@@ -98,4 +98,4 @@ Checkout one-click para subscribers recorrentes no mobile:
 
 ---
 
-*Gerado pelo PM OS — [PRD Template](../.cursor/rules/prd-template.mdc)*
+*Gerado pelo Cadence OS — [PRD Template](../.cursor/rules/prd-template.mdc)*

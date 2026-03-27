@@ -1,4 +1,4 @@
-# PM OS - Quick Start
+# Cadence OS - Quick Start
 
 Choose the right template for each situation.
 

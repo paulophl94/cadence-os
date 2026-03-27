@@ -38,8 +38,8 @@ export class StorageService {
   private workspacePath: string;
 
   constructor() {
-    this.workspacePath = process.env.WORKSPACE_PATH || '/Users/nuver/Desktop/pm-os';
-    const dbPath = path.join(this.workspacePath, 'webapp', 'data', 'pm-copilot.db');
+    this.workspacePath = process.env.WORKSPACE_PATH || '/Users/nuver/Desktop/cadence-os';
+    const dbPath = path.join(this.workspacePath, 'webapp', 'data', 'cadence-os.db');
     
     // Ensure data directory exists
     const dataDir = path.dirname(dbPath);

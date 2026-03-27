@@ -14,6 +14,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/commitments', async (req, res) => {
+  try {
+    const workspaceService = new WorkspaceService();
+    const commitments = await workspaceService.getCommitments();
+    res.json({ success: true, commitments });
+  } catch (error) {
+    console.error('Error getting commitments:', error);
+    res.status(500).json({ success: false, error: 'Failed to get commitments' });
+  }
+});
+
 router.get('/initiatives', async (req, res) => {
   try {
     const workspaceService = new WorkspaceService();

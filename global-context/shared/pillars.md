@@ -23,7 +23,7 @@ The strategic pillars that anchor all prioritization and task alignment. Every P
 
 - **Task alignment:** P1 tasks should tag a pillar: `- [ ] Task [Pillar: Name]`
 - **Morning briefing:** Today's Three validated against pillars
-- **Initiative tracking:** Each initiative in `pm-progress.json` should connect to a pillar
+- **Initiative tracking:** Each initiative in `cadence-progress.json` should connect to a pillar
 - **Weekly review:** Assess whether the week's work advanced pillar goals
 - **Roadmap decisions:** Features that don't connect to a pillar need explicit justification
 

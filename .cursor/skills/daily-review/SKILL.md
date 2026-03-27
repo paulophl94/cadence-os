@@ -31,7 +31,7 @@ Read: @to_do's/tasks.md (current tasks and completions)
 Read: @to_do's/briefings/YYYY-MM-DD.md (today's morning briefing, if exists)
 Read: @to_do's/week-priorities.md (this week's Top 3)
 Read: @to_do's/commitments.md (if exists)
-Read: @pm-progress.json (initiative pipeline status)
+Read: @cadence-progress.json (initiative pipeline status)
 ```
 
 ### Step 2: Analyze the Day
@@ -147,10 +147,10 @@ Read `@to_do's/commitments.md` and perform a full commitment health check:
 - **Closed today:** X
 - **Pending (on track):** Y
 - **Stale (>3 days):** Z
-  - [ ] [What] -> to [Who] -> since [Date] (^pm-ID) — **X days overdue**
+  - [ ] [What] -> to [Who] -> since [Date] (^cd-ID) — **X days overdue**
 ```
 
-5. **Sync task IDs:** When completing a commitment with a `^pm-` ID, also mark the corresponding task complete in `tasks.md` and any meeting note where it originated
+5. **Sync task IDs:** When completing a commitment with a `^cd-` ID, also mark the corresponding task complete in `tasks.md` and any meeting note where it originated
 
 ### Step 8: Notify User
 

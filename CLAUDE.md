@@ -1,6 +1,8 @@
-# CLAUDE.md — PM OS
+# CLAUDE.md — Cadence OS
 
-AI-powered Product Management operating system.
+AI-powered operating system for product teams.
+
+**docs-version:** 1.1.0
 
 ---
 
@@ -12,21 +14,23 @@ AI-powered Product Management operating system.
 
 | Protocol | Source file |
 |---|---|
-| Session Protocol (silent checks, staleness alerts, MCP fallbacks) | `.cursor/rules/session-protocol.mdc` |
-| Product Context (product identity, domains, triggers, context loading) | `.cursor/rules/product-context.mdc` |
-| PM Coach (next steps, career insights, improvement capture, usage tracking) | `.cursor/rules/pm-coach.mdc` |
-| People Context (auto-inject stakeholder pages) | `.cursor/rules/people-context.mdc` |
-| Formatting Preferences (no blockquotes, Mermaid neutral theme) | `.cursor/rules/formatting-preferences.mdc` |
+| Session Protocol | `.cursor/rules/session-protocol.mdc` |
+| Product Context | `.cursor/rules/product-context.mdc` |
+| Coach (core) | `.cursor/rules/cadence-coach.mdc` |
+| Coach (on-demand: level up, ratings) | `.cursor/rules/cadence-coach-ondemand.mdc` |
+| People Context | `.cursor/rules/people-context.mdc` |
+| Formatting Preferences | `.cursor/rules/formatting-preferences.mdc` |
 
 ---
 
 ## Workspace Map
 
 ```
-pm-os/
+cadence-os/
 ├── .cursor/rules/            # AI rules and document templates (canonical protocols)
 ├── .cursor/skills/           # Detailed workflows (briefing, meeting notes, meeting prep, reviews)
 │   ├── atlassian-helper/
+│   ├── career-review/
 │   ├── competitor-analysis/
 │   ├── daily-review/
 │   ├── meeting-notes/
@@ -48,9 +52,9 @@ pm-os/
 │   ├── frontend/             # React + Vite (port 3000)
 │   └── backend/              # Express API (port 3002)
 └── to_do's/                  # Tasks, briefings, reviews, learnings
-    ├── tasks.md              # Today's tasks (Today's Three) with ^pm- IDs
+    ├── tasks.md              # Today's tasks (Today's Three) with ^cd- IDs
     ├── week-priorities.md    # Top 3 for the week
-    ├── commitments.md        # Tracked promises with ^pm- IDs
+    ├── commitments.md        # Tracked promises with ^cd- IDs
     ├── quarter-goals.md      # Quarter goals
     ├── toolkit-improvements.md # Ranked improvement ideas with impact/effort
     ├── briefings/            # Daily morning briefings
@@ -61,58 +65,40 @@ pm-os/
 
 ---
 
-## Document Generation Workflows
+## Document Templates
 
 When the user requests a document, read the relevant template before generating:
 
-| Document | Template | Output path |
-|----------|----------|------------|
-| PRD (Lean) | `.cursor/rules/lean-prd-template.mdc` | `documents/PRD-[feature]-[date].md` |
-| PRD (Full) | `.cursor/rules/prd-template.mdc` | `documents/PRD-[feature]-[date].md` |
-| One-Pager | `.cursor/rules/one-pager-template.mdc` | `documents/ONE-PAGER-[feature]-[date].md` |
-| Requirements Spec | `.cursor/rules/pm-workflows.mdc` (Workflow 2) | `documents/SPEC-[feature]-[date].md` |
-| User Stories | `.cursor/rules/user-story-template.mdc` | `documents/USER-STORIES-[feature]-[date].md` |
-| RICE Analysis | `.cursor/rules/rice-analysis.mdc` | `documents/RICE-[topic]-[date].md` |
-| Risk Analysis | `.cursor/rules/risk-analysis.mdc` | `documents/RISK-ANALYSIS-[feature]-[date].md` |
-| Lean Canvas | `.cursor/rules/lean-canvas.mdc` | `documents/LEAN-CANVAS-[product]-[date].md` |
-| Roadmap | `.cursor/rules/roadmap-template.mdc` | `documents/ROADMAP-[period]-[date].md` |
-| Epic Plan | `.cursor/rules/epic-generator.mdc` | `documents/EPIC-PLAN-[feature]-[date].md` |
-| KPI-Revenue | `.cursor/rules/kpi-revenue.mdc` | `documents/KPI-REVENUE-[feature]-[date].md` |
-| Status Update | `.cursor/rules/status-update-template.mdc` | `documents/STATUS-[topic]-[date].md` |
-| Personas | `.cursor/rules/persona-template.mdc` | `documents/PERSONAS-[segment]-[date].md` |
-| Positioning | `.cursor/rules/product-positioning.mdc` | `documents/POSITIONING-[product]-[date].md` |
-| User Journey | `.cursor/rules/user-journey.mdc` | `documents/USER-JOURNEY-[flow]-[date].md` |
+| Document | Template |
+|----------|----------|
+| PRD (Lean) | `.cursor/rules/lean-prd-template.mdc` |
+| PRD (Full) | `.cursor/rules/prd-template.mdc` |
+| One-Pager | `.cursor/rules/one-pager-template.mdc` |
+| Requirements Spec | `.cursor/rules/cadence-workflows.mdc` (Workflow 2) |
+| User Stories | `.cursor/rules/user-story-template.mdc` |
+| RICE Analysis | `.cursor/rules/rice-analysis.mdc` |
+| Risk Analysis | `.cursor/rules/risk-analysis.mdc` |
+| Lean Canvas | `.cursor/rules/lean-canvas.mdc` |
+| Roadmap | `.cursor/rules/roadmap-template.mdc` |
+| Epic Plan | `.cursor/rules/epic-generator.mdc` |
+| KPI-Revenue | `.cursor/rules/kpi-revenue.mdc` |
+| Status Update | `.cursor/rules/status-update-template.mdc` |
+| Personas | `.cursor/rules/persona-template.mdc` |
+| Positioning | `.cursor/rules/product-positioning.mdc` |
+| User Journey | `.cursor/rules/user-journey.mdc` |
 
-**After generating any document**, automatically:
-1. Update `pm-progress.json` with new phase
-2. Check/create person pages in `context/people/` if people are mentioned
-3. Add action items with owners to `to_do's/commitments.md`
-4. Suggest next step (PM Coach Protocol 1)
+Output naming: `documents/[TYPE]-[description]-[YYYY-MM-DD].md`
 
-### Multi-Perspective Review
+### Multi-Perspective Reviewers
 
-When asked to review a document, apply these perspectives in sequence:
-- **User Researcher** (`.cursor/rules/reviewers/user-researcher.mdc`)
-- **Engineer** (`.cursor/rules/reviewers/engineer.mdc`)
-- **Executive** (`.cursor/rules/reviewers/executive.mdc`)
-- **Customer** (`.cursor/rules/reviewers/customer.mdc`) — optional
-- **Customer Success** (`.cursor/rules/reviewers/customer-success.mdc`) — optional
-
-Consolidate into a table: Reviewer | Feedback | Severity | Action
-
----
-
-## Task Management
-
-Files: `to_do's/tasks.md` (today), `to_do's/backlog.md` (future/P3), `to_do's/commitments.md` (tracked promises)
-
-Priorities: P1 = urgent/blockers (max 3/day, max 2 if many meetings) | P2 = important not urgent | P3 → backlog
-
-Task ID format: `^pm-YYYYMMDD-NNN` (e.g., `^pm-20260323-001`)
-- When completed, search `to_do's/`, `documents/`, `context/people/` and mark complete everywhere
-- Add timestamp: `- [x] Task text (^pm-20260323-001) ✅2026-03-23`
-
-Pillar alignment: When adding P1 tasks, check `global-context/shared/pillars.md` and tag if connected: `[Pillar: B2B Growth]`
+| Reviewer | Rule file |
+|----------|-----------|
+| User Researcher | `.cursor/rules/reviewers/user-researcher.mdc` |
+| Engineer | `.cursor/rules/reviewers/engineer.mdc` |
+| Executive | `.cursor/rules/reviewers/executive.mdc` |
+| Customer | `.cursor/rules/reviewers/customer.mdc` |
+| Customer Success | `.cursor/rules/reviewers/customer-success.mdc` |
+| Data Analyst | `.cursor/rules/reviewers/data-analyst.mdc` |
 
 ---
 
@@ -123,21 +109,6 @@ Pillar alignment: When adding P1 tasks, check `global-context/shared/pillars.md`
 - **Git safety:** Never commit/push without approval. Never force push.
 - **Secrets:** Never include API keys, tokens, or credentials in files.
 - **Scope control:** Only modify what was requested. If you notice improvements, mention but don't implement without asking.
-
----
-
-## Quick Reference
-
-| Resource | Location |
-|---|---|
-| Core protocols (alwaysApply) | `.cursor/rules/session-protocol.mdc`, `product-context.mdc`, `pm-coach.mdc`, `people-context.mdc` |
-| Document templates | `.cursor/rules/` (prd-template, one-pager, rice-analysis, etc.) |
-| PM workflows | `.cursor/rules/pm-workflows.mdc` |
-| Multi-perspective reviewers | `.cursor/rules/reviewers/` |
-| Skills (briefing, reviews, meetings) | `.cursor/skills/` |
-| Strategy frameworks | `frameworks/` |
-| People context | `context/people/` |
-| Web dashboard | `webapp/` (run with `npm run dev` in backend + frontend) |
 
 ---
 

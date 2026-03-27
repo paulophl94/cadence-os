@@ -6,7 +6,7 @@ globs: ["to_do's/**"]
 
 Manages your personal daily tasks in the `to_do's/` folder.
 
-**Note:** For tracking **product initiatives** (phases, generated documents), use `pm-progress.json` (see `.cursor/rules/progress-tracker.mdc`). This module is for **personal day-to-day tasks**.
+**Note:** For tracking **product initiatives** (phases, generated documents), use `cadence-progress.json` (see `.cursor/rules/progress-tracker.mdc`). This module is for **personal day-to-day tasks**.
 
 ---
 
@@ -51,7 +51,7 @@ Rules:
 
 Every task created from meeting notes, commitments, or cross-file workflows **must** receive a stable ID for cross-file sync.
 
-**Format:** `^pm-YYYYMMDD-NNN` (e.g., `^pm-20260323-001`)
+**Format:** `^cd-YYYYMMDD-NNN` (e.g., `^cd-20260323-001`)
 
 - `YYYYMMDD` = date the task was created
 - `NNN` = sequential counter for that day (001, 002, ...)
@@ -59,12 +59,12 @@ Every task created from meeting notes, commitments, or cross-file workflows **mu
 
 **Example:**
 ```markdown
-- [ ] Follow up with Maiki on Q2 roadmap alignment (^pm-20260323-001)
+- [ ] Follow up with Maiki on Q2 roadmap alignment (^cd-20260323-001)
 ```
 
 **Cross-file sync rules:**
 - When a task with an ID is **completed**, search for the same ID across `to_do's/`, `documents/`, and `context/people/` and mark it complete everywhere
-- When completing, add timestamp: `- [x] Task text (^pm-20260323-001) ✅2026-03-23`
+- When completing, add timestamp: `- [x] Task text (^cd-20260323-001) ✅2026-03-23`
 - Tasks created from meeting notes get IDs assigned at creation time
 - Tasks created from commitments share the same ID in `commitments.md`
 - Tasks added manually via "add task" do NOT require IDs (only cross-file tasks need them)

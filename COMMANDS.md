@@ -1,4 +1,4 @@
-# PM OS - Command Reference
+# Cadence OS - Command Reference
 
 Complete reference of all available commands.
 
@@ -148,6 +148,9 @@ Complete reference of all available commands.
 
 | Command | Description |
 |---------|-------------|
+| "/start" | Interactive onboarding wizard (first-time setup with tier selection) |
+| "Get started" | Alias for /start |
+| "/setup" | Resume or redo specific onboarding steps |
 | "Help me fill in product context" | Context generator wizard |
 | "Update product context" | Update product-context.mdc |
 | "Show terminology" | Key terms from glossary |
@@ -158,7 +161,7 @@ Complete reference of all available commands.
 
 | Command | Description |
 |---------|-------------|
-| "Level up" | Discover PM OS features you haven't used yet |
+| "Level up" | Discover Cadence OS features you haven't used yet |
 | "Discover features" | Alias |
 | "What else can I do?" | Alias |
 | "/improve" | Review and rank toolkit improvement ideas |

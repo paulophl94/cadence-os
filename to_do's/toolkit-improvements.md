@@ -1,6 +1,6 @@
 # Toolkit Improvements
 
-Actionable improvement ideas for PM OS, captured during daily work. Reviewed during weekly reviews and ranked by impact.
+Actionable improvement ideas for Cadence OS, captured during daily work. Reviewed during weekly reviews and ranked by impact.
 
 **Last ranked:** <!-- YYYY-MM-DD -->
 
@@ -8,20 +8,22 @@ Actionable improvement ideas for PM OS, captured during daily work. Reviewed dur
 
 ## Backlog (ranked by impact)
 
-<!-- Format: | # | Improvement | Context | Impact | Effort | Status | Date |
-Impact: High / Medium / Low
-Effort: Low / Medium / High
-Status: idea | planned | in-progress | done | dismissed -->
+<!-- Format: | # | Improvement | Context | Impact | Effort | Mentions | Status | Date |
+Impact: High (3) / Medium (2) / Low (1)
+Effort: Low (1) / Medium (2) / High (3)
+Mentions: Number of times this friction point was detected (incremented on duplicates)
+Status: idea | planned | in-progress | done | dismissed
+Ranking formula: (Impact * Mentions) / Effort -->
 
-| # | Improvement | Context | Impact | Effort | Status | Date |
-|---|-------------|---------|--------|--------|--------|------|
-| | | | | | | |
+| # | Improvement | Context | Impact | Effort | Mentions | Status | Date |
+|---|-------------|---------|--------|--------|----------|--------|------|
+| | | | | | | | |
 
 ---
 
 ## How Improvements Flow
 
-1. **Capture:** Detected by PM Coach (Protocol 3) from frustration phrases or user suggestions
+1. **Capture:** Detected by Cadence Coach (Protocol 3) from frustration phrases or user suggestions
 2. **Add:** New ideas go to the Backlog with status `idea` and today's date
 3. **Rank:** During weekly reviews (or via `/improve`), score impact and effort
 4. **Plan:** Top-ranked ideas get status `planned` with implementation notes

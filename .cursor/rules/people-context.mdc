@@ -4,8 +4,6 @@ alwaysApply: true
 ---
 # People Context Auto-Injection
 
-> **Editor note:** This is the canonical source. For editors without `.mdc` support, `CLAUDE.md` references this file.
-
 When a person name matching a file in `context/people/` is mentioned in conversation, in a document being worked on, or in a file being read, **silently load their person page** for additional context.
 
 ## Protocol

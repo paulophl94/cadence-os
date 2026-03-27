@@ -63,4 +63,4 @@ Habilitar "Gift this subscription" no checkout, permitindo que o comprador:
 
 ---
 
-*Gerado pelo PM OS — [One-Pager Template](../.cursor/rules/one-pager-template.mdc)*
+*Gerado pelo Cadence OS — [One-Pager Template](../.cursor/rules/one-pager-template.mdc)*

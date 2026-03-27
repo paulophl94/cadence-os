@@ -67,4 +67,4 @@ Se **Effort** de Gifting cair de 3 para 2 (ex: simplificar para prepaid only), R
 
 ---
 
-*Gerado pelo PM OS — [RICE Template](../.cursor/rules/rice-analysis.mdc)*
+*Gerado pelo Cadence OS — [RICE Template](../.cursor/rules/rice-analysis.mdc)*

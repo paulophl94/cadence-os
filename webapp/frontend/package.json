@@ -1,5 +1,5 @@
 {
-  "name": "pm-copilot-frontend",
+  "name": "cadence-os-frontend",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -11,8 +11,7 @@
   "dependencies": {
     "lucide-react": "0.469.0",
     "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "react-markdown": "9.0.3"
+    "react-dom": "19.0.0"
   },
   "devDependencies": {
     "@types/react": "19.0.2",

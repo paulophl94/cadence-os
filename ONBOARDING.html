@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PM OS — Onboarding Guide</title>
+<title>Cadence OS — Onboarding Guide</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Karla:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -264,23 +264,36 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(8,8,
 .badge{font-family:var(--font-mono);font-size:.7rem;padding:3px 8px;border-radius:4px;white-space:nowrap}
 .badge-accent{background:var(--accent-dim);color:var(--accent)}
 .badge-teal{background:var(--accent2-dim);color:var(--accent2)}
+
+/* LANG SELECTOR */
+.nav-controls{display:flex;align-items:center;gap:8px}
+.lang-select{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:5px 10px;font-family:var(--font-mono);font-size:.75rem;font-weight:500;color:var(--text-primary);cursor:pointer;outline:none;transition:border-color .2s}
+.lang-select:hover,.lang-select:focus{border-color:var(--accent)}
+.lang-select option{background:var(--bg-card);color:var(--text-primary)}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">⬡ <span>PM OS</span></div>
+  <div class="nav-logo">⬡ Cadence <span>OS</span></div>
   <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
   <ul class="nav-links">
-    <li><a href="#cursor">1. What is Cursor</a></li>
-    <li><a href="#day">2. Your Day</a></li>
-    <li><a href="#setup">3. Setup</a></li>
-    <li><a href="#toolkit">4. Toolkit</a></li>
-    <li><a href="#commands">Reference</a></li>
-    <li><a href="#checklist">Checklist</a></li>
+    <li><a href="#cursor" data-i18n="nav1">1. What is Cursor</a></li>
+    <li><a href="#day" data-i18n="nav2">2. Your Day</a></li>
+    <li><a href="#setup" data-i18n="nav3">3. Setup</a></li>
+    <li><a href="#toolkit" data-i18n="nav4">4. Toolkit</a></li>
+    <li><a href="#commands" data-i18n="nav5">Reference</a></li>
+    <li><a href="#checklist" data-i18n="nav6">Checklist</a></li>
   </ul>
-  <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">☽</button>
+  <div class="nav-controls">
+    <select class="lang-select" id="lang-select" onchange="applyLanguage(this.value)" aria-label="Language">
+      <option value="en">EN</option>
+      <option value="pt">PT-BR</option>
+      <option value="es">ES</option>
+    </select>
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">☽</button>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -289,42 +302,42 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(8,8,
   <div class="hero-glow a"></div>
   <div class="hero-glow b"></div>
   <div class="section-inner">
-    <div class="hero-badge">Open Source</div>
-    <h1 class="hero-title">PM <em>OS</em></h1>
-    <p class="hero-desc">An AI-powered workspace for Product Managers. Generate documents, run daily rituals, track commitments, and stress-test decisions — all from a single place. No code required.</p>
-    <a href="#cursor" class="hero-cta">Get Started →</a>
+    <div class="hero-badge" data-i18n="heroBadge">Open Source</div>
+    <h1 class="hero-title">Cadence <em>OS</em></h1>
+    <p class="hero-desc" data-i18n="heroDesc">Your AI co-pilot for getting more done. Generate documents, run daily rituals, track commitments, and stress-test decisions — all from a single place. No code required.</p>
+    <a href="#cursor" class="hero-cta" data-i18n="heroCta">Get Started →</a>
   </div>
-  <div class="scroll-hint">Scroll to explore</div>
+  <div class="scroll-hint" data-i18n="scrollHint">Scroll to explore</div>
 </section>
 
 <!-- WHAT IS CURSOR? -->
 <section id="cursor" class="section">
   <div class="section-inner">
-    <div class="section-label">Step 1</div>
-    <h2 class="section-title">What is Cursor?</h2>
-    <p class="section-subtitle">Cursor is an AI-native editor — think of it as a text editor with a built-in AI assistant. It reads, creates, and edits files in your workspace. You don't need to know how to code. Just open the chat panel and describe what you need in plain language.</p>
+    <div class="section-label" data-i18n="step1">Step 1</div>
+    <h2 class="section-title" data-i18n="cursorTitle">What is Cursor?</h2>
+    <p class="section-subtitle" data-i18n="cursorSubtitle">Cursor is an AI-native editor — think of it as a text editor with a built-in AI assistant. It reads, creates, and edits files in your workspace. You don't need to know how to code. Just open the chat panel and describe what you need in plain language.</p>
 
     <div class="cursor-mockup">
       <div class="cm-titlebar">
         <div class="cm-dots"><span></span><span></span><span></span></div>
-        PM OS — Cursor
+        Cadence OS — Cursor
       </div>
       <div class="cm-body">
         <div class="cm-panel" style="padding:12px 8px">
-          <div class="cm-panel-label" style="padding:0 6px">① File Explorer</div>
+          <div class="cm-panel-label" style="padding:0 6px" data-i18n="panelExplorer">① File Explorer</div>
           <ul class="cm-tree" id="file-tree"></ul>
         </div>
         <div class="cm-panel">
-          <div class="cm-panel-label">② Editor Area</div>
+          <div class="cm-panel-label" data-i18n="panelEditor">② Editor Area</div>
           <div class="cm-editor-content" id="editor-content">
-            <div class="cm-editor-placeholder">Click a file in the explorer to see what it does.</div>
+            <div class="cm-editor-placeholder" data-i18n="editorPlaceholder">Click a file in the explorer to see what it does.</div>
           </div>
         </div>
         <div class="cm-panel" style="border-right:none">
-          <div class="cm-panel-label">③ Chat Panel</div>
-          <div class="cm-chat-msg">Create a PRD for the new onboarding flow</div>
-          <div class="cm-chat-msg" style="background:var(--accent2-dim)">I'll generate a full PRD aligned with your product vision. Let me read the context first...</div>
-          <div class="cm-chat-input">Type your request here... (⌘L)</div>
+          <div class="cm-panel-label" data-i18n="panelChat">③ Chat Panel</div>
+          <div class="cm-chat-msg" data-i18n="chatMsg1">Create a PRD for the new onboarding flow</div>
+          <div class="cm-chat-msg" style="background:var(--accent2-dim)" data-i18n="chatMsg2">I'll generate a full PRD aligned with your product vision. Let me read the context first...</div>
+          <div class="cm-chat-input" data-i18n="chatInput">Type your request here... (⌘L)</div>
         </div>
       </div>
     </div>
@@ -332,29 +345,29 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(8,8,
     <div class="callout-strip">
       <div class="callout">
         <div class="callout-num">1</div>
-        <h4>Chat Panel <span class="callout-sep">—</span> Your main interface</h4>
-        <p>Press <kbd>⌘L</kbd> (Mac) or <kbd>Ctrl+L</kbd> (Windows) to open it. This is where you talk to PM OS. Type what you need in plain language — no special syntax required.</p>
+        <h4 data-i18n="callout1Title">Chat Panel <span class="callout-sep">—</span> Your main interface</h4>
+        <p data-i18n="callout1Desc">Press <kbd>⌘L</kbd> (Mac) or <kbd>Ctrl+L</kbd> (Windows) to open it. This is where you talk to Cadence OS. Type what you need in plain language — no special syntax required.</p>
       </div>
       <div class="callout">
         <div class="callout-num">2</div>
-        <h4>Agent Mode <span class="callout-sep">—</span> AI that acts</h4>
-        <p>Unlike a simple chatbot, PM OS can read and create files in your workspace. It loads your product context, understands your strategy, and generates real documents you own.</p>
+        <h4 data-i18n="callout2Title">Three Modes <span class="callout-sep">—</span> Agent, Ask &amp; Plan</h4>
+        <p data-i18n="callout2Desc"><strong>Agent</strong> reads, creates, and edits files — the default for daily work. <strong>Ask</strong> is read-only for analysis without changes. <strong>Plan</strong> researches first, shows a plan, then executes after your approval — the power move for complex tasks like full PRDs and roadmaps. Switch modes from the picker at the top of the chat panel.</p>
       </div>
       <div class="callout">
         <div class="callout-num">3</div>
-        <h4>Rules &amp; Skills <span class="callout-sep">—</span> The brain</h4>
-        <p><strong>Rules</strong> are persistent instructions that shape every response (templates, tone, coaching). <strong>Skills</strong> are multi-step workflows (daily briefing, meeting processing). Both live in <code>.cursor/</code> and you can customize them.</p>
+        <h4 data-i18n="callout3Title">Rules, Skills &amp; @ Context <span class="callout-sep">—</span> The brain</h4>
+        <p data-i18n="callout3Desc"><strong>Rules</strong> (<code>.cursor/rules/</code>) are persistent instructions that shape every response — 14 templates, 6 reviewer personas, coaching protocols. <strong>Skills</strong> (<code>.cursor/skills/</code>) are multi-step workflows like daily briefing and meeting processing. Type <strong>@</strong> in the chat to reference specific files, folders, <code>@Web</code> for live search, or <code>@Docs</code> for indexed documentation.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- A DAY WITH PM OS -->
+<!-- A DAY WITH Cadence OS -->
 <section id="day" class="section">
   <div class="section-inner">
-    <div class="section-label">Step 2</div>
-    <h2 class="section-title">A Day With PM OS</h2>
-    <p class="section-subtitle">From the first coffee to end-of-day reflection — a daily rhythm that compounds knowledge over time. Click each stage below to see what happens.</p>
+    <div class="section-label" data-i18n="step2">Step 2</div>
+    <h2 class="section-title" data-i18n="dayTitle">A Day With Cadence OS</h2>
+    <p class="section-subtitle" data-i18n="daySubtitle">From the first coffee to end-of-day reflection — a daily rhythm that compounds knowledge over time. Click each stage below to see what happens.</p>
 
     <div class="timeline">
       <div class="tl-track" id="tl-track"></div>
@@ -366,30 +379,30 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(8,8,
 <!-- SETUP -->
 <section id="setup" class="section">
   <div class="section-inner">
-    <div class="section-label">Step 3</div>
-    <h2 class="section-title">Setup</h2>
-    <p class="section-subtitle">Start light and grow into the full system. You can stop at any tier — each one is useful on its own. Pick the level that fits your needs today.</p>
+    <div class="section-label" data-i18n="step3">Step 3</div>
+    <h2 class="section-title" data-i18n="setupTitle">Setup</h2>
+    <p class="section-subtitle" data-i18n="setupSubtitle">Start light and grow into the full system. You can stop at any tier — each one is useful on its own. Pick the level that fits your needs today.</p>
 
     <div class="tiers-grid">
       <div class="tier">
-        <div class="tier-badge">START HERE</div>
+        <div class="tier-badge" data-i18n="tierBadge">START HERE</div>
         <div class="tier-icon">📄</div>
-        <h3>Quick Setup</h3>
-        <div class="tier-time">~5 minutes</div>
-        <ul class="tier-list">
+        <h3 data-i18n="tier1Title">Quick Setup</h3>
+        <div class="tier-time" data-i18n="tier1Time">~5 minutes</div>
+        <ul class="tier-list" data-i18n-list="tier1Items">
           <li>Product identity (name, model, differentiator)</li>
           <li>14 document templates (PRD, One-Pager, RICE, etc.)</li>
           <li>6 multi-perspective reviewers</li>
           <li>6 strategy frameworks</li>
-          <li>PM coaching (next-step suggestions)</li>
+          <li>Coaching (next-step suggestions)</li>
         </ul>
         <div class="tier-arrow">→</div>
       </div>
       <div class="tier">
         <div class="tier-icon">🔁</div>
-        <h3>Full Setup</h3>
-        <div class="tier-time">~15 minutes</div>
-        <ul class="tier-list">
+        <h3 data-i18n="tier2Title">Full Setup</h3>
+        <div class="tier-time" data-i18n="tier2Time">~15 minutes</div>
+        <ul class="tier-list" data-i18n-list="tier2Items">
           <li>Everything in Quick, plus:</li>
           <li>Domain configuration &amp; folder creation</li>
           <li>Working preferences (language, tone, tools)</li>
@@ -402,9 +415,9 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(8,8,
       </div>
       <div class="tier">
         <div class="tier-icon">🔗</div>
-        <h3>Power Setup</h3>
-        <div class="tier-time">~25 minutes</div>
-        <ul class="tier-list">
+        <h3 data-i18n="tier3Title">Power Setup</h3>
+        <div class="tier-time" data-i18n="tier3Time">~25 minutes</div>
+        <ul class="tier-list" data-i18n-list="tier3Items">
           <li>Everything in Full, plus:</li>
           <li>Strategic pillars</li>
           <li>Quarter goals</li>
@@ -416,12 +429,12 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(8,8,
     </div>
 
     <div class="card mt-48" style="max-width:700px;margin-left:auto;margin-right:auto">
-      <div class="card-title">⚡ Quick Start</div>
-      <div class="card-desc">
+      <div class="card-title" data-i18n="quickStartTitle">⚡ Quick Start</div>
+      <div class="card-desc" data-i18n-html="quickStartSteps">
         <ol style="display:flex;flex-direction:column;gap:10px;padding-left:20px;margin-top:12px;color:var(--text-secondary)">
           <li>Download <a href="https://cursor.com" target="_blank" rel="noopener noreferrer">Cursor</a> and install it</li>
-          <li>Clone the repo: <code>git clone https://github.com/paulophl94/pm-os.git</code></li>
-          <li>Open the <code>pm-os</code> folder in Cursor</li>
+          <li>Clone the repo: <code>git clone https://github.com/paulophl94/cadence-os.git</code></li>
+          <li>Open the <code>cadence-os</code> folder in Cursor</li>
           <li>Press <code>⌘L</code> to open the Chat Panel</li>
           <li>Type: <code>/start</code> — the wizard will ask you to pick a setup tier (Quick 5 min, Full 15 min, or Power 25 min) and guide you from there</li>
         </ol>
@@ -433,33 +446,16 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(8,8,
 <!-- THE TOOLKIT -->
 <section id="toolkit" class="section">
   <div class="section-inner">
-    <div class="section-label">Step 4</div>
-    <h2 class="section-title">The Toolkit</h2>
-    <p class="section-subtitle">14 document templates, 6 review personas, 8 workflow skills, and 6 strategy frameworks — all context-aware. No commands to memorize — just describe what you need in natural language.</p>
+    <div class="section-label" data-i18n="step4">Step 4</div>
+    <h2 class="section-title" data-i18n="toolkitTitle">The Toolkit</h2>
+    <p class="section-subtitle" data-i18n="toolkitSubtitle">14 document templates, 6 review personas, 8 workflow skills, and 6 strategy frameworks — all context-aware. No commands to memorize — just describe what you need in natural language.</p>
 
-    <div class="talk-grid" style="margin-bottom:48px">
-      <div class="talk-col">
-        <h4>🎯 Structured requests</h4>
-        <div class="talk-example"><div class="label">Create a document</div>"Create a PRD for the new onboarding flow"</div>
-        <div class="talk-example"><div class="label">Get feedback</div>"Review this as an engineer"</div>
-        <div class="talk-example"><div class="label">Start your day</div>"Morning briefing" or "What's on today?"</div>
-        <div class="talk-example"><div class="label">Process a meeting</div>"I had a meeting about X, here are the notes"</div>
-        <div class="talk-example"><div class="label">Check tasks</div>"What's pending?" or "Show my to-dos"</div>
-      </div>
-      <div class="talk-col">
-        <h4>💬 Casual and multilingual — works too</h4>
-        <div class="talk-example"><div class="label">Portuguese</div>"Criar PRD para onboarding" / "Gerar One-Pager"</div>
-        <div class="talk-example"><div class="label">Casual</div>"What would an engineer think of this?"</div>
-        <div class="talk-example"><div class="label">Casual</div>"Good morning" / "Começar o dia"</div>
-        <div class="talk-example"><div class="label">With context</div>"Process notes from my sync with the design team"</div>
-        <div class="talk-example"><div class="label">Casual</div>"O que tenho pra fazer?" / "Meus to-do's"</div>
-      </div>
-    </div>
+    <div class="talk-grid" style="margin-bottom:48px" id="talk-grid"></div>
 
     <div class="card" style="max-width:600px;margin:0 auto 48px;text-align:center">
       <div class="card-icon">💡</div>
-      <div class="card-title">Pro Tip: Be Specific</div>
-      <div class="card-desc">
+      <div class="card-title" data-i18n="proTipTitle">Pro Tip: Be Specific</div>
+      <div class="card-desc" data-i18n="proTipDesc">
         <strong>Good:</strong> "Create PRD for self-service password reset on mobile"<br>
         <strong>Vague:</strong> "Create PRD for authentication"<br><br>
         The more context you give, the better the output. Include the scope, platform, and user segment whenever possible.
@@ -474,132 +470,43 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(8,8,
 <!-- COMMAND REFERENCE -->
 <section id="commands" class="section">
   <div class="section-inner">
-    <div class="section-label">Reference</div>
-    <h2 class="section-title">Command Reference</h2>
-    <p class="section-subtitle">Every command available in PM OS. Use the search box or filter by category to find what you need. Remember: you can also just describe what you want in natural language.</p>
+    <div class="section-label" data-i18n="refLabel">Reference</div>
+    <h2 class="section-title" data-i18n="cmdTitle">Command Reference</h2>
+    <p class="section-subtitle" data-i18n="cmdSubtitle">Every command available in Cadence OS. Use the search box or filter by category to find what you need. Remember: you can also just describe what you want in natural language.</p>
 
     <div class="cmd-controls">
-      <input type="text" class="cmd-search" id="cmd-search" placeholder="Search commands...">
+      <input type="text" class="cmd-search" id="cmd-search" data-i18n-placeholder="cmdSearchPlaceholder" placeholder="Search commands...">
       <div class="cmd-filters" id="cmd-filters"></div>
     </div>
     <div style="overflow-x:auto">
       <table class="cmd-table">
-        <thead><tr><th>Command</th><th>Description</th><th>Category</th></tr></thead>
+        <thead><tr><th data-i18n="cmdThCommand">Command</th><th data-i18n="cmdThDesc">Description</th><th data-i18n="cmdThCat">Category</th></tr></thead>
         <tbody id="cmd-tbody"></tbody>
       </table>
     </div>
-    <div class="cmd-empty" id="cmd-empty" style="display:none">No commands match your search.</div>
+    <div class="cmd-empty" id="cmd-empty" style="display:none" data-i18n="cmdEmpty">No commands match your search.</div>
   </div>
 </section>
 
 <!-- SETUP CHECKLIST -->
 <section id="checklist" class="section">
   <div class="section-inner">
-    <div class="section-label">After Setup</div>
-    <h2 class="section-title">Setup Checklist</h2>
-    <p class="section-subtitle">Track what's configured in your workspace. The <code>/start</code> wizard handles the essentials — come back here to see what you can fill in over time.</p>
+    <div class="section-label" data-i18n="checklistLabel">After Setup</div>
+    <h2 class="section-title" data-i18n="checklistTitle">Setup Checklist</h2>
+    <p class="section-subtitle" data-i18n="checklistSubtitle">Track what's configured in your workspace. The <code>/start</code> wizard handles the essentials — come back here to see what you can fill in over time.</p>
 
-    <div class="cards-grid cols-2">
-      <div class="card">
-        <div class="card-icon">🎯</div>
-        <div class="card-title">Product Context</div>
-        <div class="card-desc">
-          <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:8px;font-size:.88rem;color:var(--text-secondary)">
-            <li>☐ Product Identity (name, model, differentiator)</li>
-            <li>☐ Active Domains (missions, statuses)</li>
-            <li>☐ Working Preferences (language, tone, tools)</li>
-            <li>☐ Terminology glossary</li>
-          </ul>
-        </div>
-        <div class="card-meta">File: <code>.cursor/rules/product-context.mdc</code></div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🧭</div>
-        <div class="card-title">Strategic Foundation</div>
-        <div class="card-desc">
-          <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:8px;font-size:.88rem;color:var(--text-secondary)">
-            <li>☐ Strategic pillars (2-4 themes)</li>
-            <li>☐ Quarter goals (3-5 outcomes)</li>
-            <li>☐ Week priorities (Top 3)</li>
-            <li>☐ Strategic assumptions</li>
-          </ul>
-        </div>
-        <div class="card-meta">Folder: <code>global-context/shared/</code> &amp; <code>to_do's/</code></div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🌐</div>
-        <div class="card-title">Domain Context</div>
-        <div class="card-desc">
-          <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:8px;font-size:.88rem;color:var(--text-secondary)">
-            <li>☐ Domain vision &amp; strategy</li>
-            <li>☐ Domain KPIs &amp; targets</li>
-            <li>☐ Current roadmap</li>
-            <li>☐ Architecture overview</li>
-          </ul>
-        </div>
-        <div class="card-meta">Folder: <code>global-context/{domain}/</code></div>
-      </div>
-      <div class="card">
-        <div class="card-icon">👥</div>
-        <div class="card-title">People &amp; Users</div>
-        <div class="card-desc">
-          <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:8px;font-size:.88rem;color:var(--text-secondary)">
-            <li>☐ Key stakeholder person pages</li>
-            <li>☐ User personas</li>
-            <li>☐ Commitment tracking started</li>
-          </ul>
-        </div>
-        <div class="card-meta">Folder: <code>context/people/</code></div>
-      </div>
-    </div>
+    <div class="cards-grid cols-2" id="checklist-grid"></div>
   </div>
 </section>
 
 <!-- WHAT TO DO AFTER SETUP -->
 <section id="after-setup" class="section">
   <div class="section-inner">
-    <div class="section-label">Next Steps</div>
-    <h2 class="section-title">What To Do After Setup</h2>
-    <p class="section-subtitle">Based on which setup tier you completed, here's where to go next.</p>
+    <div class="section-label" data-i18n="afterLabel">Next Steps</div>
+    <h2 class="section-title" data-i18n="afterTitle">What To Do After Setup</h2>
+    <p class="section-subtitle" data-i18n="afterSubtitle">Based on which setup tier you completed, here's where to go next.</p>
 
-    <div class="cards-grid cols-3">
-      <div class="card">
-        <div class="card-icon">📄</div>
-        <div class="card-title">After Quick Setup</div>
-        <div class="card-desc">
-          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:8px;font-size:.88rem;color:var(--text-secondary)">
-            <li>→ Try <code>Create PRD for [feature]</code></li>
-            <li>→ Try <code>Review as engineer</code></li>
-            <li>→ Fill in domain context when ready</li>
-            <li>→ Re-run <code>/start</code> for Full setup later</li>
-          </ul>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🔁</div>
-        <div class="card-title">After Full Setup</div>
-        <div class="card-desc">
-          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:8px;font-size:.88rem;color:var(--text-secondary)">
-            <li>→ Say <code>Morning briefing</code> tomorrow</li>
-            <li>→ Create person pages for key stakeholders</li>
-            <li>→ Fill in domain vision &amp; KPIs</li>
-            <li>→ Set up quarter goals &amp; pillars</li>
-          </ul>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🔗</div>
-        <div class="card-title">After Power Setup</div>
-        <div class="card-desc">
-          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:8px;font-size:.88rem;color:var(--text-secondary)">
-            <li>→ Run your first <code>Morning briefing</code></li>
-            <li>→ Connect MCPs (Jira, Slack, Calendar)</li>
-            <li>→ Fill in domain roadmap &amp; architecture</li>
-            <li>→ Say <code>Level up</code> to discover more</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <div class="cards-grid cols-3" id="after-setup-grid"></div>
   </div>
 </section>
 
@@ -607,10 +514,10 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(8,8,
 <section id="start-section" class="section">
   <div class="section-inner">
     <div class="cta-box">
-      <h3>Ready to Start?</h3>
-      <p>Open the Chat Panel in Cursor and type:</p>
+      <h3 data-i18n="ctaTitle">Ready to Start?</h3>
+      <p data-i18n="ctaDesc">Open the Chat Panel in Cursor and type:</p>
       <div class="cta-cmd">/start</div>
-      <div class="cta-sub">The wizard will ask you to pick a tier — Quick (5 min), Full (15 min), or Power (25 min).<br>You can always upgrade your setup later.</div>
+      <div class="cta-sub" data-i18n="ctaSub">The wizard will ask you to pick a tier — Quick (5 min), Full (15 min), or Power (25 min).<br>You can always upgrade your setup later.</div>
     </div>
   </div>
 </section>
@@ -622,9 +529,9 @@ function toggleTheme(){
   const next=html.getAttribute('data-theme')==='dark'?'light':'dark';
   html.setAttribute('data-theme',next);
   document.querySelector('.theme-btn').textContent=next==='dark'?'☽':'☀';
-  try{localStorage.setItem('pmos-theme',next)}catch(e){}
+  try{localStorage.setItem('cadence-theme',next)}catch(e){}
 }
-try{const saved=localStorage.getItem('pmos-theme');if(saved){document.documentElement.setAttribute('data-theme',saved);document.querySelector('.theme-btn').textContent=saved==='dark'?'☽':'☀'}}catch(e){}
+try{const saved=localStorage.getItem('cadence-theme');if(saved){document.documentElement.setAttribute('data-theme',saved);document.querySelector('.theme-btn').textContent=saved==='dark'?'☽':'☀'}}catch(e){}
 
 /* ── SCROLL REVEAL ── */
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.12});
@@ -640,299 +547,595 @@ window.addEventListener('scroll',()=>{
 },{passive:true});
 document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>document.querySelector('.nav-links').classList.remove('open')));
 
-/* ── DATA: TOOLKIT ── */
+/* ══════════════════════════════════════════════════════════════
+   I18N — TRANSLATIONS
+   ══════════════════════════════════════════════════════════════ */
+let currentLang='en';
+
+function tx(val){
+  if(!val) return '';
+  if(typeof val==='string') return val;
+  return val[currentLang]||val.en||'';
+}
+
+const i18n={
+en:{
+  nav1:'1. What is Cursor',nav2:'2. Your Day',nav3:'3. Setup',nav4:'4. Toolkit',nav5:'Reference',nav6:'Checklist',
+  heroBadge:'Open Source',
+  heroDesc:'Your AI co-pilot for getting more done. Generate documents, run daily rituals, track commitments, and stress-test decisions — all from a single place. No code required.',
+  heroCta:'Get Started →',
+  scrollHint:'Scroll to explore',
+  step1:'Step 1',step2:'Step 2',step3:'Step 3',step4:'Step 4',
+  cursorTitle:'What is Cursor?',
+  cursorSubtitle:'Cursor is an AI-native editor — think of it as a text editor with a built-in AI assistant. It reads, creates, and edits files in your workspace. You don\'t need to know how to code. Just open the chat panel and describe what you need in plain language.',
+  panelExplorer:'① File Explorer',panelEditor:'② Editor Area',panelChat:'③ Chat Panel',
+  editorPlaceholder:'Click a file in the explorer to see what it does.',
+  chatMsg1:'Create a PRD for the new onboarding flow',
+  chatMsg2:'I\'ll generate a full PRD aligned with your product vision. Let me read the context first...',
+  chatInput:'Type your request here... (⌘L)',
+  callout1Title:'Chat Panel <span class="callout-sep">—</span> Your main interface',
+  callout1Desc:'Press <kbd>⌘L</kbd> (Mac) or <kbd>Ctrl+L</kbd> (Windows) to open it. This is where you talk to Cadence OS. Type what you need in plain language — no special syntax required.',
+  callout2Title:'Three Modes <span class="callout-sep">—</span> Agent, Ask &amp; Plan',
+  callout2Desc:'<strong>Agent</strong> reads, creates, and edits files — the default for daily work. <strong>Ask</strong> is read-only for analysis without changes. <strong>Plan</strong> researches first, shows a plan, then executes after your approval — the power move for complex tasks like full PRDs and roadmaps. Switch modes from the picker at the top of the chat panel.',
+  callout3Title:'Rules, Skills &amp; @ Context <span class="callout-sep">—</span> The brain',
+  callout3Desc:'<strong>Rules</strong> (<code>.cursor/rules/</code>) are persistent instructions that shape every response — 14 templates, 6 reviewer personas, coaching protocols. <strong>Skills</strong> (<code>.cursor/skills/</code>) are multi-step workflows like daily briefing and meeting processing. Type <strong>@</strong> in the chat to reference specific files, folders, <code>@Web</code> for live search, or <code>@Docs</code> for indexed documentation.',
+  dayTitle:'A Day With Cadence OS',
+  daySubtitle:'From the first coffee to end-of-day reflection — a daily rhythm that compounds knowledge over time. Click each stage below to see what happens.',
+  setupTitle:'Setup',
+  setupSubtitle:'Start light and grow into the full system. You can stop at any tier — each one is useful on its own. Pick the level that fits your needs today.',
+  tierBadge:'START HERE',
+  tier1Title:'Quick Setup',tier1Time:'~5 minutes',
+  tier1Items:['Product identity (name, model, differentiator)','14 document templates (PRD, One-Pager, RICE, etc.)','6 multi-perspective reviewers','6 strategy frameworks','Coaching (next-step suggestions)'],
+  tier2Title:'Full Setup',tier2Time:'~15 minutes',
+  tier2Items:['Everything in Quick, plus:','Domain configuration & folder creation','Working preferences (language, tone, tools)','Morning briefing, daily & weekly reviews','Meeting notes with commitment tracking','Person pages for stakeholders','Session continuity across chats'],
+  tier3Title:'Power Setup',tier3Time:'~25 minutes',
+  tier3Items:['Everything in Full, plus:','Strategic pillars','Quarter goals','Weekly priorities (Top 3)','Morning briefings work from day one','Connect tools (Jira, Slack, Calendar) after setup'],
+  quickStartTitle:'⚡ Quick Start',
+  quickStartSteps:'<ol style="display:flex;flex-direction:column;gap:10px;padding-left:20px;margin-top:12px;color:var(--text-secondary)"><li>Download <a href="https://cursor.com" target="_blank" rel="noopener noreferrer">Cursor</a> and install it</li><li>Clone the repo: <code>git clone https://github.com/paulophl94/cadence-os.git</code></li><li>Open the <code>cadence-os</code> folder in Cursor</li><li>Press <code>⌘L</code> to open the Chat Panel</li><li>Type: <code>/start</code> — the wizard will ask you to pick a setup tier (Quick 5 min, Full 15 min, or Power 25 min) and guide you from there</li></ol>',
+  toolkitTitle:'The Toolkit',
+  toolkitSubtitle:'14 document templates, 6 review personas, 8 workflow skills, and 6 strategy frameworks — all context-aware. No commands to memorize — just describe what you need in natural language.',
+  talkCol1Title:'🎯 Structured requests',
+  talkCol2Title:'💬 Casual and multilingual — works too',
+  talkExamples:[
+    {label:'Create a document',text:'"Create a PRD for the new onboarding flow"'},
+    {label:'Get feedback',text:'"Review this as an engineer"'},
+    {label:'Start your day',text:'"Morning briefing" or "What\'s on today?"'},
+    {label:'Process a meeting',text:'"I had a meeting about X, here are the notes"'},
+    {label:'Check tasks',text:'"What\'s pending?" or "Show my to-dos"'},
+  ],
+  talkExamples2:[
+    {label:'Portuguese',text:'"Criar PRD para onboarding" / "Gerar One-Pager"'},
+    {label:'Casual',text:'"What would an engineer think of this?"'},
+    {label:'Casual',text:'"Good morning" / "Começar o dia"'},
+    {label:'With context',text:'"Process notes from my sync with the design team"'},
+    {label:'Casual',text:'"O que tenho pra fazer?" / "Meus to-do\'s"'},
+  ],
+  proTipTitle:'Pro Tip: Be Specific',
+  proTipDesc:'<strong>Good:</strong> "Create PRD for self-service password reset on mobile"<br><strong>Vague:</strong> "Create PRD for authentication"<br><br>The more context you give, the better the output. Include the scope, platform, and user segment whenever possible.',
+  refLabel:'Reference',
+  cmdTitle:'Command Reference',
+  cmdSubtitle:'Every command available in Cadence OS. Use the search box or filter by category to find what you need. Remember: you can also just describe what you want in natural language.',
+  cmdSearchPlaceholder:'Search commands...',
+  cmdThCommand:'Command',cmdThDesc:'Description',cmdThCat:'Category',
+  cmdEmpty:'No commands match your search.',
+  cmdAll:'All',
+  checklistLabel:'After Setup',
+  checklistTitle:'Setup Checklist',
+  checklistSubtitle:'Track what\'s configured in your workspace. The <code>/start</code> wizard handles the essentials — come back here to see what you can fill in over time.',
+  afterLabel:'Next Steps',
+  afterTitle:'What To Do After Setup',
+  afterSubtitle:'Based on which setup tier you completed, here\'s where to go next.',
+  ctaTitle:'Ready to Start?',
+  ctaDesc:'Open the Chat Panel in Cursor and type:',
+  ctaSub:'The wizard will ask you to pick a tier — Quick (5 min), Full (15 min), or Power (25 min).<br>You can always upgrade your setup later.',
+  tagLabels:{rule:'Rule',skill:'Skill',doc:'Document',config:'Config'},
+},
+pt:{
+  nav1:'1. O que é o Cursor',nav2:'2. Seu Dia',nav3:'3. Configuração',nav4:'4. Ferramentas',nav5:'Referência',nav6:'Checklist',
+  heroBadge:'Open Source',
+  heroDesc:'Seu co-pilot com IA para otimizar o seu trabalho. Gere documentos, execute rituais diários, acompanhe compromissos e valide decisões — tudo em um só lugar. Sem precisar programar.',
+  heroCta:'Começar →',
+  scrollHint:'Role para explorar',
+  step1:'Passo 1',step2:'Passo 2',step3:'Passo 3',step4:'Passo 4',
+  cursorTitle:'O que é o Cursor?',
+  cursorSubtitle:'O Cursor é um editor nativo de IA — pense nele como um editor de texto com um assistente de IA integrado. Ele lê, cria e edita arquivos no seu workspace. Você não precisa saber programar. Basta abrir o painel de chat e descrever o que você precisa em linguagem natural.',
+  panelExplorer:'① Explorador de Arquivos',panelEditor:'② Área do Editor',panelChat:'③ Painel de Chat',
+  editorPlaceholder:'Clique em um arquivo no explorador para ver o que ele faz.',
+  chatMsg1:'Criar um PRD para o novo fluxo de onboarding',
+  chatMsg2:'Vou gerar um PRD completo alinhado com a visão do seu produto. Deixe-me ler o contexto primeiro...',
+  chatInput:'Digite seu pedido aqui... (⌘L)',
+  callout1Title:'Painel de Chat <span class="callout-sep">—</span> Sua interface principal',
+  callout1Desc:'Pressione <kbd>⌘L</kbd> (Mac) ou <kbd>Ctrl+L</kbd> (Windows) para abrir. É aqui que você fala com o Cadence OS. Digite o que precisa em linguagem natural — sem sintaxe especial.',
+  callout2Title:'Três Modos <span class="callout-sep">—</span> Agent, Ask &amp; Plan',
+  callout2Desc:'<strong>Agent</strong> lê, cria e edita arquivos — o padrão para o trabalho diário. <strong>Ask</strong> é somente leitura para análise sem alterações. <strong>Plan</strong> pesquisa primeiro, mostra um plano e só executa após sua aprovação — o poder para tarefas complexas como PRDs e roadmaps. Alterne modos pelo seletor no topo do painel de chat.',
+  callout3Title:'Regras, Skills &amp; @ Contexto <span class="callout-sep">—</span> O cérebro',
+  callout3Desc:'<strong>Regras</strong> (<code>.cursor/rules/</code>) são instruções persistentes que moldam cada resposta — 14 templates, 6 personas de revisão, protocolos de coaching. <strong>Skills</strong> (<code>.cursor/skills/</code>) são workflows multi-etapa como briefing diário e processamento de reuniões. Digite <strong>@</strong> no chat para referenciar arquivos, pastas, <code>@Web</code> para busca web ou <code>@Docs</code> para documentação indexada.',
+  dayTitle:'Um Dia com o Cadence OS',
+  daySubtitle:'Do primeiro café à reflexão de fim de dia — um ritmo diário que acumula conhecimento ao longo do tempo. Clique em cada etapa abaixo para ver o que acontece.',
+  setupTitle:'Configuração',
+  setupSubtitle:'Comece leve e evolua para o sistema completo. Você pode parar em qualquer nível — cada um é útil por si só. Escolha o nível que se encaixa nas suas necessidades hoje.',
+  tierBadge:'COMECE AQUI',
+  tier1Title:'Setup Rápido',tier1Time:'~5 minutos',
+  tier1Items:['Identidade do produto (nome, modelo, diferencial)','14 templates de documentos (PRD, One-Pager, RICE, etc.)','6 revisores multi-perspectiva','6 frameworks estratégicos','Coaching (sugestões de próximo passo)'],
+  tier2Title:'Setup Completo',tier2Time:'~15 minutos',
+  tier2Items:['Tudo do Rápido, mais:','Configuração de domínio e criação de pastas','Preferências de trabalho (idioma, tom, ferramentas)','Briefing matinal, revisões diárias e semanais','Notas de reunião com rastreamento de compromissos','Páginas de pessoas para stakeholders','Continuidade de sessão entre chats'],
+  tier3Title:'Setup Avançado',tier3Time:'~25 minutos',
+  tier3Items:['Tudo do Completo, mais:','Pilares estratégicos','Metas do trimestre','Prioridades da semana (Top 3)','Briefings matinais funcionam desde o primeiro dia','Conectar ferramentas (Jira, Slack, Calendário) após setup'],
+  quickStartTitle:'⚡ Início Rápido',
+  quickStartSteps:'<ol style="display:flex;flex-direction:column;gap:10px;padding-left:20px;margin-top:12px;color:var(--text-secondary)"><li>Baixe o <a href="https://cursor.com" target="_blank" rel="noopener noreferrer">Cursor</a> e instale</li><li>Clone o repositório: <code>git clone https://github.com/paulophl94/cadence-os.git</code></li><li>Abra a pasta <code>cadence-os</code> no Cursor</li><li>Pressione <code>⌘L</code> para abrir o Painel de Chat</li><li>Digite: <code>/start</code> — o assistente vai pedir para escolher um nível (Rápido 5 min, Completo 15 min ou Avançado 25 min) e guiar você a partir daí</li></ol>',
+  toolkitTitle:'O Kit de Ferramentas',
+  toolkitSubtitle:'14 templates de documentos, 6 personas de revisão, 8 workflows de skills e 6 frameworks estratégicos — todos com contexto. Sem comandos para decorar — apenas descreva o que precisa em linguagem natural.',
+  talkCol1Title:'🎯 Pedidos estruturados',
+  talkCol2Title:'💬 Casual e multilíngue — também funciona',
+  talkExamples:[
+    {label:'Criar um documento',text:'"Criar PRD para o novo fluxo de onboarding"'},
+    {label:'Obter feedback',text:'"Revisar isso como engenheiro"'},
+    {label:'Começar o dia',text:'"Briefing matinal" ou "O que tenho hoje?"'},
+    {label:'Processar reunião',text:'"Tive uma reunião sobre X, aqui estão as notas"'},
+    {label:'Ver tarefas',text:'"O que está pendente?" ou "Mostrar meus to-dos"'},
+  ],
+  talkExamples2:[
+    {label:'Português',text:'"Criar PRD para onboarding" / "Gerar One-Pager"'},
+    {label:'Casual',text:'"O que um engenheiro acharia disso?"'},
+    {label:'Casual',text:'"Bom dia" / "Começar o dia"'},
+    {label:'Com contexto',text:'"Processar notas do sync com o time de design"'},
+    {label:'Casual',text:'"O que tenho pra fazer?" / "Meus to-do\'s"'},
+  ],
+  proTipTitle:'Dica: Seja Específico',
+  proTipDesc:'<strong>Bom:</strong> "Criar PRD para reset de senha self-service no mobile"<br><strong>Vago:</strong> "Criar PRD para autenticação"<br><br>Quanto mais contexto você der, melhor o resultado. Inclua o escopo, plataforma e segmento de usuário sempre que possível.',
+  refLabel:'Referência',
+  cmdTitle:'Referência de Comandos',
+  cmdSubtitle:'Todos os comandos disponíveis no Cadence OS. Use a busca ou filtre por categoria para encontrar o que precisa. Lembre-se: você também pode descrever o que quer em linguagem natural.',
+  cmdSearchPlaceholder:'Buscar comandos...',
+  cmdThCommand:'Comando',cmdThDesc:'Descrição',cmdThCat:'Categoria',
+  cmdEmpty:'Nenhum comando encontrado.',
+  cmdAll:'Todos',
+  checklistLabel:'Após Setup',
+  checklistTitle:'Checklist de Configuração',
+  checklistSubtitle:'Acompanhe o que está configurado no seu workspace. O assistente <code>/start</code> cuida do essencial — volte aqui para ver o que pode preencher ao longo do tempo.',
+  afterLabel:'Próximos Passos',
+  afterTitle:'O que Fazer Após o Setup',
+  afterSubtitle:'Com base no nível de setup que você completou, veja o que fazer a seguir.',
+  ctaTitle:'Pronto para Começar?',
+  ctaDesc:'Abra o Painel de Chat no Cursor e digite:',
+  ctaSub:'O assistente vai pedir para escolher um nível — Rápido (5 min), Completo (15 min) ou Avançado (25 min).<br>Você sempre pode atualizar seu setup depois.',
+  tagLabels:{rule:'Regra',skill:'Skill',doc:'Documento',config:'Config'},
+},
+es:{
+  nav1:'1. Qué es Cursor',nav2:'2. Tu Día',nav3:'3. Configuración',nav4:'4. Herramientas',nav5:'Referencia',nav6:'Checklist',
+  heroBadge:'Open Source',
+  heroDesc:'Tu co-pilot con IA para optimizar tu trabajo. Genera documentos, ejecuta rituales diarios, rastrea compromisos y valida decisiones — todo desde un solo lugar. Sin necesidad de programar.',
+  heroCta:'Empezar →',
+  scrollHint:'Desplaza para explorar',
+  step1:'Paso 1',step2:'Paso 2',step3:'Paso 3',step4:'Paso 4',
+  cursorTitle:'¿Qué es Cursor?',
+  cursorSubtitle:'Cursor es un editor nativo de IA — piensa en él como un editor de texto con un asistente de IA integrado. Lee, crea y edita archivos en tu workspace. No necesitas saber programar. Solo abre el panel de chat y describe lo que necesitas en lenguaje natural.',
+  panelExplorer:'① Explorador de Archivos',panelEditor:'② Área del Editor',panelChat:'③ Panel de Chat',
+  editorPlaceholder:'Haz clic en un archivo del explorador para ver qué hace.',
+  chatMsg1:'Crear un PRD para el nuevo flujo de onboarding',
+  chatMsg2:'Voy a generar un PRD completo alineado con la visión de tu producto. Déjame leer el contexto primero...',
+  chatInput:'Escribe tu solicitud aquí... (⌘L)',
+  callout1Title:'Panel de Chat <span class="callout-sep">—</span> Tu interfaz principal',
+  callout1Desc:'Presiona <kbd>⌘L</kbd> (Mac) o <kbd>Ctrl+L</kbd> (Windows) para abrirlo. Aquí es donde hablas con Cadence OS. Escribe lo que necesitas en lenguaje natural — sin sintaxis especial.',
+  callout2Title:'Tres Modos <span class="callout-sep">—</span> Agent, Ask &amp; Plan',
+  callout2Desc:'<strong>Agent</strong> lee, crea y edita archivos — el modo predeterminado para el trabajo diario. <strong>Ask</strong> es solo lectura para análisis sin cambios. <strong>Plan</strong> investiga primero, muestra un plan y solo ejecuta tras tu aprobación — el poder para tareas complejas como PRDs y roadmaps. Cambia de modo desde el selector en la parte superior del panel de chat.',
+  callout3Title:'Reglas, Skills &amp; @ Contexto <span class="callout-sep">—</span> El cerebro',
+  callout3Desc:'<strong>Reglas</strong> (<code>.cursor/rules/</code>) son instrucciones persistentes que moldean cada respuesta — 14 plantillas, 6 personas de revisión, protocolos de coaching. <strong>Skills</strong> (<code>.cursor/skills/</code>) son workflows multi-paso como briefing diario y procesamiento de reuniones. Escribe <strong>@</strong> en el chat para referenciar archivos, carpetas, <code>@Web</code> para búsqueda web o <code>@Docs</code> para documentación indexada.',
+  dayTitle:'Un Día con Cadence OS',
+  daySubtitle:'Desde el primer café hasta la reflexión de fin de día — un ritmo diario que acumula conocimiento con el tiempo. Haz clic en cada etapa para ver qué sucede.',
+  setupTitle:'Configuración',
+  setupSubtitle:'Empieza liviano y evoluciona al sistema completo. Puedes detenerte en cualquier nivel — cada uno es útil por sí solo. Elige el nivel que se ajuste a tus necesidades hoy.',
+  tierBadge:'EMPIEZA AQUÍ',
+  tier1Title:'Setup Rápido',tier1Time:'~5 minutos',
+  tier1Items:['Identidad del producto (nombre, modelo, diferencial)','14 plantillas de documentos (PRD, One-Pager, RICE, etc.)','6 revisores multi-perspectiva','6 frameworks estratégicos','Coaching (sugerencias de próximo paso)'],
+  tier2Title:'Setup Completo',tier2Time:'~15 minutos',
+  tier2Items:['Todo del Rápido, más:','Configuración de dominio y creación de carpetas','Preferencias de trabajo (idioma, tono, herramientas)','Briefing matinal, revisiones diarias y semanales','Notas de reunión con seguimiento de compromisos','Páginas de personas para stakeholders','Continuidad de sesión entre chats'],
+  tier3Title:'Setup Avanzado',tier3Time:'~25 minutos',
+  tier3Items:['Todo del Completo, más:','Pilares estratégicos','Metas del trimestre','Prioridades de la semana (Top 3)','Briefings matinales funcionan desde el primer día','Conectar herramientas (Jira, Slack, Calendario) después del setup'],
+  quickStartTitle:'⚡ Inicio Rápido',
+  quickStartSteps:'<ol style="display:flex;flex-direction:column;gap:10px;padding-left:20px;margin-top:12px;color:var(--text-secondary)"><li>Descarga <a href="https://cursor.com" target="_blank" rel="noopener noreferrer">Cursor</a> e instálalo</li><li>Clona el repositorio: <code>git clone https://github.com/paulophl94/cadence-os.git</code></li><li>Abre la carpeta <code>cadence-os</code> en Cursor</li><li>Presiona <code>⌘L</code> para abrir el Panel de Chat</li><li>Escribe: <code>/start</code> — el asistente te pedirá elegir un nivel (Rápido 5 min, Completo 15 min o Avanzado 25 min) y te guiará desde ahí</li></ol>',
+  toolkitTitle:'Las Herramientas',
+  toolkitSubtitle:'14 plantillas de documentos, 6 personas de revisión, 8 workflows de skills y 6 frameworks estratégicos — todos con contexto. Sin comandos que memorizar — solo describe lo que necesitas en lenguaje natural.',
+  talkCol1Title:'🎯 Solicitudes estructuradas',
+  talkCol2Title:'💬 Casual y multilingüe — también funciona',
+  talkExamples:[
+    {label:'Crear un documento',text:'"Crear PRD para el nuevo flujo de onboarding"'},
+    {label:'Obtener feedback',text:'"Revisar esto como ingeniero"'},
+    {label:'Empezar el día',text:'"Briefing matinal" o "¿Qué tengo hoy?"'},
+    {label:'Procesar reunión',text:'"Tuve una reunión sobre X, aquí están las notas"'},
+    {label:'Ver tareas',text:'"¿Qué está pendiente?" o "Mostrar mis tareas"'},
+  ],
+  talkExamples2:[
+    {label:'Español',text:'"Crear PRD para onboarding" / "Generar One-Pager"'},
+    {label:'Casual',text:'"¿Qué pensaría un ingeniero de esto?"'},
+    {label:'Casual',text:'"Buenos días" / "Empezar el día"'},
+    {label:'Con contexto',text:'"Procesar notas del sync con el equipo de diseño"'},
+    {label:'Casual',text:'"¿Qué tengo que hacer?" / "Mis tareas"'},
+  ],
+  proTipTitle:'Tip: Sé Específico',
+  proTipDesc:'<strong>Bueno:</strong> "Crear PRD para reset de contraseña self-service en móvil"<br><strong>Vago:</strong> "Crear PRD para autenticación"<br><br>Cuanto más contexto des, mejor el resultado. Incluye el alcance, plataforma y segmento de usuario siempre que sea posible.',
+  refLabel:'Referencia',
+  cmdTitle:'Referencia de Comandos',
+  cmdSubtitle:'Todos los comandos disponibles en Cadence OS. Usa la búsqueda o filtra por categoría para encontrar lo que necesitas. Recuerda: también puedes describir lo que quieres en lenguaje natural.',
+  cmdSearchPlaceholder:'Buscar comandos...',
+  cmdThCommand:'Comando',cmdThDesc:'Descripción',cmdThCat:'Categoría',
+  cmdEmpty:'Ningún comando encontrado.',
+  cmdAll:'Todos',
+  checklistLabel:'Después del Setup',
+  checklistTitle:'Checklist de Configuración',
+  checklistSubtitle:'Rastrea lo que está configurado en tu workspace. El asistente <code>/start</code> se encarga de lo esencial — vuelve aquí para ver qué puedes completar con el tiempo.',
+  afterLabel:'Próximos Pasos',
+  afterTitle:'Qué Hacer Después del Setup',
+  afterSubtitle:'Según el nivel de setup que completaste, esto es lo que sigue.',
+  ctaTitle:'¿Listo para Empezar?',
+  ctaDesc:'Abre el Panel de Chat en Cursor y escribe:',
+  ctaSub:'El asistente te pedirá elegir un nivel — Rápido (5 min), Completo (15 min) o Avanzado (25 min).<br>Siempre puedes actualizar tu setup después.',
+  tagLabels:{rule:'Regla',skill:'Skill',doc:'Documento',config:'Config'},
+},
+};
+
+/* ── DATA: TOOLKIT (with i18n) ── */
 const toolkitData={
-  templates:{label:'Templates',count:14,items:[
-    {icon:'📋',title:'PRD',cmd:'Create PRD for [feature]',desc:'Full PRD with 15 sections — problem, solution, user stories, metrics, and more.'},
-    {icon:'📝',title:'One-Pager',cmd:'Generate One-Pager for [feature]',desc:'Strategic 1-2 page validation document for stakeholder alignment.'},
-    {icon:'👤',title:'User Stories',cmd:'Write user stories for [feature]',desc:'User stories with Gherkin acceptance criteria, ready for dev handoff.'},
-    {icon:'📊',title:'RICE Analysis',cmd:'Prioritize using RICE',desc:'Score features by Reach, Impact, Confidence, Effort with recommendations.'},
-    {icon:'⚠️',title:'Risk Analysis',cmd:'Analyze risks of [feature]',desc:'Risk matrix with probability, severity, and mitigation strategies.'},
-    {icon:'🧩',title:'Lean Canvas',cmd:'Create Lean Canvas for [product]',desc:'9-section strategy canvas: problem, solution, metrics, advantage.'},
-    {icon:'🗺️',title:'Roadmap',cmd:'Create roadmap for [quarter]',desc:'Quarterly strategic plan with themes, milestones, and dependencies.'},
-    {icon:'🏗️',title:'Epic Plan',cmd:'Generate epic plan for [feature]',desc:'Epic structure with sub-epics, scope, and delivery phases.'},
-    {icon:'💰',title:'KPI-Revenue',cmd:'Connect KPIs to revenue',desc:'Link product metrics to business outcomes with North Star mapping.'},
-    {icon:'📢',title:'Status Update',cmd:'Generate status update',desc:'Executive communication for stakeholders — progress, blockers, asks.'},
-    {icon:'🎭',title:'Personas',cmd:'Create personas for [segment]',desc:'Ideal + Skeptical personas with goals, frustrations, and behaviors.'},
-    {icon:'🎯',title:'Positioning',cmd:'Create elevator pitch',desc:'Product positioning statement and JTBD-based pitch.'},
-    {icon:'🛤️',title:'User Journey',cmd:'Map user journey for [flow]',desc:'End-to-end journey map with touchpoints, emotions, and opportunities.'},
-    {icon:'📖',title:'Feature Docs',cmd:'Document feature [name]',desc:'Reverse-engineer documentation from an existing feature.'},
+  templates:{label:{en:'Templates',pt:'Modelos',es:'Plantillas'},count:14,items:[
+    {icon:'📋',title:'PRD',cmd:{en:'Create PRD for [feature]',pt:'Criar PRD para [feature]',es:'Crear PRD para [feature]'},desc:{en:'Full PRD with 15 sections — problem, solution, user stories, metrics, and more.',pt:'PRD completo com 15 seções — problema, solução, user stories, métricas e mais.',es:'PRD completo con 15 secciones — problema, solución, user stories, métricas y más.'}},
+    {icon:'📝',title:'One-Pager',cmd:{en:'Generate One-Pager for [feature]',pt:'Gerar One-Pager para [feature]',es:'Generar One-Pager para [feature]'},desc:{en:'Strategic 1-2 page validation document for stakeholder alignment.',pt:'Documento estratégico de 1-2 páginas para alinhamento com stakeholders.',es:'Documento estratégico de 1-2 páginas para alinear stakeholders.'}},
+    {icon:'👤',title:'User Stories',cmd:{en:'Write user stories for [feature]',pt:'Escrever user stories para [feature]',es:'Escribir user stories para [feature]'},desc:{en:'User stories with Gherkin acceptance criteria, ready for dev handoff.',pt:'User stories com critérios de aceitação Gherkin, prontas para handoff.',es:'User stories con criterios de aceptación Gherkin, listas para handoff.'}},
+    {icon:'📊',title:{en:'RICE Analysis',pt:'Análise RICE',es:'Análisis RICE'},cmd:{en:'Prioritize using RICE',pt:'Priorizar usando RICE',es:'Priorizar usando RICE'},desc:{en:'Score features by Reach, Impact, Confidence, Effort with recommendations.',pt:'Pontue features por Alcance, Impacto, Confiança, Esforço com recomendações.',es:'Puntúa features por Alcance, Impacto, Confianza, Esfuerzo con recomendaciones.'}},
+    {icon:'⚠️',title:{en:'Risk Analysis',pt:'Análise de Riscos',es:'Análisis de Riesgos'},cmd:{en:'Analyze risks of [feature]',pt:'Analisar riscos de [feature]',es:'Analizar riesgos de [feature]'},desc:{en:'Risk matrix with probability, severity, and mitigation strategies.',pt:'Matriz de riscos com probabilidade, severidade e estratégias de mitigação.',es:'Matriz de riesgos con probabilidad, severidad y estrategias de mitigación.'}},
+    {icon:'🧩',title:'Lean Canvas',cmd:{en:'Create Lean Canvas for [product]',pt:'Criar Lean Canvas para [produto]',es:'Crear Lean Canvas para [producto]'},desc:{en:'9-section strategy canvas: problem, solution, metrics, advantage.',pt:'Canvas estratégico de 9 seções: problema, solução, métricas, vantagem.',es:'Canvas estratégico de 9 secciones: problema, solución, métricas, ventaja.'}},
+    {icon:'🗺️',title:'Roadmap',cmd:{en:'Create roadmap for [quarter]',pt:'Criar roadmap para [trimestre]',es:'Crear roadmap para [trimestre]'},desc:{en:'Quarterly strategic plan with themes, milestones, and dependencies.',pt:'Plano estratégico trimestral com temas, marcos e dependências.',es:'Plan estratégico trimestral con temas, hitos y dependencias.'}},
+    {icon:'🏗️',title:'Epic Plan',cmd:{en:'Generate epic plan for [feature]',pt:'Gerar plano de epic para [feature]',es:'Generar plan de epic para [feature]'},desc:{en:'Epic structure with sub-epics, scope, and delivery phases.',pt:'Estrutura de epic com sub-epics, escopo e fases de entrega.',es:'Estructura de epic con sub-epics, alcance y fases de entrega.'}},
+    {icon:'💰',title:'KPI-Revenue',cmd:{en:'Connect KPIs to revenue',pt:'Conectar KPIs à receita',es:'Conectar KPIs a ingresos'},desc:{en:'Link product metrics to business outcomes with North Star mapping.',pt:'Conecte métricas de produto a resultados de negócio com mapeamento North Star.',es:'Conecta métricas de producto a resultados de negocio con mapeo North Star.'}},
+    {icon:'📢',title:'Status Update',cmd:{en:'Generate status update',pt:'Gerar status update',es:'Generar status update'},desc:{en:'Executive communication for stakeholders — progress, blockers, asks.',pt:'Comunicação executiva para stakeholders — progresso, bloqueios, pedidos.',es:'Comunicación ejecutiva para stakeholders — progreso, bloqueos, pedidos.'}},
+    {icon:'🎭',title:'Personas',cmd:{en:'Create personas for [segment]',pt:'Criar personas para [segmento]',es:'Crear personas para [segmento]'},desc:{en:'Ideal + Skeptical personas with goals, frustrations, and behaviors.',pt:'Personas Ideal + Cética com objetivos, frustrações e comportamentos.',es:'Personas Ideal + Escéptica con objetivos, frustraciones y comportamientos.'}},
+    {icon:'🎯',title:{en:'Positioning',pt:'Posicionamento',es:'Posicionamiento'},cmd:{en:'Create elevator pitch',pt:'Criar elevator pitch',es:'Crear elevator pitch'},desc:{en:'Product positioning statement and JTBD-based pitch.',pt:'Declaração de posicionamento de produto e pitch baseado em JTBD.',es:'Declaración de posicionamiento de producto y pitch basado en JTBD.'}},
+    {icon:'🛤️',title:{en:'User Journey',pt:'Jornada do Usuário',es:'Viaje del Usuario'},cmd:{en:'Map user journey for [flow]',pt:'Mapear jornada do usuário para [fluxo]',es:'Mapear viaje del usuario para [flujo]'},desc:{en:'End-to-end journey map with touchpoints, emotions, and opportunities.',pt:'Mapa de jornada ponta a ponta com touchpoints, emoções e oportunidades.',es:'Mapa de viaje de punta a punta con touchpoints, emociones y oportunidades.'}},
+    {icon:'📖',title:{en:'Feature Docs',pt:'Doc de Feature',es:'Doc de Feature'},cmd:{en:'Document feature [name]',pt:'Documentar feature [nome]',es:'Documentar feature [nombre]'},desc:{en:'Reverse-engineer documentation from an existing feature.',pt:'Documentação reversa a partir de uma feature existente.',es:'Documentación inversa a partir de una feature existente.'}},
   ]},
-  reviewers:{label:'Reviewers',count:6,items:[
-    {icon:'⚙️',title:'Engineer',name:'Staff Engineer perspective',cmd:'Review as engineer',desc:'Technical feasibility, edge cases, scalability, and implementation complexity.'},
-    {icon:'📈',title:'Executive',name:'VP Product perspective',cmd:'Review as executive',desc:'Strategic alignment, ROI, resource justification, and market positioning.'},
-    {icon:'🔬',title:'User Researcher',name:'Sr. UX Researcher perspective',cmd:'Review as user researcher',desc:'User need validation, adoption risks, usability, and research gaps.'},
-    {icon:'📉',title:'Data Analyst',name:'Sr. Data Analyst perspective',cmd:'Review as data analyst',desc:'Metrics definition, experiment design, data feasibility, and measurement plans.'},
-    {icon:'🛒',title:'Customer',name:'Multiple user personas',cmd:'Review as customer',desc:'Value clarity and ease of use from the perspective of your product\'s end users.'},
-    {icon:'🤝',title:'Customer Success',name:'CS Team Lead',cmd:'Review as customer success',desc:'Support impact, adoption friction, communication, and customer experience.'},
+  reviewers:{label:{en:'Reviewers',pt:'Revisores',es:'Revisores'},count:6,items:[
+    {icon:'⚙️',title:{en:'Engineer',pt:'Engenheiro',es:'Ingeniero'},name:{en:'Staff Engineer perspective',pt:'Perspectiva de Staff Engineer',es:'Perspectiva de Staff Engineer'},cmd:{en:'Review as engineer',pt:'Revisar como engenheiro',es:'Revisar como ingeniero'},desc:{en:'Technical feasibility, edge cases, scalability, and implementation complexity.',pt:'Viabilidade técnica, casos extremos, escalabilidade e complexidade de implementação.',es:'Viabilidad técnica, casos extremos, escalabilidad y complejidad de implementación.'}},
+    {icon:'📈',title:{en:'Executive',pt:'Executivo',es:'Ejecutivo'},name:{en:'VP Product perspective',pt:'Perspectiva de VP de Produto',es:'Perspectiva de VP de Producto'},cmd:{en:'Review as executive',pt:'Revisar como executivo',es:'Revisar como ejecutivo'},desc:{en:'Strategic alignment, ROI, resource justification, and market positioning.',pt:'Alinhamento estratégico, ROI, justificativa de recursos e posicionamento de mercado.',es:'Alineación estratégica, ROI, justificación de recursos y posicionamiento de mercado.'}},
+    {icon:'🔬',title:{en:'User Researcher',pt:'Pesquisador UX',es:'Investigador UX'},name:{en:'Sr. UX Researcher perspective',pt:'Perspectiva de Sr. UX Researcher',es:'Perspectiva de Sr. UX Researcher'},cmd:{en:'Review as user researcher',pt:'Revisar como pesquisador UX',es:'Revisar como investigador UX'},desc:{en:'User need validation, adoption risks, usability, and research gaps.',pt:'Validação de necessidade do usuário, riscos de adoção, usabilidade e lacunas de pesquisa.',es:'Validación de necesidad del usuario, riesgos de adopción, usabilidad y brechas de investigación.'}},
+    {icon:'📉',title:{en:'Data Analyst',pt:'Analista de Dados',es:'Analista de Datos'},name:{en:'Sr. Data Analyst perspective',pt:'Perspectiva de Sr. Data Analyst',es:'Perspectiva de Sr. Data Analyst'},cmd:{en:'Review as data analyst',pt:'Revisar como analista de dados',es:'Revisar como analista de datos'},desc:{en:'Metrics definition, experiment design, data feasibility, and measurement plans.',pt:'Definição de métricas, design de experimentos, viabilidade de dados e planos de medição.',es:'Definición de métricas, diseño de experimentos, viabilidad de datos y planes de medición.'}},
+    {icon:'🛒',title:{en:'Customer',pt:'Cliente',es:'Cliente'},name:{en:'Multiple user personas',pt:'Múltiplas personas de usuário',es:'Múltiples personas de usuario'},cmd:{en:'Review as customer',pt:'Revisar como cliente',es:'Revisar como cliente'},desc:{en:'Value clarity and ease of use from the perspective of your product\'s end users.',pt:'Clareza de valor e facilidade de uso da perspectiva dos usuários finais do seu produto.',es:'Claridad de valor y facilidad de uso desde la perspectiva de los usuarios finales de tu producto.'}},
+    {icon:'🤝',title:'Customer Success',name:{en:'CS Team Lead',pt:'Líder de CS',es:'Líder de CS'},cmd:{en:'Review as customer success',pt:'Revisar como customer success',es:'Revisar como customer success'},desc:{en:'Support impact, adoption friction, communication, and customer experience.',pt:'Impacto no suporte, fricção de adoção, comunicação e experiência do cliente.',es:'Impacto en soporte, fricción de adopción, comunicación y experiencia del cliente.'}},
   ]},
   skills:{label:'Skills',count:8,items:[
-    {icon:'☀️',title:'Morning Briefing',cmd:'Morning briefing',desc:'Pulls calendar, meetings, tracker, commitments. Generates Today\'s Three priorities.',meta:'Daily — start of day'},
-    {icon:'🌅',title:'Daily Review',cmd:'Daily review',desc:'Compares planned vs actual, captures learnings, career evidence prompt, saves session.',meta:'Daily — end of day'},
-    {icon:'📊',title:'Weekly Review',cmd:'Weekly review',desc:'Synthesizes the week, evaluates quarter progress, suggests next week\'s Top 3.',meta:'Friday'},
-    {icon:'📝',title:'Meeting Notes',cmd:'Process meeting notes',desc:'Extracts decisions, action items with IDs, updates person pages and commitments.',meta:'After any meeting'},
-    {icon:'🎯',title:'Meeting Prep',cmd:'Prep for meeting with [Name]',desc:'Loads person context, surfaces open commitments, reviews recent interactions, and suggests talking points.',meta:'Before meetings'},
-    {icon:'🔍',title:'Competitor Analysis',cmd:'Analyze competitor [name]',desc:'Web research, feature matrix, battlecard, and strategic implications.',meta:'As needed'},
-    {icon:'📐',title:'Metrics Analyzer',cmd:'Analyze metrics impact of [feature]',desc:'Impact estimation, experiment design, and measurement plan.',meta:'Per feature'},
-    {icon:'🔗',title:'Atlassian Helper',cmd:'Export to Confluence / Create Jira tickets',desc:'Convert documents to Confluence wiki markup or structured Jira epics.',meta:'As needed'},
+    {icon:'☀️',title:{en:'Morning Briefing',pt:'Briefing Matinal',es:'Briefing Matinal'},cmd:{en:'Morning briefing',pt:'Briefing matinal',es:'Briefing matinal'},desc:{en:'Pulls calendar, meetings, tracker, commitments. Generates Today\'s Three priorities.',pt:'Puxa calendário, reuniões, tracker, compromissos. Gera as Três Prioridades do dia.',es:'Carga calendario, reuniones, tracker, compromisos. Genera las Tres Prioridades del día.'},meta:{en:'Daily — start of day',pt:'Diário — início do dia',es:'Diario — inicio del día'}},
+    {icon:'🌅',title:{en:'Daily Review',pt:'Revisão Diária',es:'Revisión Diaria'},cmd:{en:'Daily review',pt:'Revisão diária',es:'Revisión diaria'},desc:{en:'Compares planned vs actual, captures learnings, career evidence prompt, saves session.',pt:'Compara planejado vs realizado, captura aprendizados, prompt de evidência de carreira, salva sessão.',es:'Compara planeado vs real, captura aprendizajes, prompt de evidencia de carrera, guarda sesión.'},meta:{en:'Daily — end of day',pt:'Diário — fim do dia',es:'Diario — fin del día'}},
+    {icon:'📊',title:{en:'Weekly Review',pt:'Revisão Semanal',es:'Revisión Semanal'},cmd:{en:'Weekly review',pt:'Revisão semanal',es:'Revisión semanal'},desc:{en:'Synthesizes the week, evaluates quarter progress, suggests next week\'s Top 3.',pt:'Sintetiza a semana, avalia progresso do trimestre, sugere Top 3 da próxima semana.',es:'Sintetiza la semana, evalúa progreso del trimestre, sugiere Top 3 de la próxima semana.'},meta:{en:'Friday',pt:'Sexta-feira',es:'Viernes'}},
+    {icon:'📝',title:{en:'Meeting Notes',pt:'Notas de Reunião',es:'Notas de Reunión'},cmd:{en:'Process meeting notes',pt:'Processar notas de reunião',es:'Procesar notas de reunión'},desc:{en:'Extracts decisions, action items with IDs, updates person pages and commitments.',pt:'Extrai decisões, itens de ação com IDs, atualiza páginas de pessoas e compromissos.',es:'Extrae decisiones, ítems de acción con IDs, actualiza páginas de personas y compromisos.'},meta:{en:'After any meeting',pt:'Após qualquer reunião',es:'Después de cualquier reunión'}},
+    {icon:'🎯',title:{en:'Meeting Prep',pt:'Preparação de Reunião',es:'Preparación de Reunión'},cmd:{en:'Prep for meeting with [Name]',pt:'Preparar reunião com [Nome]',es:'Preparar reunión con [Nombre]'},desc:{en:'Loads person context, surfaces open commitments, reviews recent interactions, and suggests talking points.',pt:'Carrega contexto da pessoa, mostra compromissos abertos, revisa interações recentes e sugere pontos de discussão.',es:'Carga contexto de la persona, muestra compromisos abiertos, revisa interacciones recientes y sugiere puntos de discusión.'},meta:{en:'Before meetings',pt:'Antes de reuniões',es:'Antes de reuniones'}},
+    {icon:'🔍',title:{en:'Competitor Analysis',pt:'Análise de Concorrentes',es:'Análisis de Competencia'},cmd:{en:'Analyze competitor [name]',pt:'Analisar concorrente [nome]',es:'Analizar competidor [nombre]'},desc:{en:'Web research, feature matrix, battlecard, and strategic implications.',pt:'Pesquisa web, matriz de features, battlecard e implicações estratégicas.',es:'Investigación web, matriz de features, battlecard e implicaciones estratégicas.'},meta:{en:'As needed',pt:'Sob demanda',es:'Según necesidad'}},
+    {icon:'📐',title:{en:'Metrics Analyzer',pt:'Analisador de Métricas',es:'Analizador de Métricas'},cmd:{en:'Analyze metrics impact of [feature]',pt:'Analisar impacto de métricas de [feature]',es:'Analizar impacto de métricas de [feature]'},desc:{en:'Impact estimation, experiment design, and measurement plan.',pt:'Estimativa de impacto, design de experimento e plano de medição.',es:'Estimación de impacto, diseño de experimento y plan de medición.'},meta:{en:'Per feature',pt:'Por feature',es:'Por feature'}},
+    {icon:'🔗',title:{en:'Atlassian Helper',pt:'Assistente Atlassian',es:'Asistente Atlassian'},cmd:{en:'Export to Confluence / Create Jira tickets',pt:'Exportar para Confluence / Criar tickets no Jira',es:'Exportar a Confluence / Crear tickets en Jira'},desc:{en:'Convert documents to Confluence wiki markup or structured Jira epics.',pt:'Converta documentos para markup wiki do Confluence ou epics estruturados no Jira.',es:'Convierte documentos a markup wiki de Confluence o epics estructurados en Jira.'},meta:{en:'As needed',pt:'Sob demanda',es:'Según necesidad'}},
   ]},
   frameworks:{label:'Frameworks',count:6,items:[
-    {icon:'🧭',title:'Rumelt Strategy Kernel',cmd:'Apply Rumelt framework',desc:'Diagnose strategic problems, define guiding policy, plan coherent actions.'},
-    {icon:'💎',title:'Gibson Biddle DHM',cmd:'Apply DHM framework',desc:'Prioritize by Delight, Hard-to-copy, and Margin-enhancing dimensions.'},
-    {icon:'😈',title:'Devil\'s Advocate',cmd:'Stress-test this strategy',desc:'Challenge assumptions, identify blind spots, surface hidden risks.'},
-    {icon:'📏',title:'Impact Estimation',cmd:'Estimate impact of [feature]',desc:'Quantify expected impact with users × rate × lift × value formula.'},
-    {icon:'⚖️',title:'SWOT Analysis',cmd:'SWOT analysis for [product]',desc:'Map strengths, weaknesses, opportunities, and threats.'},
-    {icon:'🎤',title:'Presentation Best Practices',cmd:'Help with presentation',desc:'Action titles, storytelling structure, and slide design patterns.'},
+    {icon:'🧭',title:'Rumelt Strategy Kernel',cmd:{en:'Apply Rumelt framework',pt:'Aplicar framework Rumelt',es:'Aplicar framework Rumelt'},desc:{en:'Diagnose strategic problems, define guiding policy, plan coherent actions.',pt:'Diagnosticar problemas estratégicos, definir política guia, planejar ações coerentes.',es:'Diagnosticar problemas estratégicos, definir política guía, planear acciones coherentes.'}},
+    {icon:'💎',title:'Gibson Biddle DHM',cmd:{en:'Apply DHM framework',pt:'Aplicar framework DHM',es:'Aplicar framework DHM'},desc:{en:'Prioritize by Delight, Hard-to-copy, and Margin-enhancing dimensions.',pt:'Priorizar por dimensões de Encantamento, Difícil de copiar e Melhoria de margem.',es:'Priorizar por dimensiones de Deleite, Difícil de copiar y Mejora de margen.'}},
+    {icon:'😈',title:{en:'Devil\'s Advocate',pt:'Advogado do Diabo',es:'Abogado del Diablo'},cmd:{en:'Stress-test this strategy',pt:'Stress-test desta estratégia',es:'Stress-test de esta estrategia'},desc:{en:'Challenge assumptions, identify blind spots, surface hidden risks.',pt:'Desafiar suposições, identificar pontos cegos, revelar riscos ocultos.',es:'Desafiar suposiciones, identificar puntos ciegos, revelar riesgos ocultos.'}},
+    {icon:'📏',title:{en:'Impact Estimation',pt:'Estimativa de Impacto',es:'Estimación de Impacto'},cmd:{en:'Estimate impact of [feature]',pt:'Estimar impacto de [feature]',es:'Estimar impacto de [feature]'},desc:{en:'Quantify expected impact with users × rate × lift × value formula.',pt:'Quantifique o impacto esperado com a fórmula usuários × taxa × lift × valor.',es:'Cuantifica el impacto esperado con la fórmula usuarios × tasa × lift × valor.'}},
+    {icon:'⚖️',title:{en:'SWOT Analysis',pt:'Análise SWOT',es:'Análisis SWOT'},cmd:{en:'SWOT analysis for [product]',pt:'Análise SWOT para [produto]',es:'Análisis SWOT para [producto]'},desc:{en:'Map strengths, weaknesses, opportunities, and threats.',pt:'Mapeie forças, fraquezas, oportunidades e ameaças.',es:'Mapea fortalezas, debilidades, oportunidades y amenazas.'}},
+    {icon:'🎤',title:{en:'Presentation Best Practices',pt:'Boas Práticas de Apresentação',es:'Buenas Prácticas de Presentación'},cmd:{en:'Help with presentation',pt:'Ajudar com apresentação',es:'Ayudar con presentación'},desc:{en:'Action titles, storytelling structure, and slide design patterns.',pt:'Títulos de ação, estrutura de storytelling e padrões de design de slides.',es:'Títulos de acción, estructura de storytelling y patrones de diseño de slides.'}},
   ]},
 };
 
-/* Render toolkit tabs and panels */
-const tabsBar=document.getElementById('toolkit-tabs');
-const panelsDiv=document.getElementById('toolkit-panels');
-let firstTab=true;
-for(const[key,data] of Object.entries(toolkitData)){
-  const btn=document.createElement('button');
-  btn.className='tab-btn'+(firstTab?' active':'');
-  btn.dataset.tab=key;
-  btn.innerHTML=`${data.label}<span class="tab-count">${data.count}</span>`;
-  btn.onclick=()=>{
-    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('panel-'+key).classList.add('active');
-  };
-  tabsBar.appendChild(btn);
+/* ── DATA: TIMELINE (with i18n) ── */
+const tlData=[
+  {icon:'☀️',label:{en:'Morning',pt:'Manhã',es:'Mañana'},time:{en:'Start of day',pt:'Início do dia',es:'Inicio del día'},title:{en:'Morning Briefing',pt:'Briefing Matinal',es:'Briefing Matinal'},desc:{en:'Begin your day with full context — no more 30 minutes of reconstruction.',pt:'Comece seu dia com contexto completo — sem mais 30 minutos de reconstrução.',es:'Comienza tu día con contexto completo — sin más 30 minutos de reconstrucción.'},items:{en:['Calendar and meeting prep loaded','Initiative and project status pulled','Stale commitments flagged (>3 days without update)','Today\'s Three priorities suggested (max 3 P1)','Session context restored from yesterday'],pt:['Calendário e preparação de reuniões carregados','Status de iniciativas e projetos puxados','Compromissos atrasados sinalizados (>3 dias sem atualização)','Três Prioridades do dia sugeridas (máx 3 P1)','Contexto de sessão restaurado de ontem'],es:['Calendario y preparación de reuniones cargados','Estado de iniciativas y proyectos cargados','Compromisos atrasados señalados (>3 días sin actualización)','Tres Prioridades del día sugeridas (máx 3 P1)','Contexto de sesión restaurado de ayer']}},
+  {icon:'📝',label:{en:'During Day',pt:'Durante o Dia',es:'Durante el Día'},time:{en:'Working hours',pt:'Horário de trabalho',es:'Horario de trabajo'},title:{en:'Documents, Reviews & Meetings',pt:'Documentos, Revisões e Reuniões',es:'Documentos, Revisiones y Reuniones'},desc:{en:'Generate and refine documents. Process meetings as they happen.',pt:'Gere e refine documentos. Processe reuniões conforme acontecem.',es:'Genera y refina documentos. Procesa reuniones conforme suceden.'},items:{en:['Create PRDs, One-Pagers, specs with full context','Run multi-perspective reviews (6 personas)','Process meeting notes → auto-update person pages','Track commitments with unique IDs','Use frameworks for strategic decisions'],pt:['Crie PRDs, One-Pagers, specs com contexto completo','Execute revisões multi-perspectiva (6 personas)','Processe notas de reunião → atualização automática de páginas de pessoas','Rastreie compromissos com IDs únicos','Use frameworks para decisões estratégicas'],es:['Crea PRDs, One-Pagers, specs con contexto completo','Ejecuta revisiones multi-perspectiva (6 personas)','Procesa notas de reunión → actualización automática de páginas de personas','Rastrea compromisos con IDs únicos','Usa frameworks para decisiones estratégicas']}},
+  {icon:'🌅',label:{en:'End of Day',pt:'Fim do Dia',es:'Fin del Día'},time:{en:'Before closing',pt:'Antes de fechar',es:'Antes de cerrar'},title:{en:'Daily Review',pt:'Revisão Diária',es:'Revisión Diaria'},desc:{en:'Reflect on what happened. Capture learnings and prep tomorrow.',pt:'Reflita sobre o que aconteceu. Capture aprendizados e prepare amanhã.',es:'Reflexiona sobre lo que pasó. Captura aprendizajes y prepara mañana.'},items:{en:['Compare planned vs actual (Today\'s Three)','Capture learnings and preferences','Career evidence prompt for significant work','Session context saved for tomorrow','Stale tasks and commitments flagged'],pt:['Compare planejado vs realizado (Três do Dia)','Capture aprendizados e preferências','Prompt de evidência de carreira para trabalho significativo','Contexto de sessão salvo para amanhã','Tarefas e compromissos atrasados sinalizados'],es:['Compara planeado vs real (Tres del Día)','Captura aprendizajes y preferencias','Prompt de evidencia de carrera para trabajo significativo','Contexto de sesión guardado para mañana','Tareas y compromisos atrasados señalados']}},
+  {icon:'📊',label:{en:'Friday',pt:'Sexta',es:'Viernes'},time:{en:'End of week',pt:'Fim da semana',es:'Fin de semana'},title:{en:'Weekly Review',pt:'Revisão Semanal',es:'Revisión Semanal'},desc:{en:'Synthesize the week. Set up next week for success.',pt:'Sintetize a semana. Prepare a próxima semana para o sucesso.',es:'Sintetiza la semana. Prepara la próxima semana para el éxito.'},items:{en:['Week synthesis with patterns identified','Quarter progress evaluation','Top 3 priorities for next week suggested','Toolkit improvements surfaced from backlog','Unused skill recommendation (feature discovery)'],pt:['Síntese da semana com padrões identificados','Avaliação de progresso do trimestre','Top 3 prioridades para a próxima semana sugeridas','Melhorias do toolkit trazidas do backlog','Recomendação de skill não utilizada (descoberta de features)'],es:['Síntesis de la semana con patrones identificados','Evaluación de progreso del trimestre','Top 3 prioridades para la próxima semana sugeridas','Mejoras del toolkit traídas del backlog','Recomendación de skill no utilizada (descubrimiento de features)']}},
+];
 
-  const panel=document.createElement('div');
-  panel.className='tab-panel'+(firstTab?' active':'');
-  panel.id='panel-'+key;
+/* ── DATA: COMMANDS (with i18n) ── */
+const commands=[
+  {cat:{en:'Documents',pt:'Documentos',es:'Documentos'},cmd:{en:'Create PRD for [feature]',pt:'Criar PRD para [feature]',es:'Crear PRD para [feature]'},desc:{en:'Full PRD with 15 sections',pt:'PRD completo com 15 seções',es:'PRD completo con 15 secciones'}},
+  {cat:{en:'Documents',pt:'Documentos',es:'Documentos'},cmd:{en:'Generate One-Pager for [feature]',pt:'Gerar One-Pager para [feature]',es:'Generar One-Pager para [feature]'},desc:{en:'Strategic validation document',pt:'Documento de validação estratégica',es:'Documento de validación estratégica'}},
+  {cat:{en:'Documents',pt:'Documentos',es:'Documentos'},cmd:{en:'Generate Spec for [feature]',pt:'Gerar Spec para [feature]',es:'Generar Spec para [feature]'},desc:{en:'Detailed requirements specification',pt:'Especificação detalhada de requisitos',es:'Especificación detallada de requisitos'}},
+  {cat:{en:'Documents',pt:'Documentos',es:'Documentos'},cmd:{en:'Write user stories for [feature]',pt:'Escrever user stories para [feature]',es:'Escribir user stories para [feature]'},desc:{en:'User stories + Gherkin acceptance criteria',pt:'User stories + critérios de aceitação Gherkin',es:'User stories + criterios de aceptación Gherkin'}},
+  {cat:{en:'Documents',pt:'Documentos',es:'Documentos'},cmd:{en:'Process research input about [topic]',pt:'Processar input de pesquisa sobre [tópico]',es:'Procesar input de investigación sobre [tema]'},desc:{en:'Synthesize raw research data',pt:'Sintetizar dados brutos de pesquisa',es:'Sintetizar datos brutos de investigación'}},
+  {cat:{en:'Documents',pt:'Documentos',es:'Documentos'},cmd:{en:'Document feature [name]',pt:'Documentar feature [nome]',es:'Documentar feature [nombre]'},desc:{en:'Reverse-engineer feature documentation',pt:'Documentação reversa de feature',es:'Documentación inversa de feature'}},
+  {cat:{en:'Strategy',pt:'Estratégia',es:'Estrategia'},cmd:{en:'Create roadmap for [quarter]',pt:'Criar roadmap para [trimestre]',es:'Crear roadmap para [trimestre]'},desc:{en:'Quarterly strategic plan',pt:'Plano estratégico trimestral',es:'Plan estratégico trimestral'}},
+  {cat:{en:'Strategy',pt:'Estratégia',es:'Estrategia'},cmd:{en:'Create Lean Canvas for [product]',pt:'Criar Lean Canvas para [produto]',es:'Crear Lean Canvas para [producto]'},desc:{en:'9-section strategy canvas',pt:'Canvas estratégico de 9 seções',es:'Canvas estratégico de 9 secciones'}},
+  {cat:{en:'Strategy',pt:'Estratégia',es:'Estrategia'},cmd:{en:'Create personas for [segment]',pt:'Criar personas para [segmento]',es:'Crear personas para [segmento]'},desc:{en:'Ideal + Skeptical personas',pt:'Personas Ideal + Cética',es:'Personas Ideal + Escéptica'}},
+  {cat:{en:'Strategy',pt:'Estratégia',es:'Estrategia'},cmd:{en:'Create elevator pitch',pt:'Criar elevator pitch',es:'Crear elevator pitch'},desc:{en:'Positioning + JTBD pitch',pt:'Posicionamento + pitch JTBD',es:'Posicionamiento + pitch JTBD'}},
+  {cat:{en:'Strategy',pt:'Estratégia',es:'Estrategia'},cmd:{en:'Map user journey for [flow]',pt:'Mapear jornada do usuário para [fluxo]',es:'Mapear viaje del usuario para [flujo]'},desc:{en:'End-to-end journey map',pt:'Mapa de jornada ponta a ponta',es:'Mapa de viaje de punta a punta'}},
+  {cat:{en:'Strategy',pt:'Estratégia',es:'Estrategia'},cmd:{en:'Generate epic plan for [feature]',pt:'Gerar plano de epic para [feature]',es:'Generar plan de epic para [feature]'},desc:{en:'Epic structure with sub-epics',pt:'Estrutura de epic com sub-epics',es:'Estructura de epic con sub-epics'}},
+  {cat:{en:'Strategy',pt:'Estratégia',es:'Estrategia'},cmd:{en:'Connect KPIs to revenue',pt:'Conectar KPIs à receita',es:'Conectar KPIs a ingresos'},desc:{en:'KPI-revenue linkage + North Star',pt:'Conexão KPI-receita + North Star',es:'Conexión KPI-ingresos + North Star'}},
+  {cat:{en:'Analysis',pt:'Análise',es:'Análisis'},cmd:{en:'Prioritize using RICE',pt:'Priorizar usando RICE',es:'Priorizar usando RICE'},desc:{en:'RICE scoring with recommendations',pt:'Pontuação RICE com recomendações',es:'Puntuación RICE con recomendaciones'}},
+  {cat:{en:'Analysis',pt:'Análise',es:'Análisis'},cmd:{en:'Analyze risks of [feature]',pt:'Analisar riscos de [feature]',es:'Analizar riesgos de [feature]'},desc:{en:'Risk matrix with mitigations',pt:'Matriz de riscos com mitigações',es:'Matriz de riesgos con mitigaciones'}},
+  {cat:{en:'Analysis',pt:'Análise',es:'Análisis'},cmd:{en:'Analyze metrics impact of [feature]',pt:'Analisar impacto de métricas de [feature]',es:'Analizar impacto de métricas de [feature]'},desc:{en:'Metrics impact + experiment design',pt:'Impacto em métricas + design de experimento',es:'Impacto en métricas + diseño de experimento'}},
+  {cat:{en:'Analysis',pt:'Análise',es:'Análisis'},cmd:{en:'Analyze competitor [name]',pt:'Analisar concorrente [nome]',es:'Analizar competidor [nombre]'},desc:{en:'Full competitive analysis + battlecard',pt:'Análise competitiva completa + battlecard',es:'Análisis competitivo completo + battlecard'}},
+  {cat:{en:'Analysis',pt:'Análise',es:'Análisis'},cmd:{en:'Estimate impact of [feature]',pt:'Estimar impacto de [feature]',es:'Estimar impacto de [feature]'},desc:{en:'Quantify expected feature impact',pt:'Quantificar impacto esperado da feature',es:'Cuantificar impacto esperado de la feature'}},
+  {cat:{en:'Analysis',pt:'Análise',es:'Análisis'},cmd:{en:'SWOT analysis for [product]',pt:'Análise SWOT para [produto]',es:'Análisis SWOT para [producto]'},desc:{en:'Strengths, weaknesses, opportunities, threats',pt:'Forças, fraquezas, oportunidades, ameaças',es:'Fortalezas, debilidades, oportunidades, amenazas'}},
+  {cat:{en:'Reviews',pt:'Revisões',es:'Revisiones'},cmd:{en:'Review as engineer',pt:'Revisar como engenheiro',es:'Revisar como ingeniero'},desc:{en:'Technical feasibility, edge cases, scalability',pt:'Viabilidade técnica, casos extremos, escalabilidade',es:'Viabilidad técnica, casos extremos, escalabilidad'}},
+  {cat:{en:'Reviews',pt:'Revisões',es:'Revisiones'},cmd:{en:'Review as executive',pt:'Revisar como executivo',es:'Revisar como ejecutivo'},desc:{en:'Strategic alignment, ROI, resource justification',pt:'Alinhamento estratégico, ROI, justificativa de recursos',es:'Alineación estratégica, ROI, justificación de recursos'}},
+  {cat:{en:'Reviews',pt:'Revisões',es:'Revisiones'},cmd:{en:'Review as user researcher',pt:'Revisar como pesquisador UX',es:'Revisar como investigador UX'},desc:{en:'User need validation, adoption risks',pt:'Validação de necessidade, riscos de adoção',es:'Validación de necesidad, riesgos de adopción'}},
+  {cat:{en:'Reviews',pt:'Revisões',es:'Revisiones'},cmd:{en:'Review as data analyst',pt:'Revisar como analista de dados',es:'Revisar como analista de datos'},desc:{en:'Metrics definition, experiment design',pt:'Definição de métricas, design de experimento',es:'Definición de métricas, diseño de experimento'}},
+  {cat:{en:'Reviews',pt:'Revisões',es:'Revisiones'},cmd:{en:'Review as customer',pt:'Revisar como cliente',es:'Revisar como cliente'},desc:{en:'Value clarity from your user personas',pt:'Clareza de valor das personas de usuário',es:'Claridad de valor de las personas de usuario'}},
+  {cat:{en:'Reviews',pt:'Revisões',es:'Revisiones'},cmd:{en:'Review as customer success',pt:'Revisar como customer success',es:'Revisar como customer success'},desc:{en:'Support impact, adoption, customer experience',pt:'Impacto no suporte, adoção, experiência do cliente',es:'Impacto en soporte, adopción, experiencia del cliente'}},
+  {cat:{en:'Reviews',pt:'Revisões',es:'Revisiones'},cmd:{en:'Full document review',pt:'Revisão completa do documento',es:'Revisión completa del documento'},desc:{en:'All 6 perspectives + consolidated feedback',pt:'Todas as 6 perspectivas + feedback consolidado',es:'Las 6 perspectivas + feedback consolidado'}},
+  {cat:'Workflow',cmd:{en:'Morning briefing',pt:'Briefing matinal',es:'Briefing matinal'},desc:{en:'Full daily briefing with Today\'s Three',pt:'Briefing diário completo com as Três do Dia',es:'Briefing diario completo con las Tres del Día'}},
+  {cat:'Workflow',cmd:{en:'Daily review',pt:'Revisão diária',es:'Revisión diaria'},desc:{en:'End-of-day reflection + learnings capture',pt:'Reflexão de fim de dia + captura de aprendizados',es:'Reflexión de fin de día + captura de aprendizajes'}},
+  {cat:'Workflow',cmd:{en:'Weekly review',pt:'Revisão semanal',es:'Revisión semanal'},desc:{en:'Week synthesis + next week\'s priorities',pt:'Síntese da semana + prioridades da próxima semana',es:'Síntesis de la semana + prioridades de la próxima semana'}},
+  {cat:'Workflow',cmd:{en:'Process meeting notes',pt:'Processar notas de reunião',es:'Procesar notas de reunión'},desc:{en:'Extract decisions, action items, update person pages',pt:'Extrair decisões, itens de ação, atualizar páginas de pessoas',es:'Extraer decisiones, ítems de acción, actualizar páginas de personas'}},
+  {cat:'Workflow',cmd:{en:'Prep for meeting with [Name]',pt:'Preparar reunião com [Nome]',es:'Preparar reunión con [Nombre]'},desc:{en:'Load person context, open items, and talking points',pt:'Carregar contexto da pessoa, itens abertos e pontos de discussão',es:'Cargar contexto de la persona, ítems abiertos y puntos de discusión'}},
+  {cat:'Workflow',cmd:{en:'Brief me for [meeting]',pt:'Me preparar para [reunião]',es:'Prepararme para [reunión]'},desc:{en:'Full meeting prep with relationship context',pt:'Preparação completa com contexto de relacionamento',es:'Preparación completa con contexto de relación'}},
+  {cat:'Workflow',cmd:{en:'Career review',pt:'Revisão de carreira',es:'Revisión de carrera'},desc:{en:'Synthesize career evidence for self-reviews',pt:'Sintetizar evidências de carreira para auto-avaliação',es:'Sintetizar evidencias de carrera para autoevaluación'}},
+  {cat:{en:'Planning',pt:'Planejamento',es:'Planificación'},cmd:{en:'Show my to-do\'s',pt:'Mostrar meus to-dos',es:'Mostrar mis tareas'},desc:{en:'List P1 and P2 pending tasks',pt:'Listar tarefas P1 e P2 pendentes',es:'Listar tareas P1 y P2 pendientes'}},
+  {cat:{en:'Planning',pt:'Planejamento',es:'Planificación'},cmd:{en:'Add task: [description]',pt:'Adicionar tarefa: [descrição]',es:'Agregar tarea: [descripción]'},desc:{en:'Add new task with auto-inferred priority',pt:'Adicionar nova tarefa com prioridade inferida automaticamente',es:'Agregar nueva tarea con prioridad inferida automáticamente'}},
+  {cat:{en:'Planning',pt:'Planejamento',es:'Planificación'},cmd:{en:'Complete task [title]',pt:'Concluir tarefa [título]',es:'Completar tarea [título]'},desc:{en:'Mark task done and move to completed',pt:'Marcar tarefa como feita e mover para concluídas',es:'Marcar tarea como hecha y mover a completadas'}},
+  {cat:{en:'Planning',pt:'Planejamento',es:'Planificación'},cmd:{en:'Show initiative progress',pt:'Mostrar progresso de iniciativas',es:'Mostrar progreso de iniciativas'},desc:{en:'Current status of all initiatives',pt:'Status atual de todas as iniciativas',es:'Estado actual de todas las iniciativas'}},
+  {cat:{en:'Planning',pt:'Planejamento',es:'Planificación'},cmd:{en:'Generate status update',pt:'Gerar status update',es:'Generar status update'},desc:{en:'Executive communication for stakeholders',pt:'Comunicação executiva para stakeholders',es:'Comunicación ejecutiva para stakeholders'}},
+  {cat:{en:'Planning',pt:'Planejamento',es:'Planificación'},cmd:{en:'Quarter summary',pt:'Resumo do trimestre',es:'Resumen del trimestre'},desc:{en:'Quarter-level progress from quarter-goals.md',pt:'Progresso trimestral de quarter-goals.md',es:'Progreso trimestral de quarter-goals.md'}},
+  {cat:{en:'Planning',pt:'Planejamento',es:'Planificación'},cmd:{en:'Assumptions',pt:'Suposições',es:'Suposiciones'},desc:{en:'Read or update strategic assumptions',pt:'Ler ou atualizar suposições estratégicas',es:'Leer o actualizar suposiciones estratégicas'}},
+  {cat:{en:'People',pt:'Pessoas',es:'Personas'},cmd:{en:'Who is [name]?',pt:'Quem é [nome]?',es:'¿Quién es [nombre]?'},desc:{en:'Show person page with history and open items',pt:'Mostrar página da pessoa com histórico e itens abertos',es:'Mostrar página de la persona con historial e ítems abiertos'}},
+  {cat:{en:'People',pt:'Pessoas',es:'Personas'},cmd:{en:'Create person page for [name]',pt:'Criar página de pessoa para [nome]',es:'Crear página de persona para [nombre]'},desc:{en:'Create stakeholder page in context/people/',pt:'Criar página de stakeholder em context/people/',es:'Crear página de stakeholder en context/people/'}},
+  {cat:{en:'People',pt:'Pessoas',es:'Personas'},cmd:{en:'What do I owe [name]?',pt:'O que devo para [nome]?',es:'¿Qué le debo a [nombre]?'},desc:{en:'List open commitments for a person',pt:'Listar compromissos abertos para uma pessoa',es:'Listar compromisos abiertos para una persona'}},
+  {cat:{en:'People',pt:'Pessoas',es:'Personas'},cmd:{en:'Prep for meeting with [name]',pt:'Preparar reunião com [nome]',es:'Preparar reunión con [nombre]'},desc:{en:'Load full context for a person',pt:'Carregar contexto completo de uma pessoa',es:'Cargar contexto completo de una persona'}},
+  {cat:'Setup',cmd:'/start',desc:{en:'Run the onboarding wizard',pt:'Executar o assistente de onboarding',es:'Ejecutar el asistente de onboarding'}},
+  {cat:'Setup',cmd:'Level up',desc:{en:'Discover features you haven\'t used yet',pt:'Descobrir features que você ainda não usou',es:'Descubrir features que aún no has usado'}},
+  {cat:'Setup',cmd:'/improve',desc:{en:'Review and rank toolkit improvement ideas',pt:'Revisar e classificar ideias de melhoria do toolkit',es:'Revisar y clasificar ideas de mejora del toolkit'}},
+  {cat:'Setup',cmd:{en:'Help me fill in the product context',pt:'Me ajudar a preencher o contexto do produto',es:'Ayúdame a completar el contexto del producto'},desc:{en:'Context generator wizard',pt:'Assistente gerador de contexto',es:'Asistente generador de contexto'}},
+  {cat:'Setup',cmd:{en:'Show terminology',pt:'Mostrar terminologia',es:'Mostrar terminología'},desc:{en:'Key terms from product glossary',pt:'Termos-chave do glossário do produto',es:'Términos clave del glosario del producto'}},
+  {cat:'Setup',cmd:{en:'Export to Confluence',pt:'Exportar para Confluence',es:'Exportar a Confluence'},desc:{en:'Convert document to Confluence wiki markup',pt:'Converter documento para markup wiki do Confluence',es:'Convertir documento a markup wiki de Confluence'}},
+  {cat:'Setup',cmd:{en:'Create Jira tickets for [feature]',pt:'Criar tickets no Jira para [feature]',es:'Crear tickets en Jira para [feature]'},desc:{en:'Generate Epic + Stories + Tasks',pt:'Gerar Epic + Stories + Tasks',es:'Generar Epic + Stories + Tasks'}},
+];
 
-  if(key==='reviewers'){
-    panel.innerHTML=`<div class="cards-grid cols-2">${data.items.map(i=>`
-      <div class="card"><div class="reviewer-card">
-        <div class="reviewer-avatar">${i.icon}</div>
-        <div class="reviewer-info">
-          <div class="reviewer-name">${i.title}</div>
-          <div class="reviewer-role">${i.name}</div>
-          <div class="card-desc">${i.desc}</div>
-          <div class="card-cmd">${i.cmd}</div>
-        </div>
-      </div></div>`).join('')}</div>`;
-  } else if(key==='skills'){
-    panel.innerHTML=`<div class="cards-grid cols-3">${data.items.map(i=>`
-      <div class="card">
-        <div class="card-icon">${i.icon}</div>
-        <div class="card-title">${i.title}</div>
-        <div class="card-desc">${i.desc}</div>
-        ${i.meta?`<div class="card-meta"><span class="badge badge-teal">${i.meta}</span></div>`:''}
-        <div class="card-cmd">${i.cmd}</div>
-      </div>`).join('')}</div>`;
-  } else {
-    panel.innerHTML=`<div class="cards-grid cols-3">${data.items.map(i=>`
-      <div class="card">
-        <div class="card-icon">${i.icon}</div>
-        <div class="card-title">${i.title}</div>
-        <div class="card-desc">${i.desc}</div>
-        <div class="card-cmd">${i.cmd}</div>
-      </div>`).join('')}</div>`;
-  }
-  panelsDiv.appendChild(panel);
-  firstTab=false;
+/* ── DATA: CHECKLIST (with i18n) ── */
+const checklistCards=[
+  {icon:'🎯',title:{en:'Product Context',pt:'Contexto do Produto',es:'Contexto del Producto'},items:{en:['☐ Product Identity (name, model, differentiator)','☐ Active Domains (missions, statuses)','☐ Working Preferences (language, tone, tools)','☐ Terminology glossary'],pt:['☐ Identidade do Produto (nome, modelo, diferencial)','☐ Domínios Ativos (missões, status)','☐ Preferências de Trabalho (idioma, tom, ferramentas)','☐ Glossário de terminologia'],es:['☐ Identidad del Producto (nombre, modelo, diferencial)','☐ Dominios Activos (misiones, estados)','☐ Preferencias de Trabajo (idioma, tono, herramientas)','☐ Glosario de terminología']},meta:{en:'File: <code>.cursor/rules/product-context.mdc</code>',pt:'Arquivo: <code>.cursor/rules/product-context.mdc</code>',es:'Archivo: <code>.cursor/rules/product-context.mdc</code>'}},
+  {icon:'🧭',title:{en:'Strategic Foundation',pt:'Base Estratégica',es:'Base Estratégica'},items:{en:['☐ Strategic pillars (2-4 themes)','☐ Quarter goals (3-5 outcomes)','☐ Week priorities (Top 3)','☐ Strategic assumptions'],pt:['☐ Pilares estratégicos (2-4 temas)','☐ Metas do trimestre (3-5 resultados)','☐ Prioridades da semana (Top 3)','☐ Suposições estratégicas'],es:['☐ Pilares estratégicos (2-4 temas)','☐ Metas del trimestre (3-5 resultados)','☐ Prioridades de la semana (Top 3)','☐ Suposiciones estratégicas']},meta:{en:'Folder: <code>global-context/shared/</code> &amp; <code>to_do\'s/</code>',pt:'Pasta: <code>global-context/shared/</code> &amp; <code>to_do\'s/</code>',es:'Carpeta: <code>global-context/shared/</code> &amp; <code>to_do\'s/</code>'}},
+  {icon:'🌐',title:{en:'Domain Context',pt:'Contexto de Domínio',es:'Contexto de Dominio'},items:{en:['☐ Domain vision & strategy','☐ Domain KPIs & targets','☐ Current roadmap','☐ Architecture overview'],pt:['☐ Visão e estratégia do domínio','☐ KPIs e metas do domínio','☐ Roadmap atual','☐ Visão geral da arquitetura'],es:['☐ Visión y estrategia del dominio','☐ KPIs y metas del dominio','☐ Roadmap actual','☐ Visión general de la arquitectura']},meta:{en:'Folder: <code>global-context/{domain}/</code>',pt:'Pasta: <code>global-context/{domain}/</code>',es:'Carpeta: <code>global-context/{domain}/</code>'}},
+  {icon:'👥',title:{en:'People & Users',pt:'Pessoas e Usuários',es:'Personas y Usuarios'},items:{en:['☐ Key stakeholder person pages','☐ User personas','☐ Commitment tracking started'],pt:['☐ Páginas de stakeholders-chave','☐ Personas de usuário','☐ Rastreamento de compromissos iniciado'],es:['☐ Páginas de stakeholders clave','☐ Personas de usuario','☐ Seguimiento de compromisos iniciado']},meta:{en:'Folder: <code>context/people/</code>',pt:'Pasta: <code>context/people/</code>',es:'Carpeta: <code>context/people/</code>'}},
+];
+
+/* ── DATA: AFTER SETUP (with i18n) ── */
+const afterSetupCards=[
+  {icon:'📄',title:{en:'After Quick Setup',pt:'Após Setup Rápido',es:'Después del Setup Rápido'},items:{en:['→ Try <code>Create PRD for [feature]</code>','→ Try <code>Review as engineer</code>','→ Fill in domain context when ready','→ Re-run <code>/start</code> for Full setup later'],pt:['→ Experimente <code>Criar PRD para [feature]</code>','→ Experimente <code>Revisar como engenheiro</code>','→ Preencha o contexto de domínio quando estiver pronto','→ Re-execute <code>/start</code> para o Setup Completo depois'],es:['→ Prueba <code>Crear PRD para [feature]</code>','→ Prueba <code>Revisar como ingeniero</code>','→ Completa el contexto de dominio cuando estés listo','→ Re-ejecuta <code>/start</code> para el Setup Completo después']}},
+  {icon:'🔁',title:{en:'After Full Setup',pt:'Após Setup Completo',es:'Después del Setup Completo'},items:{en:['→ Say <code>Morning briefing</code> tomorrow','→ Create person pages for key stakeholders','→ Fill in domain vision & KPIs','→ Set up quarter goals & pillars'],pt:['→ Diga <code>Briefing matinal</code> amanhã','→ Crie páginas de pessoas para stakeholders-chave','→ Preencha visão do domínio e KPIs','→ Configure metas do trimestre e pilares'],es:['→ Di <code>Briefing matinal</code> mañana','→ Crea páginas de personas para stakeholders clave','→ Completa la visión del dominio y KPIs','→ Configura metas del trimestre y pilares']}},
+  {icon:'🔗',title:{en:'After Power Setup',pt:'Após Setup Avançado',es:'Después del Setup Avanzado'},items:{en:['→ Run your first <code>Morning briefing</code>','→ Connect MCPs (Jira, Slack, Calendar)','→ Fill in domain roadmap & architecture','→ Say <code>Level up</code> to discover more'],pt:['→ Execute seu primeiro <code>Briefing matinal</code>','→ Conecte MCPs (Jira, Slack, Calendário)','→ Preencha roadmap e arquitetura do domínio','→ Diga <code>Level up</code> para descobrir mais'],es:['→ Ejecuta tu primer <code>Briefing matinal</code>','→ Conecta MCPs (Jira, Slack, Calendario)','→ Completa el roadmap y arquitectura del dominio','→ Di <code>Level up</code> para descubrir más']}},
+];
+
+/* ── DATA: FILE TREE (with i18n) ── */
+const fileTree = [
+  { name: '.cursor/', icon: '⚙️', children: [
+    { name: 'rules/', icon: '📐', children: [
+      { name: 'product-context.mdc', icon: '📄', tag: 'config', desc: {en:'<strong>Product Context</strong> — the identity file Cadence OS reads before every response. Contains your product name, model, differentiator, active domains, and working preferences.<br><br>This is the single most important file to fill in. It teaches the AI who you are and what you\'re building.',pt:'<strong>Contexto do Produto</strong> — o arquivo de identidade que o Cadence OS lê antes de cada resposta. Contém nome do produto, modelo, diferencial, domínios ativos e preferências de trabalho.<br><br>Este é o arquivo mais importante a preencher. Ele ensina à IA quem você é e o que está construindo.',es:'<strong>Contexto del Producto</strong> — el archivo de identidad que Cadence OS lee antes de cada respuesta. Contiene nombre del producto, modelo, diferencial, dominios activos y preferencias de trabajo.<br><br>Este es el archivo más importante a completar. Le enseña a la IA quién eres y qué estás construyendo.'} },
+      { name: 'cadence-coach.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>Coach</strong> — always-on coaching protocols. After each task, suggests a relevant next step. Captures career insights and workflow improvements automatically.',pt:'<strong>Coach</strong> — protocolos de coaching sempre ativos. Após cada tarefa, sugere um próximo passo relevante. Captura insights de carreira e melhorias de workflow automaticamente.',es:'<strong>Coach</strong> — protocolos de coaching siempre activos. Después de cada tarea, sugiere un próximo paso relevante. Captura insights de carrera y mejoras de workflow automáticamente.'} },
+      { name: 'cadence-workflows.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>Cadence Workflows</strong> — document generation logic. Defines how PRDs, One-Pagers, RICE analyses, and other templates are created, including post-document protocol.',pt:'<strong>Cadence Workflows</strong> — lógica de geração de documentos. Define como PRDs, One-Pagers, análises RICE e outros templates são criados, incluindo protocolo pós-documento.',es:'<strong>Cadence Workflows</strong> — lógica de generación de documentos. Define cómo se crean PRDs, One-Pagers, análisis RICE y otras plantillas, incluyendo protocolo post-documento.'} },
+      { name: 'prd-template.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>PRD Template</strong> — full 15-section Product Requirements Document. Includes problem statement, user stories, success metrics, risks, technical constraints, and more.',pt:'<strong>Template PRD</strong> — documento de requisitos com 15 seções. Inclui problema, user stories, métricas de sucesso, riscos, restrições técnicas e mais.',es:'<strong>Template PRD</strong> — documento de requisitos con 15 secciones. Incluye problema, user stories, métricas de éxito, riesgos, restricciones técnicas y más.'} },
+      { name: 'one-pager-template.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>One-Pager Template</strong> — concise strategic document for initial validation. Used to quickly align stakeholders before investing in a full PRD.',pt:'<strong>Template One-Pager</strong> — documento estratégico conciso para validação inicial. Usado para alinhar stakeholders rapidamente antes de investir em um PRD completo.',es:'<strong>Template One-Pager</strong> — documento estratégico conciso para validación inicial. Usado para alinear stakeholders rápidamente antes de invertir en un PRD completo.'} },
+      { name: 'rice-analysis.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>RICE Analysis</strong> — prioritization framework. Scores features by Reach, Impact, Confidence, and Effort. Generates ranked recommendations.',pt:'<strong>Análise RICE</strong> — framework de priorização. Pontua features por Alcance, Impacto, Confiança e Esforço. Gera recomendações ranqueadas.',es:'<strong>Análisis RICE</strong> — framework de priorización. Puntúa features por Alcance, Impacto, Confianza y Esfuerzo. Genera recomendaciones clasificadas.'} },
+      { name: 'session-protocol.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>Session Protocol</strong> — runs silently on conversation start. Checks for stale tasks (>5 days), stale commitments (>3 days), and whether today\'s briefing was done.',pt:'<strong>Protocolo de Sessão</strong> — executa silenciosamente no início da conversa. Verifica tarefas paradas (>5 dias), compromissos atrasados (>3 dias) e se o briefing de hoje foi feito.',es:'<strong>Protocolo de Sesión</strong> — se ejecuta silenciosamente al inicio de la conversación. Verifica tareas estancadas (>5 días), compromisos atrasados (>3 días) y si el briefing de hoy fue hecho.'} },
+      { name: 'progress-tracker.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>Progress Tracker</strong> — tracks initiative lifecycle through phases: discovery → requirements → development → launch → monitoring.',pt:'<strong>Rastreador de Progresso</strong> — acompanha o ciclo de vida de iniciativas: discovery → requisitos → desenvolvimento → lançamento → monitoramento.',es:'<strong>Rastreador de Progreso</strong> — acompaña el ciclo de vida de iniciativas: discovery → requisitos → desarrollo → lanzamiento → monitoreo.'} },
+      { name: 'todos.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>Task Management</strong> — personal task system with Today\'s Three, P1/P2 priorities, commitment tracking, and natural language triggers.',pt:'<strong>Gestão de Tarefas</strong> — sistema pessoal de tarefas com as Três do Dia, prioridades P1/P2, rastreamento de compromissos e gatilhos em linguagem natural.',es:'<strong>Gestión de Tareas</strong> — sistema personal de tareas con las Tres del Día, prioridades P1/P2, seguimiento de compromisos y disparadores en lenguaje natural.'} },
+      { name: 'lean-prd-template.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>Lean PRD Template</strong> — lightweight 6-section PRD for features that don\'t need the full 15-section treatment.',pt:'<strong>Template PRD Lean</strong> — PRD leve de 6 seções para features que não precisam do tratamento completo de 15 seções.',es:'<strong>Template PRD Lean</strong> — PRD ligero de 6 secciones para features que no necesitan el tratamiento completo de 15 secciones.'} },
+      { name: 'people-context.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>People Context</strong> — auto-injects person page context when stakeholder names are mentioned. Loads role, meeting history, open commitments silently.',pt:'<strong>Contexto de Pessoas</strong> — injeta automaticamente contexto de página de pessoa quando nomes de stakeholders são mencionados. Carrega papel, histórico de reuniões, compromissos abertos silenciosamente.',es:'<strong>Contexto de Personas</strong> — inyecta automáticamente contexto de página de persona cuando se mencionan nombres de stakeholders. Carga rol, historial de reuniones, compromisos abiertos silenciosamente.'} },
+      { name: 'start.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>Onboarding Wizard</strong> — the /start command. Guides new users through workspace orientation, product context setup, and first success moment.',pt:'<strong>Assistente de Onboarding</strong> — o comando /start. Guia novos usuários pela orientação do workspace, setup de contexto do produto e primeiro momento de sucesso.',es:'<strong>Asistente de Onboarding</strong> — el comando /start. Guía nuevos usuarios por la orientación del workspace, setup de contexto del producto y primer momento de éxito.'} },
+      { name: 'formatting-preferences.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>Formatting Preferences</strong> — formatting rules including no blockquotes, neutral Mermaid theme, and diagram conventions.',pt:'<strong>Preferências de Formatação</strong> — regras de formatação incluindo sem blockquotes, tema neutro do Mermaid e convenções de diagramas.',es:'<strong>Preferencias de Formato</strong> — reglas de formato incluyendo sin blockquotes, tema neutro de Mermaid y convenciones de diagramas.'} },
+      { name: 'reviewers/', icon: '👥', children: [
+        { name: 'engineer.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>Engineer Reviewer</strong> — simulates a Staff Engineer reviewing your document.',pt:'<strong>Revisor Engenheiro</strong> — simula um Staff Engineer revisando seu documento.',es:'<strong>Revisor Ingeniero</strong> — simula un Staff Engineer revisando tu documento.'} },
+        { name: 'executive.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>Executive Reviewer</strong> — simulates a VP Product.',pt:'<strong>Revisor Executivo</strong> — simula um VP de Produto.',es:'<strong>Revisor Ejecutivo</strong> — simula un VP de Producto.'} },
+        { name: 'customer.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>Customer Reviewer</strong> — simulates your product\'s end users.',pt:'<strong>Revisor Cliente</strong> — simula os usuários finais do seu produto.',es:'<strong>Revisor Cliente</strong> — simula los usuarios finales de tu producto.'} },
+        { name: 'data-analyst.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>Data Analyst Reviewer</strong> — checks metrics definitions and experiment design.',pt:'<strong>Revisor Analista de Dados</strong> — verifica definições de métricas e design de experimentos.',es:'<strong>Revisor Analista de Datos</strong> — verifica definiciones de métricas y diseño de experimentos.'} },
+        { name: 'customer-success.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>CS Reviewer</strong> — evaluates support impact and adoption friction.',pt:'<strong>Revisor CS</strong> — avalia impacto no suporte e fricção de adoção.',es:'<strong>Revisor CS</strong> — evalúa impacto en soporte y fricción de adopción.'} },
+        { name: 'user-researcher.mdc', icon: '📄', tag: 'rule', desc: {en:'<strong>User Researcher</strong> — validates user need assumptions and adoption risks.',pt:'<strong>Pesquisador de Usuário</strong> — valida suposições de necessidade do usuário e riscos de adoção.',es:'<strong>Investigador de Usuario</strong> — valida suposiciones de necesidad del usuario y riesgos de adopción.'} },
+      ]},
+    ]},
+    { name: 'skills/', icon: '🧠', children: [
+      { name: 'morning-briefing/', icon: '☀️', tag: 'skill', desc: {en:'<strong>Morning Briefing</strong> — multi-step workflow that pulls calendar, meeting transcripts, tracker status, and commitments.',pt:'<strong>Briefing Matinal</strong> — workflow multi-etapa que puxa calendário, transcrições de reuniões, status do tracker e compromissos.',es:'<strong>Briefing Matinal</strong> — workflow multi-paso que carga calendario, transcripciones de reuniones, estado del tracker y compromisos.'} },
+      { name: 'daily-review/', icon: '🌅', tag: 'skill', desc: {en:'<strong>Daily Review</strong> — end-of-day reflection. Compares planned vs actual, captures learnings.',pt:'<strong>Revisão Diária</strong> — reflexão de fim de dia. Compara planejado vs realizado, captura aprendizados.',es:'<strong>Revisión Diaria</strong> — reflexión de fin de día. Compara planeado vs real, captura aprendizajes.'} },
+      { name: 'weekly-review/', icon: '📊', tag: 'skill', desc: {en:'<strong>Weekly Review</strong> — Friday synthesis. Evaluates quarter progress, suggests next week\'s Top 3.',pt:'<strong>Revisão Semanal</strong> — síntese de sexta. Avalia progresso do trimestre, sugere Top 3 da próxima semana.',es:'<strong>Revisión Semanal</strong> — síntesis del viernes. Evalúa progreso del trimestre, sugiere Top 3 de la próxima semana.'} },
+      { name: 'meeting-notes/', icon: '📝', tag: 'skill', desc: {en:'<strong>Meeting Notes</strong> — processes raw meeting notes or transcripts.',pt:'<strong>Notas de Reunião</strong> — processa notas brutas de reunião ou transcrições.',es:'<strong>Notas de Reunión</strong> — procesa notas brutas de reunión o transcripciones.'} },
+      { name: 'meeting-prep/', icon: '🎯', tag: 'skill', desc: {en:'<strong>Meeting Prep</strong> — proactive preparation for upcoming meetings.',pt:'<strong>Preparação de Reunião</strong> — preparação proativa para reuniões futuras.',es:'<strong>Preparación de Reunión</strong> — preparación proactiva para reuniones futuras.'} },
+      { name: 'competitor-analysis/', icon: '🔍', tag: 'skill', desc: {en:'<strong>Competitor Analysis</strong> — web research, feature matrix, and battlecard generation.',pt:'<strong>Análise de Concorrentes</strong> — pesquisa web, matriz de features e geração de battlecard.',es:'<strong>Análisis de Competencia</strong> — investigación web, matriz de features y generación de battlecard.'} },
+      { name: 'metrics-analyzer/', icon: '📐', tag: 'skill', desc: {en:'<strong>Metrics Analyzer</strong> — estimates feature impact, designs experiments, and creates measurement plans.',pt:'<strong>Analisador de Métricas</strong> — estima impacto de feature, projeta experimentos e cria planos de medição.',es:'<strong>Analizador de Métricas</strong> — estima impacto de feature, diseña experimentos y crea planes de medición.'} },
+    ]},
+  ]},
+  { name: 'context/', icon: '📂', children: [
+    { name: 'people/', icon: '👤', tag: 'doc', desc: {en:'<strong>Person Pages</strong> — one file per stakeholder. Tracks interaction history, preferences, open commitments.',pt:'<strong>Páginas de Pessoas</strong> — um arquivo por stakeholder. Rastreia histórico de interações, preferências, compromissos abertos.',es:'<strong>Páginas de Personas</strong> — un archivo por stakeholder. Rastrea historial de interacciones, preferencias, compromisos abiertos.'} },
+    { name: 'USERS.md', icon: '📄', tag: 'doc', desc: {en:'<strong>User Personas</strong> — your product\'s user segments with goals, pain points, and behaviors.',pt:'<strong>Personas de Usuário</strong> — segmentos de usuário do seu produto com objetivos, dores e comportamentos.',es:'<strong>Personas de Usuario</strong> — segmentos de usuario de tu producto con objetivos, dolores y comportamientos.'} },
+    { name: 'TERMINOLOGY.md', icon: '📄', tag: 'doc', desc: {en:'<strong>Terminology</strong> — product glossary ensuring consistent language across all generated documents.',pt:'<strong>Terminologia</strong> — glossário do produto garantindo linguagem consistente em todos os documentos gerados.',es:'<strong>Terminología</strong> — glosario del producto asegurando lenguaje consistente en todos los documentos generados.'} },
+  ]},
+  { name: 'documents/', icon: '📁', tag: 'doc', desc: {en:'<strong>Documents</strong> — output folder for all generated artifacts.',pt:'<strong>Documentos</strong> — pasta de saída para todos os artefatos gerados.',es:'<strong>Documentos</strong> — carpeta de salida para todos los artefactos generados.'} },
+  { name: 'frameworks/', icon: '🧭', tag: 'doc', desc: {en:'<strong>Strategy Frameworks</strong> — Rumelt, DHM, Devil\'s Advocate, SWOT, Impact Estimation, and more.',pt:'<strong>Frameworks Estratégicos</strong> — Rumelt, DHM, Advogado do Diabo, SWOT, Estimativa de Impacto e mais.',es:'<strong>Frameworks Estratégicos</strong> — Rumelt, DHM, Abogado del Diablo, SWOT, Estimación de Impacto y más.'} },
+  { name: 'global-context/', icon: '🌐', children: [
+    { name: 'shared/', icon: '📂', children: [
+      { name: 'pillars.md', icon: '📄', tag: 'config', desc: {en:'<strong>Strategic Pillars</strong> — the 3-5 strategic pillars that anchor all prioritization.',pt:'<strong>Pilares Estratégicos</strong> — os 3-5 pilares estratégicos que ancoram toda a priorização.',es:'<strong>Pilares Estratégicos</strong> — los 3-5 pilares estratégicos que anclan toda la priorización.'} },
+      { name: 'assumptions.md', icon: '📄', tag: 'config', desc: {en:'<strong>Strategic Assumptions</strong> — explicit assumptions your product strategy rests on.',pt:'<strong>Suposições Estratégicas</strong> — suposições explícitas nas quais sua estratégia de produto se baseia.',es:'<strong>Suposiciones Estratégicas</strong> — suposiciones explícitas en las que se basa tu estrategia de producto.'} },
+    ]},
+    { name: 'DOMAIN-VISION.md', icon: '📄', tag: 'config', desc: {en:'<strong>Domain Vision</strong> — strategic mission and success criteria for a product domain.',pt:'<strong>Visão de Domínio</strong> — missão estratégica e critérios de sucesso para um domínio de produto.',es:'<strong>Visión de Dominio</strong> — misión estratégica y criterios de éxito para un dominio de producto.'} },
+    { name: 'DOMAIN-KPIS.md', icon: '📄', tag: 'config', desc: {en:'<strong>Domain KPIs</strong> — metrics hierarchy: North Star, primary, secondary, and guardrail.',pt:'<strong>KPIs de Domínio</strong> — hierarquia de métricas: North Star, primárias, secundárias e guardrail.',es:'<strong>KPIs de Dominio</strong> — jerarquía de métricas: North Star, primarias, secundarias y guardrail.'} },
+    { name: 'ROADMAP.md', icon: '📄', tag: 'config', desc: {en:'<strong>Roadmap</strong> — quarterly priorities, themes, milestones, and dependencies.',pt:'<strong>Roadmap</strong> — prioridades trimestrais, temas, marcos e dependências.',es:'<strong>Roadmap</strong> — prioridades trimestrales, temas, hitos y dependencias.'} },
+    { name: 'ARCHITECTURE.md', icon: '📄', tag: 'config', desc: {en:'<strong>Architecture</strong> — technical landscape, system constraints, and integration points.',pt:'<strong>Arquitetura</strong> — panorama técnico, restrições de sistema e pontos de integração.',es:'<strong>Arquitectura</strong> — panorama técnico, restricciones de sistema y puntos de integración.'} },
+  ]},
+  { name: 'to_do\'s/', icon: '✅', children: [
+    { name: 'tasks.md', icon: '📄', tag: 'doc', desc: {en:'<strong>Today\'s Tasks</strong> — your daily task list with P1/P2 priorities.',pt:'<strong>Tarefas de Hoje</strong> — sua lista diária com prioridades P1/P2.',es:'<strong>Tareas de Hoy</strong> — tu lista diaria con prioridades P1/P2.'} },
+    { name: 'commitments.md', icon: '📄', tag: 'doc', desc: {en:'<strong>Commitments</strong> — tracked promises to stakeholders with unique IDs.',pt:'<strong>Compromissos</strong> — promessas rastreadas para stakeholders com IDs únicos.',es:'<strong>Compromisos</strong> — promesas rastreadas para stakeholders con IDs únicos.'} },
+    { name: 'week-priorities.md', icon: '📄', tag: 'doc', desc: {en:'<strong>Week Priorities</strong> — top 3 goals for the current week.',pt:'<strong>Prioridades da Semana</strong> — top 3 metas para a semana atual.',es:'<strong>Prioridades de la Semana</strong> — top 3 metas para la semana actual.'} },
+    { name: 'quarter-goals.md', icon: '📄', tag: 'doc', desc: {en:'<strong>Quarter Goals</strong> — high-level objectives that cascade down.',pt:'<strong>Metas do Trimestre</strong> — objetivos de alto nível que se desdobram.',es:'<strong>Metas del Trimestre</strong> — objetivos de alto nivel que se desglosan.'} },
+    { name: 'briefings/', icon: '📂', tag: 'doc', desc: {en:'<strong>Briefings</strong> — daily morning briefing outputs.',pt:'<strong>Briefings</strong> — outputs do briefing matinal diário.',es:'<strong>Briefings</strong> — outputs del briefing matinal diario.'} },
+    { name: 'reviews/', icon: '📂', tag: 'doc', desc: {en:'<strong>Reviews</strong> — daily review outputs.',pt:'<strong>Revisões</strong> — outputs da revisão diária.',es:'<strong>Revisiones</strong> — outputs de la revisión diaria.'} },
+    { name: 'weekly-reviews/', icon: '📂', tag: 'doc', desc: {en:'<strong>Weekly Reviews</strong> — Friday synthesis documents.',pt:'<strong>Revisões Semanais</strong> — documentos de síntese de sexta.',es:'<strong>Revisiones Semanales</strong> — documentos de síntesis del viernes.'} },
+    { name: 'learnings/', icon: '📂', tag: 'doc', desc: {en:'<strong>Learnings</strong> — accumulated preferences, patterns, and skill ratings.',pt:'<strong>Aprendizados</strong> — preferências, padrões e avaliações de skills acumulados.',es:'<strong>Aprendizajes</strong> — preferencias, patrones y evaluaciones de skills acumulados.'} },
+    { name: 'toolkit-improvements.md', icon: '📄', tag: 'doc', desc: {en:'<strong>Toolkit Improvements</strong> — ranked backlog of improvement ideas.',pt:'<strong>Melhorias do Toolkit</strong> — backlog ranqueado de ideias de melhoria.',es:'<strong>Mejoras del Toolkit</strong> — backlog clasificado de ideas de mejora.'} },
+  ]},
+  { name: 'webapp/', icon: '🖥️', children: [
+    { name: 'frontend/', icon: '⚛️', tag: 'doc', desc: {en:'<strong>Co-Pilot Frontend</strong> — React + Vite + Tailwind dashboard.',pt:'<strong>Frontend Co-Pilot</strong> — dashboard React + Vite + Tailwind.',es:'<strong>Frontend Co-Pilot</strong> — dashboard React + Vite + Tailwind.'} },
+    { name: 'backend/', icon: '⚙️', tag: 'doc', desc: {en:'<strong>Co-Pilot Backend</strong> — Express + TypeScript API.',pt:'<strong>Backend Co-Pilot</strong> — API Express + TypeScript.',es:'<strong>Backend Co-Pilot</strong> — API Express + TypeScript.'} },
+  ]},
+  { name: 'README.md', icon: '📄', tag: 'doc', desc: {en:'<strong>README</strong> — project overview and quick-start instructions.',pt:'<strong>README</strong> — visão geral do projeto e instruções de início rápido.',es:'<strong>README</strong> — visión general del proyecto e instrucciones de inicio rápido.'} },
+  { name: 'COMMANDS.md', icon: '📄', tag: 'doc', desc: {en:'<strong>Command Reference</strong> — full list of every command Cadence OS understands.',pt:'<strong>Referência de Comandos</strong> — lista completa de todos os comandos que o Cadence OS entende.',es:'<strong>Referencia de Comandos</strong> — lista completa de todos los comandos que Cadence OS entiende.'} },
+];
+
+/* ══════════════════════════════════════════════════════════════
+   RENDER FUNCTIONS
+   ══════════════════════════════════════════════════════════════ */
+
+function renderTalkGrid(){
+  const T=i18n[currentLang];
+  document.getElementById('talk-grid').innerHTML=`
+    <div class="talk-col">
+      <h4>${T.talkCol1Title}</h4>
+      ${T.talkExamples.map(e=>`<div class="talk-example"><div class="label">${e.label}</div>${e.text}</div>`).join('')}
+    </div>
+    <div class="talk-col">
+      <h4>${T.talkCol2Title}</h4>
+      ${T.talkExamples2.map(e=>`<div class="talk-example"><div class="label">${e.label}</div>${e.text}</div>`).join('')}
+    </div>`;
 }
 
-/* ── DATA: TIMELINE ── */
-const tlData=[
-  {icon:'☀️',label:'Morning',time:'Start of day',title:'Morning Briefing',desc:'Begin your day with full context — no more 30 minutes of reconstruction.',items:['Calendar and meeting prep loaded','Initiative and project status pulled','Stale commitments flagged (>3 days without update)','Today\'s Three priorities suggested (max 3 P1)','Session context restored from yesterday']},
-  {icon:'📝',label:'During Day',time:'Working hours',title:'Documents, Reviews & Meetings',desc:'Generate and refine documents. Process meetings as they happen.',items:['Create PRDs, One-Pagers, specs with full context','Run multi-perspective reviews (6 personas)','Process meeting notes → auto-update person pages','Track commitments with unique IDs','Use frameworks for strategic decisions']},
-  {icon:'🌅',label:'End of Day',time:'Before closing',title:'Daily Review',desc:'Reflect on what happened. Capture learnings and prep tomorrow.',items:['Compare planned vs actual (Today\'s Three)','Capture learnings and preferences','Career evidence prompt for significant work','Session context saved for tomorrow','Stale tasks and commitments flagged']},
-  {icon:'📊',label:'Friday',time:'End of week',title:'Weekly Review',desc:'Synthesize the week. Set up next week for success.',items:['Week synthesis with patterns identified','Quarter progress evaluation','Top 3 priorities for next week suggested','Toolkit improvements surfaced from backlog','Unused skill recommendation (feature discovery)']},
-];
+function renderToolkit(){
+  const tabsBar=document.getElementById('toolkit-tabs');
+  const panelsDiv=document.getElementById('toolkit-panels');
+  tabsBar.innerHTML='';panelsDiv.innerHTML='';
+  let first=true;
+  for(const[key,data] of Object.entries(toolkitData)){
+    const btn=document.createElement('button');
+    btn.className='tab-btn'+(first?' active':'');
+    btn.dataset.tab=key;
+    btn.innerHTML=`${tx(data.label)}<span class="tab-count">${data.count}</span>`;
+    btn.onclick=()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-'+key).classList.add('active');
+    };
+    tabsBar.appendChild(btn);
+    const panel=document.createElement('div');
+    panel.className='tab-panel'+(first?' active':'');
+    panel.id='panel-'+key;
+    if(key==='reviewers'){
+      panel.innerHTML=`<div class="cards-grid cols-2">${data.items.map(i=>`
+        <div class="card"><div class="reviewer-card">
+          <div class="reviewer-avatar">${i.icon}</div>
+          <div class="reviewer-info">
+            <div class="reviewer-name">${tx(i.title)}</div>
+            <div class="reviewer-role">${tx(i.name)}</div>
+            <div class="card-desc">${tx(i.desc)}</div>
+            <div class="card-cmd">${tx(i.cmd)}</div>
+          </div>
+        </div></div>`).join('')}</div>`;
+    } else if(key==='skills'){
+      panel.innerHTML=`<div class="cards-grid cols-3">${data.items.map(i=>`
+        <div class="card">
+          <div class="card-icon">${i.icon}</div>
+          <div class="card-title">${tx(i.title)}</div>
+          <div class="card-desc">${tx(i.desc)}</div>
+          ${i.meta?`<div class="card-meta"><span class="badge badge-teal">${tx(i.meta)}</span></div>`:''}
+          <div class="card-cmd">${tx(i.cmd)}</div>
+        </div>`).join('')}</div>`;
+    } else {
+      panel.innerHTML=`<div class="cards-grid cols-3">${data.items.map(i=>`
+        <div class="card">
+          <div class="card-icon">${i.icon}</div>
+          <div class="card-title">${tx(i.title)}</div>
+          <div class="card-desc">${tx(i.desc)}</div>
+          <div class="card-cmd">${tx(i.cmd)}</div>
+        </div>`).join('')}</div>`;
+    }
+    panelsDiv.appendChild(panel);
+    first=false;
+  }
+}
 
-const tlTrack=document.getElementById('tl-track');
-const tlDetails=document.getElementById('tl-details');
-tlData.forEach((d,i)=>{
-  const node=document.createElement('div');
-  node.className='tl-node'+(i===0?' active':'');
-  node.innerHTML=`<div class="tl-dot">${d.icon}</div><div class="tl-label">${d.label}</div><div class="tl-time">${d.time}</div>`;
-  node.onclick=()=>{
-    document.querySelectorAll('.tl-node').forEach(n=>n.classList.remove('active'));
-    document.querySelectorAll('.tl-detail').forEach(n=>n.classList.remove('active'));
-    node.classList.add('active');
-    document.getElementById('tl-detail-'+i).classList.add('active');
-  };
-  tlTrack.appendChild(node);
-
-  const detail=document.createElement('div');
-  detail.className='tl-detail'+(i===0?' active':'');
-  detail.id='tl-detail-'+i;
-  detail.innerHTML=`<h4>${d.title}</h4><p>${d.desc}</p><ul>${d.items.map(it=>`<li>${it}</li>`).join('')}</ul>`;
-  tlDetails.appendChild(detail);
-});
-
-/* ── DATA: COMMANDS ── */
-const commands=[
-  {cat:'Documents',cmd:'Create PRD for [feature]',desc:'Full PRD with 15 sections'},
-  {cat:'Documents',cmd:'Generate One-Pager for [feature]',desc:'Strategic validation document'},
-  {cat:'Documents',cmd:'Generate Spec for [feature]',desc:'Detailed requirements specification'},
-  {cat:'Documents',cmd:'Write user stories for [feature]',desc:'User stories + Gherkin acceptance criteria'},
-  {cat:'Documents',cmd:'Process research input about [topic]',desc:'Synthesize raw research data'},
-  {cat:'Documents',cmd:'Document feature [name]',desc:'Reverse-engineer feature documentation'},
-  {cat:'Strategy',cmd:'Create roadmap for [quarter]',desc:'Quarterly strategic plan'},
-  {cat:'Strategy',cmd:'Create Lean Canvas for [product]',desc:'9-section strategy canvas'},
-  {cat:'Strategy',cmd:'Create personas for [segment]',desc:'Ideal + Skeptical personas'},
-  {cat:'Strategy',cmd:'Create elevator pitch',desc:'Positioning + JTBD pitch'},
-  {cat:'Strategy',cmd:'Map user journey for [flow]',desc:'End-to-end journey map'},
-  {cat:'Strategy',cmd:'Generate epic plan for [feature]',desc:'Epic structure with sub-epics'},
-  {cat:'Strategy',cmd:'Connect KPIs to revenue',desc:'KPI-revenue linkage + North Star'},
-  {cat:'Analysis',cmd:'Prioritize using RICE',desc:'RICE scoring with recommendations'},
-  {cat:'Analysis',cmd:'Analyze risks of [feature]',desc:'Risk matrix with mitigations'},
-  {cat:'Analysis',cmd:'Analyze metrics impact of [feature]',desc:'Metrics impact + experiment design'},
-  {cat:'Analysis',cmd:'Analyze competitor [name]',desc:'Full competitive analysis + battlecard'},
-  {cat:'Analysis',cmd:'Estimate impact of [feature]',desc:'Quantify expected feature impact'},
-  {cat:'Analysis',cmd:'SWOT analysis for [product]',desc:'Strengths, weaknesses, opportunities, threats'},
-  {cat:'Reviews',cmd:'Review as engineer',desc:'Technical feasibility, edge cases, scalability'},
-  {cat:'Reviews',cmd:'Review as executive',desc:'Strategic alignment, ROI, resource justification'},
-  {cat:'Reviews',cmd:'Review as user researcher',desc:'User need validation, adoption risks'},
-  {cat:'Reviews',cmd:'Review as data analyst',desc:'Metrics definition, experiment design'},
-  {cat:'Reviews',cmd:'Review as customer',desc:'Value clarity from your user personas'},
-  {cat:'Reviews',cmd:'Review as customer success',desc:'Support impact, adoption, customer experience'},
-  {cat:'Reviews',cmd:'Full document review',desc:'All 6 perspectives + consolidated feedback'},
-  {cat:'Workflow',cmd:'Morning briefing',desc:'Full daily briefing with Today\'s Three'},
-  {cat:'Workflow',cmd:'Daily review',desc:'End-of-day reflection + learnings capture'},
-  {cat:'Workflow',cmd:'Weekly review',desc:'Week synthesis + next week\'s priorities'},
-  {cat:'Workflow',cmd:'Process meeting notes',desc:'Extract decisions, action items, update person pages'},
-  {cat:'Workflow',cmd:'Prep for meeting with [Name]',desc:'Load person context, open items, and talking points'},
-  {cat:'Workflow',cmd:'Brief me for [meeting]',desc:'Full meeting prep with relationship context'},
-  {cat:'Workflow',cmd:'Career review',desc:'Synthesize career evidence for self-reviews'},
-  {cat:'Planning',cmd:'Show my to-do\'s',desc:'List P1 and P2 pending tasks'},
-  {cat:'Planning',cmd:'Add task: [description]',desc:'Add new task with auto-inferred priority'},
-  {cat:'Planning',cmd:'Complete task [title]',desc:'Mark task done and move to completed'},
-  {cat:'Planning',cmd:'Show initiative progress',desc:'Current status of all initiatives'},
-  {cat:'Planning',cmd:'Generate status update',desc:'Executive communication for stakeholders'},
-  {cat:'Planning',cmd:'Quarter summary',desc:'Quarter-level progress from quarter-goals.md'},
-  {cat:'Planning',cmd:'Assumptions',desc:'Read or update strategic assumptions'},
-  {cat:'People',cmd:'Who is [name]?',desc:'Show person page with history and open items'},
-  {cat:'People',cmd:'Create person page for [name]',desc:'Create stakeholder page in context/people/'},
-  {cat:'People',cmd:'What do I owe [name]?',desc:'List open commitments for a person'},
-  {cat:'People',cmd:'Prep for meeting with [name]',desc:'Load full context for a person'},
-  {cat:'Setup',cmd:'/start',desc:'Run the onboarding wizard'},
-  {cat:'Setup',cmd:'Level up',desc:'Discover PM OS features you haven\'t used yet'},
-  {cat:'Setup',cmd:'/improve',desc:'Review and rank toolkit improvement ideas'},
-  {cat:'Setup',cmd:'Help me fill in the product context',desc:'Context generator wizard'},
-  {cat:'Setup',cmd:'Show terminology',desc:'Key terms from product glossary'},
-  {cat:'Setup',cmd:'Export to Confluence',desc:'Convert document to Confluence wiki markup'},
-  {cat:'Setup',cmd:'Create Jira tickets for [feature]',desc:'Generate Epic + Stories + Tasks'},
-];
-
-const categories=[...new Set(commands.map(c=>c.cat))];
-const filtersDiv=document.getElementById('cmd-filters');
-filtersDiv.innerHTML=`<button class="cmd-filter active" data-cat="All">All</button>`+categories.map(c=>`<button class="cmd-filter" data-cat="${c}">${c}</button>`).join('');
+function renderTimeline(){
+  const tlTrack=document.getElementById('tl-track');
+  const tlDetails=document.getElementById('tl-details');
+  tlTrack.innerHTML='';tlDetails.innerHTML='';
+  tlData.forEach((d,i)=>{
+    const node=document.createElement('div');
+    node.className='tl-node'+(i===0?' active':'');
+    node.innerHTML=`<div class="tl-dot">${d.icon}</div><div class="tl-label">${tx(d.label)}</div><div class="tl-time">${tx(d.time)}</div>`;
+    node.onclick=()=>{
+      document.querySelectorAll('.tl-node').forEach(n=>n.classList.remove('active'));
+      document.querySelectorAll('.tl-detail').forEach(n=>n.classList.remove('active'));
+      node.classList.add('active');
+      document.getElementById('tl-detail-'+i).classList.add('active');
+    };
+    tlTrack.appendChild(node);
+    const detail=document.createElement('div');
+    detail.className='tl-detail'+(i===0?' active':'');
+    detail.id='tl-detail-'+i;
+    const items=tx(d.items);
+    detail.innerHTML=`<h4>${tx(d.title)}</h4><p>${tx(d.desc)}</p><ul>${(Array.isArray(items)?items:[]).map(it=>`<li>${it}</li>`).join('')}</ul>`;
+    tlDetails.appendChild(detail);
+  });
+}
 
 let activeCat='All';
-filtersDiv.querySelectorAll('.cmd-filter').forEach(btn=>{
-  btn.onclick=()=>{
-    filtersDiv.querySelectorAll('.cmd-filter').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    activeCat=btn.dataset.cat;
-    renderCommands();
-  };
-});
-document.getElementById('cmd-search').addEventListener('input',renderCommands);
-
 function renderCommands(){
+  const T=i18n[currentLang];
   const q=document.getElementById('cmd-search').value.toLowerCase();
   const filtered=commands.filter(c=>{
-    const matchCat=activeCat==='All'||c.cat===activeCat;
-    const matchQ=!q||c.cmd.toLowerCase().includes(q)||c.desc.toLowerCase().includes(q)||c.cat.toLowerCase().includes(q);
+    const catVal=tx(c.cat);
+    const cmdVal=tx(c.cmd);
+    const descVal=tx(c.desc);
+    const matchCat=activeCat==='All'||catVal===activeCat;
+    const matchQ=!q||cmdVal.toLowerCase().includes(q)||descVal.toLowerCase().includes(q)||catVal.toLowerCase().includes(q);
     return matchCat&&matchQ;
   });
   const tbody=document.getElementById('cmd-tbody');
   const empty=document.getElementById('cmd-empty');
   if(!filtered.length){tbody.innerHTML='';empty.style.display='block';return}
   empty.style.display='none';
-  tbody.innerHTML=filtered.map(c=>`<tr><td class="cmd-command">${c.cmd}</td><td>${c.desc}</td><td><span class="cmd-cat">${c.cat}</span></td></tr>`).join('');
+  tbody.innerHTML=filtered.map(c=>`<tr><td class="cmd-command">${tx(c.cmd)}</td><td>${tx(c.desc)}</td><td><span class="cmd-cat">${tx(c.cat)}</span></td></tr>`).join('');
 }
-renderCommands();
 
-/* ── INTERACTIVE FILE EXPLORER ── */
-const fileTree = [
-  { name: '.cursor/', icon: '⚙️', children: [
-    { name: 'rules/', icon: '📐', children: [
-      { name: 'product-context.mdc', icon: '📄', tag: 'config', desc: '<strong>Product Context</strong> — the identity file PM OS reads before every response. Contains your product name, model, differentiator, active domains, and working preferences.<br><br>This is the single most important file to fill in. It teaches the AI who you are and what you\'re building.' },
-      { name: 'pm-coach.mdc', icon: '📄', tag: 'rule', desc: '<strong>PM Coach</strong> — always-on coaching protocols. After each task, suggests a relevant next step. Captures career insights and workflow improvements automatically.' },
-      { name: 'pm-workflows.mdc', icon: '📄', tag: 'rule', desc: '<strong>PM Workflows</strong> — document generation logic. Defines how PRDs, One-Pagers, RICE analyses, and other templates are created, including post-document protocol.' },
-      { name: 'prd-template.mdc', icon: '📄', tag: 'rule', desc: '<strong>PRD Template</strong> — full 15-section Product Requirements Document. Includes problem statement, user stories, success metrics, risks, technical constraints, and more.' },
-      { name: 'one-pager-template.mdc', icon: '📄', tag: 'rule', desc: '<strong>One-Pager Template</strong> — concise strategic document for initial validation. Used to quickly align stakeholders before investing in a full PRD.' },
-      { name: 'rice-analysis.mdc', icon: '📄', tag: 'rule', desc: '<strong>RICE Analysis</strong> — prioritization framework. Scores features by Reach, Impact, Confidence, and Effort. Generates ranked recommendations.' },
-      { name: 'session-protocol.mdc', icon: '📄', tag: 'rule', desc: '<strong>Session Protocol</strong> — runs silently on conversation start. Checks for stale tasks (>5 days), stale commitments (>3 days), and whether today\'s briefing was done.' },
-      { name: 'progress-tracker.mdc', icon: '📄', tag: 'rule', desc: '<strong>Progress Tracker</strong> — tracks initiative lifecycle through phases: discovery → requirements → development → launch → monitoring.' },
-      { name: 'todos.mdc', icon: '📄', tag: 'rule', desc: '<strong>Task Management</strong> — personal task system with Today\'s Three, P1/P2 priorities, commitment tracking, and natural language triggers.' },
-      { name: 'lean-prd-template.mdc', icon: '📄', tag: 'rule', desc: '<strong>Lean PRD Template</strong> — lightweight 6-section PRD for features that don\'t need the full 15-section treatment. Covers the essentials: what, why, how, and how we\'ll know it worked.' },
-      { name: 'people-context.mdc', icon: '📄', tag: 'rule', desc: '<strong>People Context</strong> — auto-injects person page context when stakeholder names are mentioned in conversation. Loads role, meeting history, open commitments, and communication preferences silently.' },
-      { name: 'start.mdc', icon: '📄', tag: 'rule', desc: '<strong>Onboarding Wizard</strong> — the /start command. Guides new users through workspace orientation, product context setup, and first success moment.' },
-      { name: 'formatting-preferences.mdc', icon: '📄', tag: 'rule', desc: '<strong>Formatting Preferences</strong> — formatting rules including no blockquotes, neutral Mermaid theme, and diagram conventions.' },
-      { name: 'reviewers/', icon: '👥', children: [
-        { name: 'engineer.mdc', icon: '📄', tag: 'rule', desc: '<strong>Engineer Reviewer</strong> — simulates a Staff Engineer reviewing your document. Checks technical feasibility, edge cases, scalability, API design, and implementation complexity.' },
-        { name: 'executive.mdc', icon: '📄', tag: 'rule', desc: '<strong>Executive Reviewer</strong> — simulates a VP Product. Evaluates strategic alignment, ROI, market positioning, and resource justification.' },
-        { name: 'customer.mdc', icon: '📄', tag: 'rule', desc: '<strong>Customer Reviewer</strong> — simulates your product\'s end users. Tests value clarity, ease of use, and whether the feature solves a real pain.' },
-        { name: 'data-analyst.mdc', icon: '📄', tag: 'rule', desc: '<strong>Data Analyst Reviewer</strong> — checks metrics definitions, experiment design, measurement feasibility, and statistical rigor.' },
-        { name: 'customer-success.mdc', icon: '📄', tag: 'rule', desc: '<strong>CS Reviewer</strong> — evaluates support impact, adoption friction, migration risks, and communication needs.' },
-        { name: 'user-researcher.mdc', icon: '📄', tag: 'rule', desc: '<strong>User Researcher</strong> — validates user need assumptions, identifies adoption risks, checks for research gaps and usability concerns.' },
-      ]},
-    ]},
-    { name: 'skills/', icon: '🧠', children: [
-      { name: 'morning-briefing/', icon: '☀️', tag: 'skill', desc: '<strong>Morning Briefing</strong> — multi-step workflow that pulls calendar, meeting transcripts, tracker status, and commitments. Generates Today\'s Three priorities.' },
-      { name: 'daily-review/', icon: '🌅', tag: 'skill', desc: '<strong>Daily Review</strong> — end-of-day reflection. Compares planned vs actual, captures learnings, prompts for career evidence, saves session context.' },
-      { name: 'weekly-review/', icon: '📊', tag: 'skill', desc: '<strong>Weekly Review</strong> — Friday synthesis. Evaluates quarter progress, identifies patterns, suggests next week\'s Top 3 priorities.' },
-      { name: 'meeting-notes/', icon: '📝', tag: 'skill', desc: '<strong>Meeting Notes</strong> — processes raw meeting notes or transcripts. Extracts decisions, action items with IDs, updates person pages and commitments.' },
-      { name: 'meeting-prep/', icon: '🎯', tag: 'skill', desc: '<strong>Meeting Prep</strong> — proactive preparation for upcoming meetings. Loads person context, surfaces open commitments, reviews recent interactions, and suggests talking points.' },
-      { name: 'competitor-analysis/', icon: '🔍', tag: 'skill', desc: '<strong>Competitor Analysis</strong> — web research, feature matrix, battlecard generation, and strategic implications for your product.' },
-      { name: 'metrics-analyzer/', icon: '📐', tag: 'skill', desc: '<strong>Metrics Analyzer</strong> — estimates feature impact, designs experiments, and creates measurement plans tied to your KPIs.' },
-    ]},
-  ]},
-  { name: 'context/', icon: '📂', children: [
-    { name: 'people/', icon: '👤', tag: 'doc', desc: '<strong>Person Pages</strong> — one file per stakeholder (manager, designer, engineer, etc.). Tracks interaction history, preferences, open commitments, and meeting context.' },
-    { name: 'USERS.md', icon: '📄', tag: 'doc', desc: '<strong>User Personas</strong> — your product\'s user segments with goals, pain points, behaviors, and jobs-to-be-done. Referenced when generating any user-facing document.' },
-    { name: 'TERMINOLOGY.md', icon: '📄', tag: 'doc', desc: '<strong>Terminology</strong> — product glossary ensuring consistent language across all generated documents. Maps internal jargon to user-facing terms.' },
-  ]},
-  { name: 'documents/', icon: '📁', tag: 'doc', desc: '<strong>Documents</strong> — output folder for all generated artifacts: PRDs, One-Pagers, specs, analyses, status updates. Organized by domain subfolders.' },
-  { name: 'frameworks/', icon: '🧭', tag: 'doc', desc: '<strong>Strategy Frameworks</strong> — Rumelt Strategy Kernel, Gibson Biddle DHM, Devil\'s Advocate, SWOT, Impact Estimation, and Presentation Best Practices.' },
-  { name: 'global-context/', icon: '🌐', children: [
-    { name: 'shared/', icon: '📂', children: [
-      { name: 'pillars.md', icon: '📄', tag: 'config', desc: '<strong>Strategic Pillars</strong> — the 3-5 strategic pillars that anchor all prioritization. Every P1 task should connect to a pillar. Reviewed quarterly.' },
-      { name: 'assumptions.md', icon: '📄', tag: 'config', desc: '<strong>Strategic Assumptions</strong> — explicit assumptions your product strategy rests on. Current Truths, 6-Month Bets, 12-Month Bets, and Anti-Truths. Prevents invisible strategic drift.' },
-    ]},
-    { name: 'DOMAIN-VISION.md', icon: '📄', tag: 'config', desc: '<strong>Domain Vision</strong> — strategic mission, target outcomes, and success criteria for a product domain. Template to fill per domain.' },
-    { name: 'DOMAIN-KPIS.md', icon: '📄', tag: 'config', desc: '<strong>Domain KPIs</strong> — metrics hierarchy: North Star, primary, secondary, and guardrail metrics for a domain.' },
-    { name: 'ROADMAP.md', icon: '📄', tag: 'config', desc: '<strong>Roadmap</strong> — quarterly priorities, themes, milestones, and dependencies. Referenced before generating any strategic document.' },
-    { name: 'ARCHITECTURE.md', icon: '📄', tag: 'config', desc: '<strong>Architecture</strong> — technical landscape, system constraints, and integration points. Referenced for technical feasibility checks.' },
-  ]},
-  { name: 'to_do\'s/', icon: '✅', children: [
-    { name: 'tasks.md', icon: '📄', tag: 'doc', desc: '<strong>Today\'s Tasks</strong> — your daily task list with P1/P2 priorities. Max 3 P1 per day. Managed via natural language: "add task X", "done with Y".' },
-    { name: 'commitments.md', icon: '📄', tag: 'doc', desc: '<strong>Commitments</strong> — tracked promises to stakeholders with unique IDs, owners, due dates, and staleness detection (flagged after 3 days).' },
-    { name: 'week-priorities.md', icon: '📄', tag: 'doc', desc: '<strong>Week Priorities</strong> — top 3 goals for the current week. Set during weekly review, referenced in every morning briefing.' },
-    { name: 'quarter-goals.md', icon: '📄', tag: 'doc', desc: '<strong>Quarter Goals</strong> — high-level objectives that cascade down to weekly priorities and daily tasks.' },
-    { name: 'briefings/', icon: '📂', tag: 'doc', desc: '<strong>Briefings</strong> — daily morning briefing outputs, named by date (YYYY-MM-DD.md). Your daily context snapshots.' },
-    { name: 'reviews/', icon: '📂', tag: 'doc', desc: '<strong>Reviews</strong> — daily review outputs. End-of-day reflections with planned vs actual comparisons.' },
-    { name: 'weekly-reviews/', icon: '📂', tag: 'doc', desc: '<strong>Weekly Reviews</strong> — Friday synthesis documents with week patterns, quarter progress, and next week\'s priorities.' },
-    { name: 'learnings/', icon: '📂', tag: 'doc', desc: '<strong>Learnings</strong> — accumulated preferences, patterns, and skill ratings. Feeds the compound learning loop.' },
-    { name: 'toolkit-improvements.md', icon: '📄', tag: 'doc', desc: '<strong>Toolkit Improvements</strong> — ranked backlog of improvement ideas for PM OS itself. Captured automatically from frustration phrases, ranked by impact/effort during weekly reviews.' },
-  ]},
-  { name: 'webapp/', icon: '🖥️', children: [
-    { name: 'frontend/', icon: '⚛️', tag: 'doc', desc: '<strong>PM Co-Pilot Frontend</strong> — React + Vite + Tailwind dashboard. Views: Morning Briefing, Tasks, Commitments, Backlog, Initiative Progress, People.' },
-    { name: 'backend/', icon: '⚙️', tag: 'doc', desc: '<strong>PM Co-Pilot Backend</strong> — Express + TypeScript API. Reads workspace markdown files and serves them to the dashboard. Run with npm run dev.' },
-  ]},
-  { name: 'README.md', icon: '📄', tag: 'doc', desc: '<strong>README</strong> — project overview and quick-start instructions for PM OS. The first file you see on GitHub.' },
-  { name: 'COMMANDS.md', icon: '📄', tag: 'doc', desc: '<strong>Command Reference</strong> — full list of every command, trigger phrase, and natural language variant PM OS understands.' },
-];
+function renderCommandFilters(){
+  const T=i18n[currentLang];
+  const filtersDiv=document.getElementById('cmd-filters');
+  const cats=[...new Set(commands.map(c=>tx(c.cat)))];
+  filtersDiv.innerHTML=`<button class="cmd-filter active" data-cat="All">${T.cmdAll}</button>`+cats.map(c=>`<button class="cmd-filter" data-cat="${c}">${c}</button>`).join('');
+  activeCat='All';
+  filtersDiv.querySelectorAll('.cmd-filter').forEach(btn=>{
+    btn.onclick=()=>{
+      filtersDiv.querySelectorAll('.cmd-filter').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCat=btn.dataset.cat;
+      renderCommands();
+    };
+  });
+}
 
+function renderChecklist(){
+  const grid=document.getElementById('checklist-grid');
+  grid.innerHTML=checklistCards.map(c=>`
+    <div class="card">
+      <div class="card-icon">${c.icon}</div>
+      <div class="card-title">${tx(c.title)}</div>
+      <div class="card-desc">
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:8px;font-size:.88rem;color:var(--text-secondary)">
+          ${tx(c.items).map(li=>`<li>${li}</li>`).join('')}
+        </ul>
+      </div>
+      <div class="card-meta">${tx(c.meta)}</div>
+    </div>`).join('');
+}
+
+function renderAfterSetup(){
+  const grid=document.getElementById('after-setup-grid');
+  grid.innerHTML=afterSetupCards.map(c=>`
+    <div class="card">
+      <div class="card-icon">${c.icon}</div>
+      <div class="card-title">${tx(c.title)}</div>
+      <div class="card-desc">
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:8px;font-size:.88rem;color:var(--text-secondary)">
+          ${tx(c.items).map(li=>`<li>${li}</li>`).join('')}
+        </ul>
+      </div>
+    </div>`).join('');
+}
+
+/* ── FILE TREE ── */
 function buildTree(items, parentUl) {
   items.forEach(item => {
     const li = document.createElement('li');
     const row = document.createElement('div');
     row.className = 'cm-tree-item';
     const isFolder = !!item.children;
-
     if (isFolder) {
       const chevron = document.createElement('span');
       chevron.className = 'cm-tree-chevron';
@@ -944,25 +1147,20 @@ function buildTree(items, parentUl) {
       spacer.style.flexShrink = '0';
       row.appendChild(spacer);
     }
-
     const icon = document.createElement('span');
     icon.className = 'cm-tree-icon';
     icon.textContent = item.icon;
     row.appendChild(icon);
-
     const name = document.createElement('span');
     name.className = 'cm-tree-name';
     name.textContent = item.name;
     row.appendChild(name);
-
     li.appendChild(row);
-
     if (isFolder) {
       const childUl = document.createElement('ul');
       childUl.style.maxHeight = '0';
       buildTree(item.children, childUl);
       li.appendChild(childUl);
-
       row.addEventListener('click', (e) => {
         e.stopPropagation();
         const chevron = row.querySelector('.cm-tree-chevron');
@@ -971,14 +1169,12 @@ function buildTree(items, parentUl) {
         if (item.desc) showFileInfo(item, row);
       });
     }
-
     if (item.desc) {
       row.addEventListener('click', (e) => {
         e.stopPropagation();
         showFileInfo(item, row);
       });
     }
-
     parentUl.appendChild(li);
   });
 }
@@ -989,12 +1185,13 @@ function showFileInfo(item, row) {
   const editor = document.getElementById('editor-content');
   const path = getItemPath(item);
   const tagClass = item.tag || 'doc';
-  const tagLabel = { rule: 'Rule', skill: 'Skill', doc: 'Document', config: 'Config' }[tagClass] || 'File';
+  const T=i18n[currentLang];
+  const tagLabel = (T.tagLabels && T.tagLabels[tagClass]) || tagClass;
   editor.innerHTML = `
     <div class="cm-editor-file">
       <div class="cm-ef-path">${path}</div>
       <div class="cm-ef-body">
-        ${item.desc}
+        ${tx(item.desc)}
         <div style="margin-top:10px"><span class="cm-ef-tag ${tagClass}">${tagLabel}</span></div>
       </div>
     </div>`;
@@ -1015,22 +1212,76 @@ function getItemPath(target) {
   return search(fileTree, '') || target.name;
 }
 
-const treeRoot = document.getElementById('file-tree');
-buildTree(fileTree, treeRoot);
-
-/* Auto-expand .cursor/ on load and select product-context */
-setTimeout(() => {
-  const firstItem = treeRoot.querySelector('.cm-tree-item');
-  if (firstItem) firstItem.click();
+function renderFileTree(){
+  const treeRoot = document.getElementById('file-tree');
+  treeRoot.innerHTML='';
+  buildTree(fileTree, treeRoot);
   setTimeout(() => {
-    const rulesItem = treeRoot.querySelector('li > ul > li > .cm-tree-item');
-    if (rulesItem) rulesItem.click();
+    const firstItem = treeRoot.querySelector('.cm-tree-item');
+    if (firstItem) firstItem.click();
     setTimeout(() => {
-      const firstFile = treeRoot.querySelector('li > ul > li > ul > li > .cm-tree-item');
-      if (firstFile) firstFile.click();
+      const rulesItem = treeRoot.querySelector('li > ul > li > .cm-tree-item');
+      if (rulesItem) rulesItem.click();
+      setTimeout(() => {
+        const firstFile = treeRoot.querySelector('li > ul > li > ul > li > .cm-tree-item');
+        if (firstFile) firstFile.click();
+      }, 150);
     }, 150);
-  }, 150);
-}, 300);
+  }, 100);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   APPLY LANGUAGE
+   ══════════════════════════════════════════════════════════════ */
+function applyLanguage(lang){
+  currentLang=lang;
+  const T=i18n[lang]||i18n.en;
+
+  document.documentElement.lang=lang==='pt'?'pt-BR':lang;
+  document.title=lang==='pt'?'Cadence OS — Guia de Onboarding':lang==='es'?'Cadence OS — Guía de Onboarding':'Cadence OS — Onboarding Guide';
+
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    if(T[key]!==undefined) el.innerHTML=T[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+    const key=el.getAttribute('data-i18n-html');
+    if(T[key]!==undefined) el.innerHTML=T[key];
+  });
+  document.querySelectorAll('[data-i18n-list]').forEach(el=>{
+    const key=el.getAttribute('data-i18n-list');
+    if(T[key]&&Array.isArray(T[key])){
+      el.innerHTML=T[key].map(li=>`<li>${li}</li>`).join('');
+    }
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key=el.getAttribute('data-i18n-placeholder');
+    if(T[key]!==undefined) el.placeholder=T[key];
+  });
+
+  const sel=document.getElementById('lang-select');
+  if(sel) sel.value=lang;
+
+  renderTalkGrid();
+  renderToolkit();
+  renderTimeline();
+  renderCommandFilters();
+  renderCommands();
+  renderChecklist();
+  renderAfterSetup();
+  renderFileTree();
+
+  try{localStorage.setItem('cadence-lang',lang)}catch(e){}
+}
+
+/* ── INIT ── */
+document.getElementById('cmd-search').addEventListener('input',renderCommands);
+
+(function init(){
+  let lang='en';
+  try{const saved=localStorage.getItem('cadence-lang');if(saved&&i18n[saved])lang=saved}catch(e){}
+  applyLanguage(lang);
+})();
 </script>
 </body>
 </html>

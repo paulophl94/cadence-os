@@ -1,4 +1,4 @@
-# PM OS — An AI Operating System for Product Managers
+# Cadence OS — An AI Operating System for Product Managers
 
 [![Works with Cursor](https://img.shields.io/badge/Works%20with-Cursor-blue.svg)](https://cursor.com)
 [![Works with Claude Code](https://img.shields.io/badge/Works%20with-Claude%20Code-orange.svg)](https://claude.ai/code)
@@ -12,9 +12,9 @@ Built by a PM who uses this system every day to manage two product domains at a 
 
 ## Editor Compatibility
 
-PM OS works with any AI editor that can load context files. Pick the one you use:
+Cadence OS works with any AI editor that can load context files. Pick the one you use:
 
-| Editor | How PM OS loads | Experience |
+| Editor | How Cadence OS loads | Experience |
 |--------|----------------|------------|
 | **[Cursor](https://cursor.com)** | Auto-loads `.cursor/rules/*.mdc` files | Full — rules, skills, and MCP integrations work natively |
 | **[Claude Code](https://claude.ai/code)** | Reads `CLAUDE.md` as workspace instructions | Full — all workflows available via natural language commands |
@@ -24,14 +24,14 @@ PM OS works with any AI editor that can load context files. Pick the one you use
 
 ## See It In Action
 
-**Without PM OS** — generic AI output:
+**Without Cadence OS** — generic AI output:
 ```
 User: "Create a PRD for subscription pause"
 AI:   [Generic 2-page document with no product context, wrong terminology,
        misaligned metrics, no connection to company strategy]
 ```
 
-**With PM OS** — context-aware, strategy-aligned output:
+**With Cadence OS** — context-aware, strategy-aligned output:
 ```
 User: "Create a PRD for subscription pause"
 AI:   [Reads your product vision, KPIs, terminology, and architecture]
@@ -48,7 +48,7 @@ See [`documents/_EXAMPLE-ONE-PAGER.md`](documents/_EXAMPLE-ONE-PAGER.md) for an 
 
 ## What Pain This Removes
 
-| Problem | How PM OS Solves It |
+| Problem | How Cadence OS Solves It |
 |---------|---------------------|
 | **Context scattered across 6-8 tools** | One workspace with persistent memory. The AI resumes where yesterday left off. |
 | **30 min every morning reconstructing state** | Morning briefing pulls calendar, meetings, Jira, and commitments automatically. |
@@ -72,7 +72,7 @@ Fork the repo, fill in `product-context.mdc` with your product details, and star
 - 14 document templates (PRD, One-Pager, User Stories, RICE, Risk Analysis, Lean Canvas, Roadmap, Epic Plan, KPI-Revenue, Status Update, Personas, Positioning, User Journey, Feature Docs)
 - 6 multi-perspective reviewers (Engineer, Executive, User Researcher, Data Analyst, Customer, Customer Success)
 - 6 strategy frameworks (Rumelt, Gibson Biddle DHM, Devil's Advocate, Impact Estimation, SWOT, Presentation Best Practices)
-- PM coaching (automatic next-step suggestions, career insights)
+- Cadence coaching (automatic next-step suggestions, career insights)
 
 ### Tier 2 — Personal OS (15 minutes)
 
@@ -82,7 +82,7 @@ Set up the planning system and daily workflows.
 - Morning briefing, daily review, weekly review skills
 - Meeting notes processor with person page updates
 - Meeting prep with automatic context loading (person pages, open commitments, talking points)
-- Level Up feature (discover unused PM OS capabilities)
+- Level Up feature (discover unused Cadence OS capabilities)
 - Toolkit improvement capture and ranking
 - Planning hierarchy: quarter goals -> week priorities -> daily tasks
 - Commitment tracker with staleness detection
@@ -117,8 +117,8 @@ To install an MCP server: in Cursor go to **Settings > MCP > Add Server**; in Cl
 ### 1. Get the code
 
 ```bash
-git clone https://github.com/paulophl94/pm-os.git
-cd pm-os
+git clone https://github.com/paulophl94/cadence-os.git
+cd cadence-os
 ```
 
 Open the folder in your AI editor of choice ([Cursor](https://cursor.com), [Claude Code](https://claude.ai/code), or another AI-enabled editor).
@@ -138,7 +138,7 @@ This opens the **[Interactive Onboarding Guide](ONBOARDING.html)** in your brows
 4. Initial stakeholder person pages
 5. Quarter goals and week priorities
 
-The onboarding guide covers everything — how Agent Mode works and how to talk to PM OS in natural language, with instructions for both Cursor and Claude Code.
+The onboarding guide covers everything — how Agent Mode works and how to talk to Cadence OS in natural language, with instructions for both Cursor and Claude Code.
 
 Or edit `product-context.mdc` manually — replace the `<!-- TODO -->` markers with your product details.
 
@@ -237,7 +237,7 @@ Work backwards from impact: *What would make you incredibly satisfied three mont
 
 ## The System That Improves Itself
 
-PM OS captures learnings and improves over time:
+Cadence OS captures learnings and improves over time:
 
 - **Daily reviews** capture what worked and what didn't -> stored in `learnings/`
 - **Weekly reviews** synthesize patterns across meetings and decisions
@@ -251,13 +251,13 @@ Day 1: helpful but generic. Week 2: knows your preferences. Month 1: adapted to 
 ## Project Structure
 
 ```
-pm-os/
+cadence-os/
 ├── .cursor/
 │   ├── rules/                     # AI rules and document templates
 │   │   ├── product-context.mdc    # YOUR product (fill this first)
 │   │   ├── people-context.mdc     # Auto-inject person context
-│   │   ├── pm-coach.mdc           # Coaching protocols
-│   │   ├── pm-workflows.mdc       # Document generation workflows
+│   │   ├── cadence-coach.mdc      # Coaching protocols
+│   │   ├── cadence-workflows.mdc  # Document generation workflows
 │   │   ├── session-protocol.mdc   # Session-start checks
 │   │   ├── formatting-preferences.mdc
 │   │   ├── progress-tracker.mdc   # Initiative progress
@@ -315,9 +315,9 @@ pm-os/
 
 ---
 
-## Why PM OS vs Other Options
+## Why Cadence OS vs Other Options
 
-| Dimension | PM OS | Dex | Notion Templates | ChatGPT |
+| Dimension | Cadence OS | Dex | Notion Templates | ChatGPT |
 |-----------|-------|-----|-------------------|---------|
 | **Built for** | Product Managers | Any role (31 presets) | Anyone | Anyone |
 | **Platform** | Cursor, Claude Code, other AI editors | Claude Code + Cursor | Notion | Browser |

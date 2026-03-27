@@ -1,10 +1,10 @@
 ---
 description: Progress Tracker - Track initiative progress across phases
-globs: ["pm-progress.json"]
+globs: ["cadence-progress.json"]
 ---
 # Progress Tracker
 
-This module manages progress tracking for **product initiatives** via `pm-progress.json`.
+This module manages progress tracking for **product initiatives** via `cadence-progress.json`.
 
 **Note:** Don't confuse with `to_do's/progress-log.md` (personal daily briefing log) or `to_do's/tasks.md` (daily tasks). This tracker is about **initiative phases**, not personal tasks.
 
@@ -51,7 +51,7 @@ Each initiative goes through the following phases:
 
 ### When Creating a Document
 
-After generating any document, update `pm-progress.json`:
+After generating any document, update `cadence-progress.json`:
 
 1. Check if initiative exists
 2. If not, create a new entry

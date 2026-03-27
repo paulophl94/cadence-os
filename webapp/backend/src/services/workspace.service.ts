@@ -22,7 +22,7 @@ export class WorkspaceService {
   private workspacePath: string;
 
   constructor() {
-    this.workspacePath = process.env.WORKSPACE_PATH || '/Users/nuver/Desktop/pm-os';
+    this.workspacePath = process.env.WORKSPACE_PATH || '/Users/nuver/Desktop/cadence-os';
   }
 
   async getWorkspaceInfo(): Promise<WorkspaceInfo> {
@@ -103,14 +103,18 @@ export class WorkspaceService {
           priority = 'P3';
         }
 
+        const cdIdMatch = text.match(/\(\^cd-\d{8}-\d{3}\)/);
+        const stableId = cdIdMatch ? cdIdMatch[0].slice(1, -1) : `task-${taskId}`;
+
         tasks.push({
-          id: `task-${taskId++}`,
+          id: stableId,
           text,
           completed,
           priority,
           section: currentSection,
           starred,
         });
+        taskId++;
       }
     }
 
@@ -157,7 +161,7 @@ export class WorkspaceService {
       const text = taskMatch[2];
 
       const whatMatch = text.match(/^(.+?)\s*->\s*(to|from)\s+(.+?)\s*->\s*since\s+(\d{4}-\d{2}-\d{2})/);
-      const idMatch = text.match(/\((\^pm-\d{8}-\d{3})\)/);
+      const idMatch = text.match(/\((\^cd-\d{8}-\d{3})\)/);
       const contextMatch = text.match(/context:\s*([^(]+)/);
 
       const commitment: Commitment = {
@@ -187,7 +191,7 @@ export class WorkspaceService {
   // ============ INITIATIVES METHODS ============
 
   async getInitiatives(): Promise<InitiativeData> {
-    const filePath = path.join(this.workspacePath, 'pm-progress.json');
+    const filePath = path.join(this.workspacePath, 'cadence-progress.json');
     try {
       const content = await fs.readFile(filePath, 'utf-8');
       const data = JSON.parse(content);
@@ -393,8 +397,8 @@ export class WorkspaceService {
     const content = await fs.readFile(filePath, 'utf-8');
     const lines = content.split('\n');
 
-    // Parse the taskId to get the index
-    const taskIndex = parseInt(taskId.replace('task-', ''));
+    const isCdId = taskId.startsWith('^cd-');
+    const taskIndex = isCdId ? -1 : parseInt(taskId.replace('task-', ''));
     let currentTaskIndex = 0;
     let found = false;
     let taskLineIndex = -1;
@@ -403,11 +407,9 @@ export class WorkspaceService {
     let isCurrentlyStarred = false;
     let wasCompleted = false;
 
-    // First pass: find the task and its current section
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
       
-      // Track current section
       if (line.startsWith('## ')) {
         currentSection = line.replace('## ', '').trim();
         continue;
@@ -416,13 +418,16 @@ export class WorkspaceService {
       const taskMatch = line.match(/^- \[([ x])\] (.+)$/);
       
       if (taskMatch) {
-        if (currentTaskIndex === taskIndex) {
+        const matchById = isCdId
+          ? line.includes(`(${taskId})`)
+          : currentTaskIndex === taskIndex;
+
+        if (matchById) {
           taskLineIndex = i;
           wasCompleted = taskMatch[1] === 'x';
           taskText = taskMatch[2];
           isCurrentlyStarred = taskText.startsWith('★ ') || taskText.startsWith('⭐ ');
           
-          // Remove star prefix if present for clean text
           if (isCurrentlyStarred) {
             taskText = taskText.replace(/^[★⭐]\s*/, '');
           }
@@ -546,7 +551,8 @@ export class WorkspaceService {
     const content = await fs.readFile(filePath, 'utf-8');
     const lines = content.split('\n');
 
-    const taskIndex = parseInt(taskId.replace('task-', ''));
+    const isCdId = taskId.startsWith('^cd-');
+    const taskIndex = isCdId ? -1 : parseInt(taskId.replace('task-', ''));
     let currentTaskIndex = 0;
     let found = false;
 
@@ -555,7 +561,10 @@ export class WorkspaceService {
       const taskMatch = line.match(/^- \[([ x])\] (.+)$/);
       
       if (taskMatch) {
-        if (currentTaskIndex === taskIndex) {
+        const matchById = isCdId
+          ? line.includes(`(${taskId})`)
+          : currentTaskIndex === taskIndex;
+        if (matchById) {
           let text = taskMatch[2];
           const isCurrentlyStarred = text.startsWith('★ ') || text.startsWith('⭐ ');
           
@@ -1342,6 +1351,41 @@ export class WorkspaceService {
     
     return items;
   }
+}
+
+// Schema types for cadence-progress.json
+interface CadenceProgressSchema {
+  initiatives: Record<string, {
+    name: string;
+    status: 'not_started' | 'in_progress' | 'paused' | 'completed' | 'cancelled';
+    priority: 'P1' | 'P2' | 'P3';
+    quarter: string;
+    current_phase: 'research' | 'one_pager' | 'requirements' | 'user_stories' | 'review' | 'handoff' | '';
+    completed_phases: string[];
+    documents: Array<{ type: string; path: string; status: string; date: string }>;
+    next_actions: string[];
+    blockers: string[];
+  }>;
+  metadata: {
+    version: string;
+    last_updated: string;
+  };
+}
+
+// Schema types for onboarding-state.json
+interface OnboardingStateSchema {
+  onboarding: {
+    started: string;
+    language: 'en' | 'pt-BR' | 'es-LATAM';
+    tier: 'quick' | 'full' | 'power';
+    role: string | null;
+    completed_steps: string[];
+    pending_steps: string[];
+    status: 'in_progress' | 'completed';
+    context_depth: Record<string, unknown>;
+    mcps_configured: string[];
+    mcps_suggested: string[];
+  };
 }
 
 // Types for progress log

@@ -40,7 +40,7 @@ Extract and organize:
 
 ### Step 3: Generate Output
 
-Create a structured document. **Assign stable task IDs** (format `^pm-YYYYMMDD-NNN`) to all action items for cross-file sync:
+Create a structured document. **Assign stable task IDs** (format `^cd-YYYYMMDD-NNN`) to all action items for cross-file sync:
 
 ```markdown
 # Meeting Summary: [Title/Topic]
@@ -72,8 +72,8 @@ Create a structured document. **Assign stable task IDs** (format `^pm-YYYYMMDD-N
 
 | Task | Owner | Due Date | Priority |
 |------|-------|----------|----------|
-| [ ] [Task 1] (^pm-YYYYMMDD-001) | [Name] | [Date] | P1/P2/P3 |
-| [ ] [Task 2] (^pm-YYYYMMDD-002) | [Name] | [Date] | P1/P2/P3 |
+| [ ] [Task 1] (^cd-YYYYMMDD-001) | [Name] | [Date] | P1/P2/P3 |
+| [ ] [Task 2] (^cd-YYYYMMDD-002) | [Name] | [Date] | P1/P2/P3 |
 
 ---
 
@@ -128,13 +128,13 @@ After processing, **automatically** update person pages for key participants:
 - Use this format per entry:
 
 ```markdown
-- [ ] [What] -> to [Who] -> since [YYYY-MM-DD] -> context: [Meeting title] (^pm-YYYYMMDD-NNN)
+- [ ] [What] -> to [Who] -> since [YYYY-MM-DD] -> context: [Meeting title] (^cd-YYYYMMDD-NNN)
 ```
 
 **Commitment extraction rules:**
 - Scan for phrases: "I'll", "I will", "I can", "let me", "I'll send", "I'll follow up", "I'll share", "I'll schedule"
 - Scan for assignments to others: "[Name] will", "[Name] to", "can you", "please send", "action on [Name]"
-- Each commitment gets the same `^pm-` ID as the corresponding action item
+- Each commitment gets the same `^cd-` ID as the corresponding action item
 - If a commitment doesn't map to an existing action item, create a new ID for it
 
 ### Step 6: Suggest Follow-ups

@@ -1,6 +1,8 @@
-# Contributing to PM OS
+# Contributing to Cadence OS
 
-Thanks for your interest in improving PM OS. This guide covers the main ways to contribute.
+Thanks for your interest in improving Cadence OS. This guide covers the main ways to contribute.
+
+**Before contributing**, read `ARCHITECTURE.md` to understand the system layers, data model, and design decisions.
 
 ## Ways to Contribute
 
@@ -69,4 +71,4 @@ Add a markdown file to `frameworks/` and update `frameworks/README.md`.
 
 ## Questions?
 
-Open a [GitHub Issue](https://github.com/paulophl94/pm-os/issues) or start a [Discussion](https://github.com/paulophl94/pm-os/discussions).
+Open a [GitHub Issue](https://github.com/paulophl94/cadence-os/issues) or start a [Discussion](https://github.com/paulophl94/cadence-os/discussions).

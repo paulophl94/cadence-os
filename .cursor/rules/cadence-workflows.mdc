@@ -37,7 +37,7 @@ Automated workflows for product document generation. Follow these protocols when
    - Save in: `documents/ONE-PAGER-[feature-slug]-[YYYY-MM-DD].md`
 
 5. **Update Progress Tracking**
-   - Register in `pm-progress.json`
+   - Register in `cadence-progress.json`
 
 ---
 
@@ -134,7 +134,7 @@ Automated workflows for product document generation. Follow these protocols when
 After generating ANY document in `documents/`, automatically execute this checklist:
 
 ### 1. Progress Tracking (required)
-Update `pm-progress.json` (see `.cursor/rules/progress-tracker.mdc`)
+Update `cadence-progress.json` (see `.cursor/rules/progress-tracker.mdc`)
 
 ### 2. Person Pages (if applicable)
 If the document mentions people by name, check/create person pages in `context/people/`
@@ -142,7 +142,7 @@ If the document mentions people by name, check/create person pages in `context/p
 ### 3. Commitments (if applicable)
 If the document contains action items with owners, add to `to_do's/commitments.md`
 
-### 4. Next Step (via pm-coach Protocol 1)
+### 4. Next Step (via cadence-coach Protocol 1)
 Suggest next step per the capability map
 
-**Rules:** Steps 1-3 are automatic (execute without asking). Step 4 follows pm-coach protocol.
+**Rules:** Steps 1-3 are automatic (execute without asking). Step 4 follows cadence-coach protocol.

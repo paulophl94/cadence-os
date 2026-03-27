@@ -4,8 +4,6 @@ alwaysApply: true
 ---
 # Session Protocol
 
-> **Editor note:** This is the canonical source. For editors without `.mdc` support, `CLAUDE.md` references this file.
-
 Silent protocol executed on the first interaction of each conversation.
 
 ## Session Start (silent)
@@ -18,7 +16,7 @@ Silently read these files to establish strategic awareness for the entire conver
 
 1. `global-context/shared/pillars.md` — know the strategic pillars (if exists)
 2. `to_do's/week-priorities.md` — know the current week's Top 3 (if exists)
-3. `pm-progress.json` — know active initiatives and their phases (metadata only)
+3. `cadence-progress.json` — know active initiatives and their phases (metadata only)
 
 **Purpose:** Every conversation should be strategically aware. This context informs task prioritization, document alignment, and coaching suggestions without the user needing to provide it.
 
@@ -29,7 +27,7 @@ Silently read these files to establish strategic awareness for the entire conver
 1. **Incomplete onboarding** — Check if `to_do's/learnings/onboarding-state.json` exists with `"status": "in_progress"`. If so, flag with the last completed step so the user can resume.
 2. **Task staleness** — Read `to_do's/tasks.md`, identify P1 tasks pending >5 days -> flag
 3. **Commitment staleness** — Read `to_do's/commitments.md`, identify commitments >3 days without update -> flag with person name and original context
-4. **Initiative staleness** — Read `pm-progress.json`, identify `in_progress` initiatives where metadata `last_updated` is >7 days ago -> flag with current phase
+4. **Initiative staleness** — Read `cadence-progress.json`, identify `in_progress` initiatives where metadata `last_updated` is >7 days ago -> flag with current phase
 5. **Today's briefing** — Check if `to_do's/briefings/YYYY-MM-DD.md` exists for today; if not, suggest morning briefing
 
 **Rules:**
@@ -49,6 +47,25 @@ Silently read these files to establish strategic awareness for the entire conver
 - Initiative "Z" without progress for 12 days (phase: requirements)
 - Today's briefing not done yet — run morning briefing?
 ```
+
+### Phase 3: Workspace Health Score (silent, for internal use)
+
+Compute a health score to inform coaching and suggestions. Do NOT display unless the user asks (`/setup`, `workspace health`, `how's my setup?`).
+
+**Scoring dimensions (0-100 each):**
+
+1. **Context completeness** — Count filled fields in `product-context.mdc` (8 fields in Profile + Product Identity). Score = (filled / 8) * 100.
+2. **Domain depth** — Check `global-context/` for non-`shared` folders with at least one populated file. Score: 0 (none), 50 (folders exist but empty), 100 (at least one domain file has content).
+3. **Operational freshness** — Score based on recency: last briefing within 2 days (100), within 5 days (50), older (0). Factor in last review and commitment update.
+4. **Usage diversity** — From `to_do's/learnings/usage-log.md`: count distinct features used. Score = min(100, (distinct_features / 10) * 100).
+
+**Workspace Health = average of the 4 dimensions.**
+
+**Use this score to:**
+- When health < 40: suggest `/setup` in staleness alerts
+- When health < 60: suggest specific improvements during next-step suggestions
+- When health >= 80: suggest advanced features via "level up"
+- Include in weekly review output when the weekly-review skill runs
 
 ## Tool Availability (Graceful Degradation)
 

@@ -1,0 +1,45 @@
+---
+description: "Coach on-demand protocols — Level Up and Skill Rating. Triggered by 'level up', 'discover features', 'what else can I do', or after completing a skill."
+alwaysApply: false
+---
+# Cadence Coach — On-Demand Protocols
+
+## Protocol 5: Level Up
+
+When the user triggers "level up", "discover features", or "what else can I do":
+
+1. Read `to_do's/learnings/usage-log.md`
+2. Identify which features have been used and which haven't
+3. Based on the Feature Discovery Map, suggest 2-3 features the user hasn't tried yet that are natural next steps from their current usage
+4. For each suggestion, include: what it does, why it's relevant now, and a copyable command to try it
+
+**Format:**
+
+```
+**Level Up Suggestions:**
+
+Based on your usage, here are capabilities you haven't explored yet:
+
+1. **[Feature]** — [What it does]. Relevant now because [reason].
+   → Try: `[copyable command]`
+
+2. **[Feature]** — [What it does].
+   → Try: `[copyable command]`
+```
+
+**Rules:**
+- Maximum 3 suggestions (avoid overwhelming)
+- Prioritize features that build on what the user already does
+- If the user has used everything, congratulate and suggest deeper usage patterns
+
+## Protocol 6: Skill Rating (optional)
+
+After completing morning-briefing, daily-review, weekly-review, or meeting-notes, ask:
+
+**"Useful? (1-5)"**
+
+- If user responds with number: log in `to_do's/learnings/skill-ratings.md`
+- If ignored or changes subject: don't insist, move on
+- Max 1 rating question per session
+
+**Skip:** if user says "skip ratings"

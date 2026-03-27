@@ -44,4 +44,4 @@ Dia produtivo com foco em execução. Checkout one-click avançou bem — protó
 ---
 *Review feito em: 2026-03-20 18:45*
 
-*Gerado pelo PM OS — [Daily Review Skill](../.cursor/skills/daily-review/SKILL.md)*
+*Gerado pelo Cadence OS — [Daily Review Skill](../.cursor/skills/daily-review/SKILL.md)*

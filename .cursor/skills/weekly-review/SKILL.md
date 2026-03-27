@@ -35,7 +35,7 @@ Read: @to_do's/quarter-goals.md (quarter-level progress)
 Read: @to_do's/commitments.md (open and completed commitments)
 Read: @to_do's/tasks.md (current state of tasks)
 Read: @to_do's/learnings/ (preferences.md and patterns.md, if exist)
-Read: @to_do's/toolkit-backlog.md (pending toolkit improvements)
+Read: @to_do's/toolkit-improvements.md (pending toolkit improvements)
 Read: @to_do's/learnings/usage-log.md (skill/template usage tracking)
 Read: @to_do's/learnings/career-evidence.md (career evidence, if exists)
 ```
@@ -198,7 +198,9 @@ If not a quarter boundary, skip this step silently.
 
 Read `@to_do's/toolkit-improvements.md` and briefly surface:
 - Total improvement ideas captured
-- Top 1-2 by potential impact (if any have been scored)
+- Top 1-2 by `(Impact * Mentions) / Effort` ratio
+- Items with 3+ mentions (repeated friction points)
+- Items pending for 4+ weeks
 - Suggest: "Want to review and implement a toolkit improvement this week?"
 
 ### Step 8: Update Week Priorities
@@ -224,21 +226,7 @@ If the user shared learnings or strategic insights:
 1. Append to `@to_do's/learnings/preferences.md` (if about working style)
 2. Append to `@to_do's/learnings/patterns.md` (if about errors or anti-patterns)
 
-### Step 9: Surface Toolkit Improvements
-
-Read `@to_do's/toolkit-backlog.md` and surface actionable improvements:
-
-1. List top 3 pending improvements by impact (H > M > L)
-2. Ask: "Quer implementar alguma dessas melhorias?"
-3. If any improvement has been pending for 4+ weeks, flag it
-
-Format:
-> **Toolkit Backlog — Top 3 pendentes:**
-> 1. `^imp-XXX` [Description] (Impacto: H, há X dias)
-> 2. `^imp-XXX` [Description] (Impacto: M, há X dias)
-> 3. `^imp-XXX` [Description] (Impacto: M, há X dias)
-
-### Step 10: Update Usage Log
+### Step 11: Update Usage Log
 
 Read `@to_do's/learnings/usage-log.md` and update the summary section:
 
@@ -246,13 +234,13 @@ Read `@to_do's/learnings/usage-log.md` and update the summary section:
 2. Identify templates/skills never used in the last 30 days
 3. Generate a "Sugestão da semana" — recommend 1 unused template or skill with a brief reason why it would be useful based on the week's work
 
-### Step 11: Skill Ratings Summary
+### Step 12: Skill Ratings Summary
 
 Read `@to_do's/learnings/skill-ratings.md` (if exists) and surface skills with average rating <3:
 
 > **Skills com rating baixo esta semana:** [skill-name] (media: X.X) — investigar?
 
-### Step 12: Notify User
+### Step 13: Notify User
 
 > **Weekly review completo!**
 >
@@ -260,7 +248,8 @@ Read `@to_do's/learnings/skill-ratings.md` (if exists) and surface skills with a
 > - Quarter: [on track / behind] com X semanas restantes
 > - Proxima semana: [Top priority #1]
 > - [Stale commitments warning if any]
-> - Toolkit: X melhorias pendentes (top: [top improvement])
+> - Toolkit: X melhorias pendentes (top: [top improvement], [N] com mencoes repetidas)
+> - Workspace health: XX/100 [brief note if < 60]
 > - Sugestao da semana: experimentar [unused template/skill]
 > - Review salvo em `to_do's/weekly-reviews/YYYY-WXX.md`
 

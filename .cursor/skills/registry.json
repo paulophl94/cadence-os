@@ -1,0 +1,172 @@
+{
+  "version": "1.0.0",
+  "skills": [
+    {
+      "id": "morning-briefing",
+      "name": "Morning Briefing",
+      "category": "daily-workflow",
+      "triggers": ["morning briefing", "start the day", "what's on today"],
+      "inputs": [
+        ".cursor/rules/product-context.mdc",
+        "global-context/{domain}/DOMAIN-VISION.md",
+        "global-context/{domain}/ROADMAP.md",
+        "global-context/shared/pillars.md",
+        "global-context/shared/assumptions.md",
+        "to_do's/quarter-goals.md",
+        "to_do's/week-priorities.md",
+        "to_do's/commitments.md",
+        "to_do's/tasks.md",
+        "cadence-progress.json",
+        "context/people/*.md"
+      ],
+      "outputs": [
+        "to_do's/briefings/YYYY-MM-DD.md",
+        "to_do's/progress-log.md",
+        "to_do's/tasks.md"
+      ],
+      "integrations": ["calendar", "fireflies", "jira", "browser"],
+      "estimated_time": "3-5 min",
+      "depends_on": []
+    },
+    {
+      "id": "daily-review",
+      "name": "Daily Review",
+      "category": "daily-workflow",
+      "triggers": ["daily review", "end of day", "close the day"],
+      "inputs": [
+        "to_do's/tasks.md",
+        "to_do's/briefings/YYYY-MM-DD.md",
+        "to_do's/week-priorities.md",
+        "to_do's/commitments.md",
+        "cadence-progress.json"
+      ],
+      "outputs": [
+        "to_do's/reviews/YYYY-MM-DD.md",
+        "to_do's/tasks.md",
+        "to_do's/learnings/preferences.md",
+        "to_do's/learnings/patterns.md"
+      ],
+      "integrations": [],
+      "estimated_time": "5-10 min",
+      "depends_on": ["morning-briefing"]
+    },
+    {
+      "id": "weekly-review",
+      "name": "Weekly Review",
+      "category": "weekly-workflow",
+      "triggers": ["weekly review", "close the week", "friday review"],
+      "inputs": [
+        "to_do's/briefings/*",
+        "to_do's/reviews/*",
+        "to_do's/week-priorities.md",
+        "to_do's/quarter-goals.md",
+        "to_do's/commitments.md",
+        "to_do's/tasks.md",
+        "to_do's/learnings/*",
+        "to_do's/toolkit-improvements.md"
+      ],
+      "outputs": [
+        "to_do's/weekly-reviews/YYYY-WXX.md",
+        "to_do's/week-priorities.md",
+        "to_do's/quarter-goals.md"
+      ],
+      "integrations": ["fireflies"],
+      "estimated_time": "10-15 min",
+      "depends_on": ["daily-review"]
+    },
+    {
+      "id": "meeting-notes",
+      "name": "Meeting Notes Processor",
+      "category": "meetings",
+      "triggers": ["meeting notes", "process notes", "call with"],
+      "inputs": [
+        "context/people/_TEMPLATE.md"
+      ],
+      "outputs": [
+        "documents/MEETING-[type]-[topic]-[date].md",
+        "context/people/*.md",
+        "to_do's/commitments.md"
+      ],
+      "integrations": [],
+      "estimated_time": "3-5 min",
+      "depends_on": []
+    },
+    {
+      "id": "meeting-prep",
+      "name": "Meeting Prep",
+      "category": "meetings",
+      "triggers": ["prep for", "prepare for 1:1", "meeting prep", "brief me for"],
+      "inputs": [
+        "context/people/*.md",
+        "to_do's/commitments.md",
+        "documents/MEETING-*.md",
+        "cadence-progress.json",
+        "to_do's/week-priorities.md",
+        "global-context/shared/pillars.md"
+      ],
+      "outputs": [],
+      "integrations": ["calendar"],
+      "estimated_time": "2-3 min",
+      "depends_on": []
+    },
+    {
+      "id": "competitor-analysis",
+      "name": "Competitor Analysis",
+      "category": "analysis",
+      "triggers": ["analyze competitor", "competitive analysis", "battlecard"],
+      "inputs": [],
+      "outputs": [
+        "documents/COMPETITIVE-[name]-[date].md"
+      ],
+      "integrations": ["web-search"],
+      "estimated_time": "10-15 min",
+      "depends_on": []
+    },
+    {
+      "id": "metrics-analyzer",
+      "name": "Metrics Impact Analyzer",
+      "category": "analysis",
+      "triggers": ["analyze metric impact", "metrics analysis"],
+      "inputs": [],
+      "outputs": [
+        "documents/METRICS-[feature]-[date].md"
+      ],
+      "integrations": [],
+      "estimated_time": "10-15 min",
+      "depends_on": []
+    },
+    {
+      "id": "atlassian-helper",
+      "name": "Atlassian Helper",
+      "category": "integrations",
+      "triggers": ["export to jira", "create jira tickets", "confluence export"],
+      "inputs": [
+        "documents/*.md"
+      ],
+      "outputs": [
+        "documents/JIRA-[feature]-[date].md"
+      ],
+      "integrations": ["atlassian"],
+      "estimated_time": "5-10 min",
+      "depends_on": []
+    },
+    {
+      "id": "career-review",
+      "name": "Career Review",
+      "category": "career",
+      "triggers": ["career review", "self-review", "promotion assessment"],
+      "inputs": [
+        "to_do's/learnings/career-evidence.md",
+        "to_do's/quarter-goals.md",
+        "to_do's/weekly-reviews/*",
+        "to_do's/learnings/preferences.md"
+      ],
+      "outputs": [
+        "documents/CAREER-[type]-[date].md"
+      ],
+      "integrations": [],
+      "estimated_time": "15-20 min",
+      "depends_on": ["weekly-review"]
+    }
+  ]
+}

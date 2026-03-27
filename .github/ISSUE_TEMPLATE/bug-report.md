@@ -13,7 +13,7 @@ A clear description of the bug.
 e.g., `prd-template.mdc`, `morning-briefing` skill, `session-protocol.mdc`
 
 **Steps to reproduce:**
-1. Open PM OS in Cursor
+1. Open Cadence OS in Cursor
 2. Type "..."
 3. The AI does/doesn't do...
 

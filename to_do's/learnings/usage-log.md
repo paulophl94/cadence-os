@@ -1,4 +1,4 @@
-# PM OS Usage Log
+# Cadence OS Usage Log
 
 Tracks which features and commands have been used. Updated automatically by the post-document protocol and skill completions.
 

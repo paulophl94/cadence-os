@@ -56,7 +56,7 @@ Search `documents/MEETING-*.md` for the person's name to find recent discussions
 ### Step 4: Load Strategic Context
 
 ```
-Read: @pm-progress.json (initiatives this person is involved in)
+Read: @cadence-progress.json (initiatives this person is involved in)
 Read: @to_do's/week-priorities.md (alignment opportunities)
 Read: @global-context/shared/pillars.md (if exists — strategic context)
 ```
@@ -86,10 +86,10 @@ Present a concise prep brief:
 ## Open Items
 
 ### You owe them
-- [ ] [Commitment] — since [Date] — **X days pending** (^pm-ID)
+- [ ] [Commitment] — since [Date] — **X days pending** (^cd-ID)
 
 ### They owe you
-- [ ] [Commitment] — since [Date] — **X days pending** (^pm-ID)
+- [ ] [Commitment] — since [Date] — **X days pending** (^cd-ID)
 
 ### Open questions from past meetings
 - [Question still unresolved]
@@ -104,7 +104,7 @@ Based on open items, recent context, and current priorities:
 
 ## Strategic Alignment
 
-- **Relevant initiatives:** [From pm-progress.json]
+- **Relevant initiatives:** [From cadence-progress.json]
 - **Week priority connection:** [From week-priorities.md]
 - **Pillar connection:** [From pillars.md]
 ```

@@ -63,7 +63,7 @@ Read: @to_do's/commitments.md (if exists)
 Read the initiative tracker to surface document pipeline status:
 
 ```
-Read: @pm-progress.json
+Read: @cadence-progress.json
 ```
 
 **Extract for each active initiative** (`status: in_progress` or `blocked`):
@@ -72,7 +72,7 @@ Read: @pm-progress.json
 - Documents with `status: draft` — these need action
 - Blocked initiatives — surface blockers prominently
 
-**If pm-progress.json is empty or only has examples:** Note "No active initiatives tracked — create one with `Create new initiative [name]`."
+**If cadence-progress.json is empty or only has examples:** Note "No active initiatives tracked — create one with `Create new initiative [name]`."
 
 ### Step 4: Load Person Pages for Today's Meetings
 
@@ -178,7 +178,7 @@ date: YYYY-MM-DD
 **Stale items (staleness detection):**
 - Check `@to_do's/tasks.md` for tasks pending 5+ days
 - Check `@to_do's/commitments.md` for commitments >3 days old
-- Check `@pm-progress.json` for initiatives >7 days without update
+- Check `@cadence-progress.json` for initiatives >7 days without update
 - Flag with warning and days pending
 
 **Critical actions:**
@@ -282,11 +282,46 @@ If any data source is unavailable, continue with what's available. The briefing 
 - "Morning briefing for [domain] only"
 - "Morning briefing P1 only"
 
+## Stale Skill Detection
+
+After generating the briefing, silently check `to_do's/learnings/usage-log.md` (if it exists):
+
+1. Identify skills/templates not used in the last 30 days
+2. Cross-reference with current work context (active initiatives, week priorities)
+3. If a relevant unused skill is found, add a one-line suggestion at the end of the briefing:
+
+```
+**Tip:** You haven't used [skill/template] in 30+ days. It could help with [current initiative/priority]. Try: `[command]`
+```
+
+Only suggest one skill per briefing. Don't suggest if the user has used all skills recently.
+
+## Cursor Tip (Progressive Learning)
+
+After generating the briefing, silently check `to_do's/learnings/onboarding-state.json` → `cursor_skills_learned` array (if it exists):
+
+If fewer than 5 skills are learned, pick ONE untaught skill from this list and add a one-line tip at the end of the briefing:
+
+| Skill ID | Not learned? Suggest this tip |
+|---|---|
+| `chat_and_modes` | **Cursor tip:** This chat has three modes — Agent (creates files), Ask (read-only analysis), and Plan (research then plan then execute). Switch from the mode picker at the top of the chat panel. |
+| `at_context` | **Cursor tip:** Type **@** in the chat to reference specific files or folders. Try `@documents/` to point me at your docs, or `@Web` to search the internet. |
+| `diffs` | **Cursor tip:** When I edit a file, you see a diff with green (added) and red (removed) lines. Accept or Reject each change — nothing saves until you approve. |
+| `rules_awareness` | **Cursor tip:** The templates that shape my output live in `.cursor/rules/`. Open any `.mdc` file in the sidebar to see how they work — 14 templates, 6 reviewer personas, all customizable. |
+| `plan_mode` | **Cursor tip:** For complex tasks (full PRD, roadmap, competitive analysis), try **Plan mode** — I research first, show a plan, and only execute after your approval. Toggle from the mode picker or press Shift+Tab. |
+
+**Rules:**
+- Only one tip per briefing
+- Rotate through untaught skills in order
+- Once all 5 are in `cursor_skills_learned`, stop showing tips
+- If the user acts on a tip (e.g., switches to Plan mode), add that skill to `cursor_skills_learned`
+- If `onboarding-state.json` doesn't exist or has no `cursor_skills_learned` field, skip this section
+
 ## Quality Checklist
 
 Before presenting the briefing:
 - [ ] Strategic context loaded (domain vision + roadmap, or noted as missing)
-- [ ] Initiative pipeline loaded from pm-progress.json (or noted as empty)
+- [ ] Initiative pipeline loaded from cadence-progress.json (or noted as empty)
 - [ ] Calendar events fetched (or error noted)
 - [ ] Meeting data fetched (or error noted)
 - [ ] Project tracker data fetched (or error noted)
@@ -297,5 +332,6 @@ Before presenting the briefing:
 - [ ] Today's Three: max 3 P1s (2 if 4+ meetings), connected to initiatives where applicable
 - [ ] Staleness check: tasks >5 days, commitments >3 days, initiatives >7 days flagged
 - [ ] Meeting prep: person pages + commitments cross-referenced for each attendee
+- [ ] Stale skill detection: check usage-log for unused skills relevant to current work
 - [ ] File saved to correct location
 - [ ] Webapp opened in browser (frontend + backend running)

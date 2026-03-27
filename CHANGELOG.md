@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to PM OS will be documented in this file.
+All notable changes to Cadence OS will be documented in this file.
 
 ## [Unreleased]
 
@@ -11,7 +11,7 @@ All notable changes to PM OS will be documented in this file.
 - Global context shared structure — strategic pillars (`pillars.md`) and assumptions (`assumptions.md`)
 - Webapp / PM Co-Pilot dashboard — React + Express local dashboard for briefings, tasks, commitments, initiatives, and people
 - Toolkit improvements system — captures and ranks workspace improvement ideas (`toolkit-improvements.md`)
-- Level Up feature — discovers unused PM OS capabilities based on usage history
+- Level Up feature — discovers unused Cadence OS capabilities based on usage history
 - `/improve` command — reviews and ranks toolkit improvement backlog
 - Example One-Pager document (`documents/_EXAMPLE-ONE-PAGER.md`)
 - GitHub issue templates (bug report, feature request, template submission)
@@ -30,7 +30,7 @@ All notable changes to PM OS will be documented in this file.
 - Staleness detection for tasks (>5 days) and commitments (>3 days)
 - Context Loading Protocol for strategy-aligned document generation
 - Context Generator wizard for guided setup
-- PM coaching protocols: next-step suggestions, career insights, workflow improvement capture
+- Cadence coaching protocols: next-step suggestions, career insights, workflow improvement capture
 - Session protocol with silent start-of-session checks
 - Global context templates: Domain Vision, KPIs, Roadmap, Architecture
 - Example PRD and One-Pager for reference

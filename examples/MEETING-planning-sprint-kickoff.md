@@ -79,4 +79,4 @@ Sprint 14 focado em checkout one-click mobile (US-1 e US-2) + bug fix de timezon
 *Processed: 2026-03-18*
 *Next meeting: 2026-03-21 14:00*
 
-*Gerado pelo PM OS — [Meeting Notes Skill](../.cursor/skills/meeting-notes/SKILL.md)*
+*Gerado pelo Cadence OS — [Meeting Notes Skill](../.cursor/skills/meeting-notes/SKILL.md)*

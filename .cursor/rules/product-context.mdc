@@ -1,59 +1,47 @@
 ---
-description: Product Context - Core product knowledge for all PM documents
+description: Product Context - Core product knowledge for all generated documents
 alwaysApply: true
 ---
 # Product Context
 
-> **Editor note:** This is the canonical source. For editors without `.mdc` support, `CLAUDE.md` references this file.
+Essential context for all interactions. The AI adapts to your role and product context to deliver relevant, tailored outputs.
 
-Essential context for all interactions. The AI responds as an experienced PM for your product.
+## Your Profile
+
+| Field | Value |
+|-------|-------|
+| **Name** | |
+| **Role** | |
+| **Company** | |
+| **Team** | |
 
 ## Product Identity
 
 | Field | Value |
 |-------|-------|
-| **Product** | <!-- e.g., "Acme Analytics" --> |
-| **Description** | <!-- e.g., "SaaS analytics platform helping e-commerce stores understand customer behavior" --> |
-| **Model** | <!-- e.g., "B2B SaaS" / "B2C" / "B2B2C" / "Marketplace" --> |
-| **Differentiator** | <!-- e.g., "Only analytics tool with native Shopify + WooCommerce integration and automated insights" --> |
+| **Product** | |
+| **Description** | |
+| **Model** | |
+| **Differentiator** | |
 
 ## Active Domains
 
-<!-- List your product domains/areas. Examples below. -->
-<!-- For a single-product team, remove Domain 2 and keep only one column. -->
-
 | | Domain 1 | Domain 2 |
 |---|----------|----------|
-| **Mission** | <!-- e.g., "Enable recurring revenue via native subscriptions" --> | <!-- e.g., "Let merchants sell B2B and D2C from one store" --> |
-| **Status** | <!-- e.g., "GA", "Beta", "Discovery", "Build" --> | <!-- e.g., "GA Q1 2026" --> |
-| **Jira/Linear** | <!-- e.g., "[SUB](https://your-org.atlassian.net/jira/...)" --> | <!-- link --> |
+| **Mission** | | |
+| **Status** | | |
+| **Jira/Linear** | | |
 | **Context** | `global-context/domain1/` | `global-context/domain2/` |
 | **Docs** | `documents/domain1/` | `documents/domain2/` |
 
-## Canonical Path Map
-
-Rules and skills use these paths. Replace `{domain}` with your domain name.
-
-| Alias | Path |
-|-------|------|
-| DOMAIN_VISION | `global-context/{domain}/DOMAIN-VISION.md` |
-| DOMAIN_KPIS | `global-context/{domain}/DOMAIN-KPIS.md` |
-| ROADMAP | `global-context/{domain}/ROADMAP.md` |
-| ARCHITECTURE | `global-context/{domain}/ARCHITECTURE.md` |
-| USERS | `context/USERS.md` |
-| TERMINOLOGY | `context/TERMINOLOGY.md` |
-| PEOPLE | `context/people/` |
-
 ## Working Preferences
 
-<!-- Customize these to match your style. Delete what doesn't apply. -->
-
 - **Tone:** Chief of Staff — direct, no fluff
-- **Language:** English <!-- or "Portuguese (BR)", "Spanish LATAM", etc. -->
+- **Language:** English
 - **Format:** Bullet points for scanning; tables for comparisons
 - **Routine:** Morning briefing to start the day; max 3 P1/day (2 if many meetings)
 - **Actions:** Specific and actionable, never generic
-- **Tools:** Jira/Linear, Slack <!-- list your actual tools -->
+- **Tools:** Jira/Linear, Slack
 - **Tone by audience:**
   - Default: Direct, concise
   - For executives: strategic framing, business impact first, numbers highlighted
@@ -74,9 +62,11 @@ Recognize natural command variants:
 | Show Tasks | "my tasks", "what's pending", "show to-do's" | Read to_do's/tasks.md |
 | Add Task | "remind me to X", "add task X", "to-do: X" | Add to tasks.md, infer priority |
 | Complete Task | "done with X", "completed X", "finished X" | Mark [x] in tasks.md |
-| Level Up | "level up", "what else can I do", "discover features" | Show unused PM OS capabilities based on usage-log |
-| Improve Toolkit | "improve toolkit", "improve pm-os", "what should we fix" | Review and rank toolkit-improvements.md |
+| Level Up | "level up", "what else can I do", "discover features" | Show unused capabilities based on usage-log |
+| Improve Toolkit | "improve toolkit", "improve cadence-os", "what should we fix" | Review and rank toolkit-improvements.md |
 | Assumptions | "assumptions", "what do we believe", "strategic bets" | Read/update global-context/shared/assumptions.md |
+| Onboarding | "/start", "get started", "onboarding" | Execute onboarding wizard (start.mdc) |
+| Setup Status | "/setup", "setup status", "workspace health" | Show setup completeness and re-onboard options |
 
 ## Anti-Patterns (avoid)
 
