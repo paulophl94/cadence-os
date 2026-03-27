@@ -31,6 +31,25 @@ Based on your usage, here are capabilities you haven't explored yet:
 - Maximum 3 suggestions (avoid overwhelming)
 - Prioritize features that build on what the user already does
 - If the user has used everything, congratulate and suggest deeper usage patterns
+- **MCP discovery:** If `to_do's/learnings/onboarding-state.json` exists and no MCPs are visibly configured (check Settings → Cursor Settings → MCP), always include a "Connect your tools" suggestion. Map to the user's workflow:
+
+```
+**Connect your tools** — This workspace can plug into Jira, Slack, Google Calendar,
+Fireflies, Figma, and more. Morning briefings pull your real schedule, meeting notes
+grab transcripts automatically, and you can post to Slack from the chat.
+→ Go to **Settings → Cursor Settings → MCP → Add new MCP server**
+→ Or say: `Help me connect [tool name]`
+```
+
+| Tool | MCP Server | What It Unlocks |
+|------|-----------|----------------|
+| Jira/Linear | Atlassian MCP / Linear MCP | Morning briefing pulls your board. Create/update tickets from chat. |
+| Calendar | Zapier MCP | Morning briefing shows today's schedule. Meeting prep triggers automatically. |
+| Meeting transcripts | Fireflies MCP | `Process meeting notes` grabs transcripts, extracts action items, updates person pages. |
+| Slack | Slack MCP | Send messages and share document summaries directly from chat. |
+| Google Docs/Sheets | Google Docs MCP / Sheets MCP | Export documents to Docs. Pull data from Sheets for analyses. |
+| Figma | Figma MCP | Reference design files during PRD and spec generation. |
+| Analytics | Amplitude MCP | Query metrics directly. Connect feature impact to real data in RICE analyses. |
 
 ## Protocol 6: Skill Rating (optional)
 

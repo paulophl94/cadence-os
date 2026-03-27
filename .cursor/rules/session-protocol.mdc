@@ -8,7 +8,7 @@ Silent protocol executed on the first interaction of each conversation.
 
 ## Session Start (silent)
 
-On the first response of each conversation, silently execute two phases:
+On the first response of each conversation, silently execute these phases:
 
 ### Phase 1: Load Strategic Context (silent, no output)
 
@@ -22,13 +22,32 @@ Silently read these files to establish strategic awareness for the entire conver
 
 **Rules:** Load silently. Never mention what was loaded. If files don't exist, skip gracefully.
 
-### Phase 2: Staleness Checks (alert only if issues found)
+### Phase 2: Incomplete Onboarding Recovery (first-paragraph interrupt)
 
-1. **Incomplete onboarding** — Check if `to_do's/learnings/onboarding-state.json` exists with `"status": "in_progress"`. If so, flag with the last completed step so the user can resume.
-2. **Task staleness** — Read `to_do's/tasks.md`, identify P1 tasks pending >5 days -> flag
-3. **Commitment staleness** — Read `to_do's/commitments.md`, identify commitments >3 days without update -> flag with person name and original context
-4. **Initiative staleness** — Read `cadence-progress.json`, identify `in_progress` initiatives where metadata `last_updated` is >7 days ago -> flag with current phase
-5. **Today's briefing** — Check if `to_do's/briefings/YYYY-MM-DD.md` exists for today; if not, suggest morning briefing
+Check if `to_do's/learnings/onboarding-state.json` exists with `"status": "in_progress"`. If so:
+
+1. Read the `started` date and calculate elapsed days since onboarding began.
+2. Read `pending_steps` and `tier` to estimate remaining time:
+   - Count remaining steps. Estimate ~2 min per remaining step (rough average across tiers).
+   - Cap the estimate at the tier's total time minus what's already done.
+3. **Display as the FIRST paragraph** of your response — before addressing the user's request:
+
+```
+You started the setup [yesterday / X days ago]. From where we stopped, it's ~[N] min left. Want to continue? (Or say "skip setup" to jump straight to work.)
+```
+
+4. Use the stored `language` field to write the recovery message in the user's chosen language (default to English if no language was set).
+5. After the recovery prompt, proceed with the user's actual request below it — never block the user.
+6. If the user says "skip setup", "skip", "pular", "saltar", or similar — set `status` to `skipped` in `onboarding-state.json` and don't prompt again.
+
+**Exception:** Don't show the recovery prompt if the user's first message is already "morning briefing", "daily review", `/start`, `onboarding`, or any trigger from `start.mdc` — those flows already handle incomplete onboarding.
+
+### Phase 3: Staleness Checks (alert only if issues found)
+
+1. **Task staleness** — Read `to_do's/tasks.md`, identify P1 tasks pending >5 days -> flag
+2. **Commitment staleness** — Read `to_do's/commitments.md`, identify commitments >3 days without update -> flag with person name and original context
+3. **Initiative staleness** — Read `cadence-progress.json`, identify `in_progress` initiatives where metadata `last_updated` is >7 days ago -> flag with current phase
+4. **Today's briefing** — Check if `to_do's/briefings/YYYY-MM-DD.md` exists for today; if not, suggest morning briefing
 
 **Rules:**
 - Never block the user's request — respond first, append alerts at the end
@@ -41,14 +60,13 @@ Silently read these files to establish strategic awareness for the entire conver
 ```
 ---
 **Quick attention:**
-- Onboarding started but not finished — say "/start" to pick up where you left off
 - Task "X" pending for 7 days (P1)
 - Commitment "Y" without update for 4 days (owed to [Person])
 - Initiative "Z" without progress for 12 days (phase: requirements)
 - Today's briefing not done yet — run morning briefing?
 ```
 
-### Phase 3: Workspace Health Score (silent, for internal use)
+### Phase 4: Workspace Health Score (silent, for internal use)
 
 Compute a health score to inform coaching and suggestions. Do NOT display unless the user asks (`/setup`, `workspace health`, `how's my setup?`).
 

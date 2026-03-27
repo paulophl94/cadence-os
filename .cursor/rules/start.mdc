@@ -4,7 +4,7 @@ alwaysApply: false
 ---
 # Onboarding Start
 
-This rule handles the first-time experience for new users. It orchestrates a conversational, hands-on onboarding with tier-based paths that respect the user's time.
+This rule handles the first-time experience for new users. It orchestrates a conversational, hands-on onboarding with tier-based paths that respect the user's time. Product value arrives in 3-4 interactions — editor teaching comes after.
 
 ## Re-Onboard Command (/setup)
 
@@ -56,252 +56,193 @@ For re-onboard: `/setup`, `redo setup`, `resume setup`, `setup status`, `configu
 
 Before starting, check two things:
 
-1. **Already configured?** — Check if `product-context.mdc` already has custom content (not the default `<!-- ... -->` placeholders). If it does, ask: "This workspace already has product context configured. Want to **start fresh** or **skip straight to the orientation**?" If starting fresh, begin from Step 0. If skipping, jump to Step 7 (Orientation).
+1. **Already configured?** — Check if `product-context.mdc` already has custom content (not the default `<!-- ... -->` placeholders). If it does, ask: "This workspace already has product context configured. Want to **start fresh** or **skip straight to the orientation**?" If starting fresh, begin from Step 0. If skipping, jump to Step 6 (Orientation).
 
-2. **Incomplete onboarding?** — Check if `to_do's/learnings/onboarding-state.json` exists with `"status": "in_progress"`. If so, read it and ask (in the stored language, or English if no language was set yet): "You started setting this up before but didn't finish. Want to pick up from where you left off ([last completed step])?" If yes, resume from the next pending step. If no, start fresh from Step 0.
+2. **Incomplete onboarding?** — Check if `to_do's/learnings/onboarding-state.json` exists with `"status": "in_progress"`. If so, read `started` date, `pending_steps`, `tier`, and `step_events`. The last completed step is the entry in `step_events` with the most recent `completed_at`. Calculate elapsed days and estimate remaining time (~2 min per remaining step). Ask (in the stored language, or English if no language was set yet): "You started the setup [yesterday / X days ago]. From where we stopped, it's ~[N] min left. Want to continue? (Or say 'skip setup' to start fresh.)" If yes, resume from the next pending step. If "skip setup" or "start fresh", clear `onboarding-state.json` and start from Step 0.
 
 ---
 
-## Step 0: Language Selection
+## Step 0: Language + Tier Selection
 
-This step is always in English, regardless of anything else.
+This step is always in English, regardless of anything else. Language and tier are asked together in a single message.
 
 **Display:**
 
-Before we begin — **what language would you like to use?**
+Before we begin — two quick choices:
+
+**Language:** What language would you like to use?
 
 1. **English**
 2. **Português (BR)**
 3. **Español (LATAM)**
 
-STOP: Wait for the user to pick. Accept the number, the language name, or a natural response in any of the three languages (e.g., "portugues", "spanish", "en español").
+**Setup depth:** How much time do you have?
 
----
+1. **Espresso** (~5 min) — After this, PRDs and docs talk about YOUR product — not generic placeholders.
+2. **Full Setup** (~15 min) — After this, I also know your team, your domains, and your product jargon. This is the one I'd pick.
+3. **The Works** (~25 min) — After this, morning briefings, reviews, and daily workflows are dialed in from day one — with strategic pillars, quarter goals, and weekly priorities set.
 
-ACTION: Store the language choice. This language will be used for the entire onboarding and saved to `product-context.mdc` (Working Preferences → Language) and to the onboarding state.
+Or — if you have a product description, pitch deck text, or "about us" page handy:
 
-Update `to_do's/learnings/onboarding-state.json` — add `"language"` field with the chosen language code (`"en"`, `"pt-BR"`, or `"es-LATAM"`).
-
-From this point forward, **all text displayed to the user must be in the chosen language**. Every message, question, confirmation, suggestion, and closing — everything. Only technical terms, file paths, and command examples stay in English.
-
-Mark `language_selection` as completed and proceed to Step 1.
-
----
-
-## Step 1: Welcome + Tier Selection
-
-ACTION: Open the onboarding page for the user — try each method in order, stop at the first success:
-1. **Browser MCP:** Try `browser_navigate` to open `ONBOARDING.html` via `file://` protocol using the workspace absolute path (e.g., `file:///Users/name/path/to/cadence-os/ONBOARDING.html`). Use `position: "side"` so it doesn't cover the chat.
-2. **System browser:** If the MCP is unavailable or navigation fails, run `open "ONBOARDING.html"` (macOS), `xdg-open "ONBOARDING.html"` (Linux), or `start "ONBOARDING.html"` (Windows) via Shell to launch the file in the user's default browser. Detect the OS from the environment.
-3. **Manual fallback (last resort):** Only if both methods above fail, tell the user: "I couldn't open it automatically — right-click `ONBOARDING.html` in the file explorer → 'Reveal in Finder' → double-click to open in your browser."
-
-Adapt the welcome message below based on which method succeeded (or if manual fallback was needed).
-
-Then display:
-
----
-
-**So, you want a workspace that actually knows your product.** Good call.
-
-I've opened the **Onboarding Guide** in your browser — keep it around. It's the full map of everything this workspace can do, and you'll want it later. (If the manual fallback was used, replace this line with: "Your **Onboarding Guide** should be open in your browser now — it's the full map of everything this workspace can do.")
-
-Here's the short version: this workspace turns the chat into your operating system for product work. PRDs, One-Pagers, user stories, morning briefings, risk analyses, commitment tracking — all generated with your product context baked in, all from right here.
-
-But first, I need to learn about your product. Three ways to do this:
-
-1. **Espresso** (~5 min) — Your product context, nothing else. Enough to start generating real documents right away.
-2. **Full Setup** (~15 min) — Product context + domains + working preferences + key people and terminology. This is the one I'd pick.
-3. **The Works** (~30 min) — Everything above + strategic pillars, quarter goals, weekly priorities, and tool integrations (Jira, Slack, calendar…). If you want morning briefings and reviews dialed in from day one, this is it.
+4. **Instant Setup** (~2 min) — Paste your product description and I extract everything at once: product identity, domains, user segments, terminology. You review a single summary, accept or adjust, done.
 
 Nothing is permanent — you can always layer more in later.
 
-STOP: Ask the user to pick 1, 2, or 3 (or Espresso/Full/The Works).
+STOP: Wait for the user to respond with both choices. Accept numbers, names, or natural responses in any of the three languages. If the user only provides one answer (e.g., just the language or just the tier), ask for the other one naturally before proceeding.
 
 ---
 
-ACTION: Save the tier selection. Update `to_do's/learnings/onboarding-state.json` (already created in Step 0):
+ACTION: Store both choices. Save the language to `product-context.mdc` (Working Preferences → Language) and to the onboarding state. Create `to_do's/learnings/onboarding-state.json`:
 
-Add the `"tier"` field and set `pending_steps` based on the tier:
-- **Quick:** `["editor_basics", "agent_mode_basics", "context_generator", "first_success", "role_starter_kit", "orientation"]`
-- **Full:** `["editor_basics", "agent_mode_basics", "workspace_tour", "context_generator", "people_and_terminology", "first_success", "role_starter_kit", "orientation"]`
-- **Power:** `["editor_basics", "agent_mode_basics", "workspace_tour", "context_generator", "people_and_terminology", "strategic_foundation", "connect_tools", "first_success", "role_starter_kit", "orientation"]`
+Add both `"language"` (code: `"en"`, `"pt-BR"`, or `"es-LATAM"`) and `"tier"` fields, and set `pending_steps` based on the tier:
+- **Quick:** `["context_generator", "first_success", "role_starter_kit", "editor_basics", "agent_mode_basics", "orientation"]`
+- **Full:** `["context_generator", "people_and_terminology", "first_success", "role_starter_kit", "editor_basics", "agent_mode_basics", "workspace_tour", "orientation"]`
+- **Power:** `["context_generator", "people_and_terminology", "first_success", "role_starter_kit", "editor_basics", "agent_mode_basics", "workspace_tour", "strategic_foundation", "orientation"]`
+- **Instant:** `["instant_context", "first_success", "role_starter_kit", "editor_basics", "agent_mode_basics", "orientation"]`
 
 The full JSON shape at this point should be:
 
 ```json
 {
   "onboarding": {
-    "started": "YYYY-MM-DD",
+    "started": "2026-03-27T09:00:00Z",
     "language": "en|pt-BR|es-LATAM",
-    "tier": "quick|full|power",
+    "tier": "quick|full|power|instant",
     "role": null,
-    "completed_steps": ["language_selection", "welcome"],
+    "step_events": {
+      "welcome": { "started_at": "2026-03-27T09:00:00Z", "completed_at": "2026-03-27T09:01:15Z" }
+    },
     "pending_steps": ["...based on tier..."],
     "cursor_skills_learned": [],
     "status": "in_progress",
-    "context_depth": {},
-    "mcps_configured": [],
-    "mcps_suggested": []
+    "context_depth": {}
   }
 }
 ```
 
-The `role` field is populated in Step 4 (Context Generator, Phase 1). The `cursor_skills_learned` array tracks which Cursor micro-lessons have been completed during onboarding — valid values: `"chat_and_modes"`, `"at_context"`, `"diffs"`, `"rules_awareness"`, `"plan_mode"`. These feed the Level Up feature and optional Cursor tips in morning briefings. The `context_depth`, `mcps_configured`, and `mcps_suggested` fields are populated as the user progresses through the onboarding.
+The `role` field is populated in Step 1 (Context Generator, Phase 1) or Step 0.5 (Instant Context). The `cursor_skills_learned` array tracks which Cursor micro-lessons have been completed during onboarding — valid values: `"chat_and_modes"`, `"at_context"`, `"diffs"`, `"rules_awareness"`, `"plan_mode"`. These feed the Level Up feature and optional Cursor tips in morning briefings. The `context_depth` field is populated as the user progresses through the onboarding. The `step_events` object replaces the old `completed_steps` array — each key is a step name, with `started_at` and `completed_at` ISO-8601 timestamps for drop-off analysis.
 
-Mark `welcome` as completed.
+From this point forward, **all text displayed to the user must be in the chosen language**. Every message, question, confirmation, suggestion, and closing — everything. Only technical terms, file paths, and command examples stay in English.
 
----
-
-## Step 2: Editor Basics
-
-This step has two parts: first, a hands-on lesson navigating the workspace; then, an explanation of the chat panel and how we work together.
-
-### 2a: Workspace Navigation (hands-on)
-
-**Display:**
-
-Quick orientation before we configure anything — 30 seconds, even if you've never opened a code editor before.
-
-See the **left sidebar**? That's the File Explorer — your entire workspace lives there. Every folder, every file. Try this:
-
-1. Find `ONBOARDING.html` in the explorer — it's right at the top level.
-2. Click it. It opens in the center panel — you'll see raw HTML, that's normal. The pretty version is the one I already opened in your browser.
-
-That's it. That's how you open files here. You'll use this to check documents I generate, review tasks, or peek at your strategic context. Markdown files (which is most of what we'll create) look great right here in the editor.
-
-STOP — wait for the user to confirm they found the file or have the guide open. If they seem stuck, explain patiently. If they say "skip", move on.
+Record `welcome` in `step_events` with `started_at` (when Step 0 began) and `completed_at` (now). Remove `welcome` from `pending_steps`.
 
 ---
 
-### 2b: Your Onboarding Guide — What's Inside
+Display (in the user's chosen language):
 
-**Display:**
+**So, you want a workspace that actually knows your product.** Good call.
 
-That guide is your long-term reference. Here's what's inside — you can scroll or jump between sections from the nav bar:
+Here's the short version: this workspace turns the chat into your operating system for product work. PRDs, One-Pagers, user stories, morning briefings, risk analyses, commitment tracking — all generated with your product context baked in, all from right here.
 
-- **What is Cursor** — the "where am I?" primer (you're getting that right now)
-- **Your Day** — what a day actually looks like with this workspace: morning briefing, focused work, daily close
-- **Setup** — the setup path you just picked, explained in detail
-- **Toolkit** — the full arsenal: 14 document types, 6 reviewer personas, 8 workflow skills, 6 strategy frameworks. All with copyable commands
-- **Reference** — every command the workspace understands, in a searchable table. Filter by category. This is the one you'll bookmark mentally.
-- **Checklist** — tracks what's configured and what you can fill in over time
-
-The two sections you'll come back to most: **Toolkit** (when you want to do something new) and **Reference** (when you know what you want but forgot the exact words).
-
-### 2c: The Chat & Modes (Micro-Lesson)
-
-**Display:**
-
-Now the important part — how this actually works.
-
-**The Chat Panel** is your main interface. Press **⌘L** (Mac) or **Ctrl+L** (Windows/Linux) to open it anytime. Talk to me like you'd talk to a sharp colleague: "Create a PRD for checkout", "Morning briefing", "What's pending?" — I figure out the right template, load the right context, and handle it.
-
-Here's something worth knowing early: this chat has **three modes**, and they change what I can do.
-
-- **Agent** — I can read files, create documents, edit your workspace, connect to tools. This is where we do most of our work. **This is the mode you should be in right now.**
-- **Ask** — Read-only. I can analyze and answer questions, but I won't touch any files. Use this when you want analysis without accidental edits.
-- **Plan** — I research first, build a structured plan, and wait for your approval before executing. Save this for complex work — we'll get to it later.
-
-Look at the **mode picker** at the top of this chat panel. It should say **Agent**.
-
-**Quick exercise (15 seconds):** Try switching to **Ask** mode using the picker. Notice the change — I'm now read-only. Then switch back to **Agent**. That toggle is all you need to know for now — we'll cover Plan mode at the end.
-
-STOP — wait for the user to confirm they've tried switching modes or say "got it" / "skip".
+Let's get your product context set up — that's where the magic starts.
 
 ---
 
-### 2d: The @ Shortcut (Micro-Lesson)
+## Step 0.5: Instant Context (Instant tier only)
+
+Skip this step for Quick, Full, and Power tiers. Proceed directly to Step 1 instead.
+
+This step replaces the conversational context generator (Step 1) and people/terminology setup (Step 1.5) with a single paste-and-extract flow.
+
+### 0.5a: Paste Your Description
 
 **Display:**
 
-One more trick that'll save you time every single day: the **@** shortcut.
+Paste your product description below — an "about us" page, pitch deck text, internal wiki summary, investor blurb, anything that describes what your product does, who it's for, and what makes it different. The more detail, the more I can extract. Even a few sentences work.
 
-Type **@** in the chat input and you'll see an autocomplete menu. This is how you point me at specific context:
-
-- **@filename** — reference a specific file. Like `@context/USERS.md` or `@to_do's/tasks.md`.
-- **@folder/** — reference an entire folder. Like `@documents/` to show me all your docs.
-- **@Web** — I search the web for live information. Great for competitive research.
-- **@Docs** — reference external documentation you've indexed in Cursor.
-
-**Hands-on:** Type **@** right now in the chat input. See the autocomplete? Pick any file — that's how you feed me specific context when you want me to work with something particular.
-
-Everything in this workspace is **Markdown** — plain text files you own. No vendor lock-in, no proprietary format. If this workspace disappears tomorrow, your files still make perfect sense.
-
-You don't need to memorize anything. Describe what you want, and I'll sort it out. When in doubt, the **Reference** section in your Onboarding Guide has every command.
-
-STOP: "Makes sense? Let's get to the interesting part — but first, one more thing about how this editor works."
-
-ACTION: Update onboarding state — mark `editor_basics` as completed. Add `"chat_and_modes"` and `"at_context"` to `cursor_skills_learned` array.
+STOP — wait for the user to paste their text.
 
 ---
 
-## Step 2.5: How Agent Mode Works
+### 0.5b: Extract and Review
 
-This step teaches the critical Cursor concepts users need to understand before the workspace can function properly. It applies to ALL tiers.
+**After the user pastes:**
 
-### 2.5a: Confirm Agent Mode
+ACTION: Analyze the pasted text and extract as much as possible:
 
-**Display:**
+**From `product-context.mdc`:**
 
-Quick check: is the mode picker still set to **Agent**? If you switched it during the exercise, make sure it's back to Agent before we continue. That's the mode that lets me create and edit files in your workspace.
+| Field | Extraction Rule |
+|-------|----------------|
+| **Name** | Ask directly if not in text — "One thing I couldn't find: what's your name and role?" |
+| **Role** | Ask directly if not in text (same question as Name) |
+| **Company** | Extract company/brand name |
+| **Team** | Extract team/group if mentioned, otherwise leave blank |
+| **Product** | Extract product name |
+| **Description** | Synthesize 1-sentence description |
+| **Model** | Infer: B2B, B2C, B2B2C, Marketplace, etc. |
+| **Differentiator** | Extract or synthesize unique value proposition |
 
-If it says Agent, we're good.
+**Additional context (if detectable):**
 
----
+| Context | Extraction Rule |
+|---------|----------------|
+| **Domains** | If multiple product areas are mentioned, identify them as domains |
+| **User segments** | Extract user types, customer segments, tiers |
+| **Terminology** | Extract product-specific jargon, internal terms, acronyms |
+| **Working preferences** | Language is already set from Step 0 |
 
-### 2.5b: Accepting Changes
+**If Name/Role are not in the pasted text:** Ask once before showing the review table — "One thing I couldn't find in there: what's your name and role? (e.g., 'Ana Silva, Product Manager')"
 
-**Display:**
-
-When I create or edit a file, you'll see a **diff view** — changes highlighted in green (additions) and red (removals). You have full control:
-
-- **Accept** — applies the change to the file
-- **Reject** — discards it, nothing happens
-- **Accept All** — when I make multiple changes at once, saves time
-
-Think of it as a "track changes" system where you always have the final say. You'll see this in action very soon — when we configure your product context, I'll edit a file live and you'll experience the diff firsthand. Nothing gets saved until you accept it.
-
-### 2.5c: Tool Connections (MCPs)
-
-Here's where it gets interesting. This workspace can connect to your actual tools — Jira, Slack, Google Calendar, meeting transcription services, Figma. These connections are called **MCPs** (Model Context Protocol servers).
-
-With MCPs connected:
-- Morning briefings pull your **real calendar** and **real Jira board**
-- Meeting notes grab **transcripts automatically**
-- I can **post to Slack** or **create Jira tickets** from the chat
-
-Without them, everything still works — you just paste data manually instead. We'll set up the relevant ones later if you picked The Works. For now, just know they exist and live in **Settings → Cursor Settings → MCP**.
-
-STOP: "Ready to explore your workspace?"
-
-ACTION: Update onboarding state — mark `agent_mode_basics` as completed.
+STOP — wait for the user to respond if Name/Role question was asked.
 
 ---
 
-## Step 3: Workspace Tour (Full & Power tiers only)
+**Display the review table:**
 
-Skip this step entirely for Quick tier.
+Here's what I extracted — review and tell me what to fix:
 
-**Display:**
+| Field | Value |
+|-------|-------|
+| **You** | [Name], [Role] at [Company] |
+| **Product** | [Product name] — [1-sentence description] |
+| **Model** | [B2B/B2C/etc.] |
+| **Differentiator** | [Value prop] |
+| **Domains** | [Domain 1, Domain 2] or "None detected — you can add later" |
+| **User segments** | [Segment 1, Segment 2] or "None detected" |
+| **Terminology** | [Term 1, Term 2, ...] or "None detected" |
 
-Let me give you the quick tour — think of it as knowing which drawer has the knives:
+Anything to change? Say "looks good" to apply, or tell me what to fix.
 
-- **`documents/`** — Everything I generate lands here. PRDs, One-Pagers, analyses, roadmaps. All Markdown, all portable. This folder will grow fast.
-- **`context/`** — Your product brain. User personas, terminology, stakeholder pages. I read these before generating anything — so the more you fill in, the smarter the output gets.
-- **`global-context/`** — Where strategy lives: domain vision, KPIs, roadmap, architecture. Organized by domain, with shared pillars and assumptions across all of them. We'll set up the basics next.
-- **`to_do's/`** — Your planning system. Quarter goals cascade into weekly priorities, which feed into daily tasks. Also tracks commitments, briefings, and reviews. The whole hierarchy lives here.
-- **`.cursor/rules/`** — My playbook. 14 document templates, 6 reviewer personas, coaching protocols. These activate automatically — you never need to touch them.
-- **`.cursor/skills/`** — Complex workflows: morning briefing, daily/weekly reviews, meeting notes, meeting prep, competitor analysis. The multi-step stuff.
-
-The rest (strategy frameworks, web dashboard) is in your Onboarding Guide. **Toolkit** section for the full catalog with copyable commands, **Reference** for the searchable command table.
-
-STOP: "Ready to get into your product context?"
-
-ACTION: Update onboarding state — mark `workspace_tour` as completed.
+STOP — wait for the user to confirm or correct.
 
 ---
 
-## Step 4: Context Generator
+### 0.5c: Apply Everything
+
+**After the user confirms (or after corrections):**
+
+ACTION: Apply all extracted data in one batch:
+
+1. **Update `product-context.mdc`** — fill in both Your Profile and Product Identity tables with extracted values. Use the same edit rules as the context generator (replace placeholders, preserve structure).
+
+2. **Create domain folders** (if domains were detected) — for each domain, create `global-context/{domain}/` with template files copied from `global-context/_TEMPLATE-*.md`. Replace `[Domain Name]` placeholders. Update the Active Domains table in `product-context.mdc`.
+
+3. **Update `context/USERS.md`** (if user segments were detected) — add segments in the standard table format (Segment, Description, Key Needs).
+
+4. **Update `context/TERMINOLOGY.md`** (if terminology was detected) — add terms in the standard table format (Term, Definition, Context).
+
+**Diff Teaching Moment (Micro-Lesson — display before the first edit):**
+
+Before making the first edit, display the same diff teaching moment as Step 1:
+
+"I'm about to apply everything to your workspace. Watch what happens next: you'll see a **diff view** with green and red highlights. Green = what I'm adding. Red = what I'm removing. You **Accept** or **Reject** each change. Nothing is saved until you say so."
+
+ACTION: After the user accepts the diffs, add `"diffs"` to `cursor_skills_learned` array in `onboarding-state.json`.
+
+**Display after all edits are applied:**
+
+Done — your product context, [domains if created,] [user segments if created,] and [terminology if created] are all configured. That took about [elapsed time]. Everything I generate from now on is grounded in your product.
+
+ACTION: Update onboarding state — record `instant_context` in `step_events` with `started_at` (when Step 0.5 began) and `completed_at` (now). Remove from `pending_steps`. Store the user's role in `onboarding-state.json` → `"role"` field (normalize to `"product_manager"`, `"engineering_manager"`, `"designer"`, `"founder"`, or `"other"`). Update `context_depth` with what was created.
+
+Proceed to Step 2 (First Success Moment).
+
+---
+
+## Step 1: Context Generator
+
+Skip this step for Instant tier (already handled in Step 0.5).
 
 This is the core setup. Run the context generator from `context-generator.mdc`, but only the phases that match the user's tier:
 
@@ -334,19 +275,19 @@ That's the foundation done. From here on, everything I generate — PRDs, analys
 
 ---
 
-ACTION: Update onboarding state — mark `context_generator` as completed. Also store the user's role (from Phase 1) in `onboarding-state.json` → `"role"` field. Normalize to one of: `"product_manager"`, `"engineering_manager"`, `"designer"`, `"founder"`, or `"other"`. This drives role-specific suggestions later.
+ACTION: Update onboarding state — record `context_generator` in `step_events` with `started_at` (when Step 1 began) and `completed_at` (now). Remove from `pending_steps`. Also store the user's role (from Phase 1) in `onboarding-state.json` → `"role"` field. Normalize to one of: `"product_manager"`, `"engineering_manager"`, `"designer"`, `"founder"`, or `"other"`. This drives role-specific suggestions later.
 
-If the tier is Quick, proceed to Step 6 (First Success Moment). If Full or Power, proceed to Step 4.5.
+If the tier is Quick, proceed to Step 2 (First Success Moment). If Full or Power, proceed to Step 1.5.
 
 ---
 
-## Step 4.5: Your People and Product Language (Full & Power tiers only)
+## Step 1.5: Your People and Product Language (Full & Power tiers only)
 
-Skip this step for Quick tier.
+Skip this step for Quick and Instant tiers.
 
 This step populates the context files that have the highest leverage on output quality: people, terminology, and user segments. All three take under 3 minutes combined.
 
-### 4.5a: Key Stakeholders
+### 1.5a: Key Stakeholders
 
 **Display:**
 
@@ -399,7 +340,7 @@ Also update the People Registry in `people-context.mdc` with each new person.
 
 Update `onboarding-state.json` → `context_depth.people` with the count of pages created.
 
-### 4.5b: Product Terminology
+### 1.5b: Product Terminology
 
 **Display:**
 
@@ -430,7 +371,7 @@ Key terms used across the product. Referenced automatically during document gene
 
 Update `onboarding-state.json` → `context_depth.terminology` with the count of terms added.
 
-### 4.5c: User Segments
+### 1.5c: User Segments
 
 **Display:**
 
@@ -463,15 +404,280 @@ Update `onboarding-state.json` → `context_depth.users` with the count of segme
 
 People, terminology, user segments — done. These are the context files that make the biggest difference in output quality. Every PRD now uses your jargon. Every meeting prep now knows who you're meeting with.
 
-ACTION: Update onboarding state — mark `people_and_terminology` as completed.
+ACTION: Update onboarding state — record `people_and_terminology` in `step_events` with `started_at` (when Step 1.5 began) and `completed_at` (now). Remove from `pending_steps`.
 
-If the tier is Full, proceed to Step 6 (First Success Moment). If Power, proceed to Step 5.
+Proceed to Step 2 (First Success Moment).
+
+---
+
+## Step 2: First Success Moment
+
+This is the critical "aha!" moment. Generate a real document using the user's freshly configured context to demonstrate the value of the setup.
+
+---
+
+**ACTION**: Read the updated `product-context.mdc` to load the user's product context.
+
+**Display:**
+
+Time to see why all those questions were worth it. Give me a feature you're currently thinking about — something real, not a test — and I'll generate a document for it on the spot.
+
+Pick your weapon:
+
+1. **Mini PRD** — Problem, solution, and success metrics. Sharp and practical.
+2. **One-Pager** — A strategic pitch for an idea. Good for getting alignment before you invest.
+3. **Risk Analysis** — The top 5 things that could go wrong. Good for stress-testing before you commit.
+
+Or just describe the feature and say "surprise me" — I'll pick the best format.
+
+STOP — wait for the user to respond.
+
+---
+
+**After the user responds:**
+
+ACTION: Based on the user's choice (or default to mini Lean PRD if "surprise me"):
+
+- **Mini PRD:** Generate abbreviated Lean PRD — just Problem, Solution, and Success Metrics sections. Keep it to ~200 words. Save in `documents/`.
+- **One-Pager:** Generate abbreviated One-Pager — just Opportunity, Proposal, and Success Metrics sections. Keep it to ~200 words. Save in `documents/`.
+- **Risk Analysis:** Generate top-5 risk table with probability, severity, and one-line mitigation. Keep it to ~200 words. Save in `documents/`.
+
+Then immediately generate a **quick engineer review** of that document — 3 bullet points only, using the engineer reviewer perspective. Don't save the review as a separate file; display it inline.
+
+**Before showing the result, display this contrast (Micro-Lesson: Rules = Memory):**
+
+Here's what a generic AI without context would write for the same request — something like: *"The product should implement [feature] to improve user experience metrics, following industry best practices for onboarding optimization..."* — vague, interchangeable, could be about any product.
+
+Now look at what I just generated:
+
+**Display the document content, then the 3 review bullets, then say:**
+
+See the difference? This talks about **[their product name]**, references **[their users]**, and builds on **[their differentiator]**. The engineer review flagged [specific thing from the review] — without you providing extra context.
+
+That's `.cursor/rules/` at work — 14 document templates that automatically inject your product context. They fire behind the scenes every time you ask me to generate something.
+
+**Optional peek:** "Curious how it works? Open `.cursor/rules/lean-prd-template.mdc` in the left sidebar — that's one of the templates I use. Every template in that folder works the same way: persistent instructions that shape what I produce. You never need to edit them, but now you know they're there."
+
+ACTION: Add `"rules_awareness"` to `cursor_skills_learned` array in `onboarding-state.json`.
+
+### Context Scorecard
+
+After showing the document and review, display a brief scorecard that teaches the mental model of "more context = better outputs":
+
+**Display:**
+
+Here's what powered that output — your **Context Depth**:
+
+ACTION: Read the actual state of context files and build this table dynamically. Check each file/folder for real content (not just placeholders):
+
+| Context Layer | Status | Impact |
+|---------------|--------|--------|
+| Product identity | [Configured / Not yet] | Documents reference your product correctly |
+| Domains | [Configured (N) / Not yet] | Documents align to the right domain |
+| People | [N pages / Not yet] | Meeting prep and notes are personalized |
+| Terminology | [N terms / Not yet] | Correct jargon in all outputs |
+| User segments | [N segments / Not yet] | Right audience framing in PRDs |
+| Strategic pillars | [Configured (N) / Not yet] | Tasks and docs connect to strategy |
+| Quarter goals | [Configured / Not yet] | Briefings reference progress |
+| Architecture | [Not yet] | Technical PRDs lack constraint awareness |
+| KPIs | [Not yet] | Documents don't connect to metrics targets |
+
+For "Not yet" items, add the one-line suggestion: what to do to unlock it. Example: "Say `Help me fill in terminology` to add product-specific terms."
+
+**Display after the table:**
+
+Each row you fill in makes every output sharper. You don't need to do it all today — context compounds over time. The items marked "Not yet" are your roadmap for making this workspace smarter.
+
+ACTION: Update `onboarding-state.json` → `context_depth` with the current state of each layer. Record `first_success` in `step_events` with `started_at` (when Step 2 began) and `completed_at` (now). Remove from `pending_steps`.
+
+---
+
+## Step 2.5: Your Starter Kit
+
+This step provides role-specific "first 3 things to try" based on the role captured in Step 1 (Context Generator, Phase 1). It makes the transition from onboarding to daily use concrete.
+
+---
+
+ACTION: Read the `role` field from `onboarding-state.json`. Select the matching starter kit below. If the role is `"other"` or unclear, use the Product Manager kit as the default.
+
+**Display:**
+
+Based on your role, here are the **3 things worth trying first** — the ones that'll have the most impact for you:
+
+**If role is `product_manager`:**
+
+1. **Morning briefing** — Tomorrow morning, say `Morning briefing`. I'll pull your priorities, calendar, commitments, and initiative status into a single cockpit view. It takes 30 seconds and sets your entire day.
+2. **Meeting notes** — After your next meeting, say `Process meeting notes` (paste the transcript or summary). I'll extract decisions, action items, update person pages, and add commitments automatically.
+3. **One-Pager** — When you have a feature idea, say `Create One-Pager for [feature]`. It's the fastest path from idea to stakeholder alignment — grounded in your product context.
+
+**If role is `engineering_manager`:**
+
+1. **1:1 prep** — Before your next 1:1, say `Prep for 1:1 with [name]`. I'll load their person page, surface open items, and suggest topics to cover — so you walk in prepared, not winging it.
+2. **Epic plan** — Say `Create epic plan for [feature]` to break a project into epics, stories, and a delivery sequence. Good for sprint planning and estimation conversations.
+3. **Engineer review** — Use `Review as engineer` on any PRD or spec before sprint planning. It flags technical debt, missing edge cases, and scalability concerns.
+
+**If role is `designer`:**
+
+1. **User journey** — Say `Map user journey for [flow]` to visualize the end-to-end experience. Surfaces pain points, drop-off risks, and opportunity moments.
+2. **Personas** — Use `Create personas for [segment]` to generate Ideal and Skeptical personas. Both are useful for design reviews and usability testing.
+3. **Customer review** — Try `Review as customer` on any document. It simulates feedback from three customer segments (Small, Growth, Enterprise) — like a usability test without scheduling one.
+
+**If role is `founder`:**
+
+1. **Lean Canvas** — Say `Create Lean Canvas for [product]` to structure your value proposition, channels, cost structure, and unfair advantage in one page.
+2. **Roadmap** — Use `Create roadmap for [quarter]` to plan your next 3 months with strategic themes, milestones, and dependencies.
+3. **Status update** — Try `Generate status update` for your investors or board. It pulls from your initiative progress and metrics to create a concise executive communication.
+
+**If role is `other` or default:**
+
+1. **Morning briefing** — Say `Morning briefing` tomorrow to see your day organized: priorities, meetings, commitments, initiative status.
+2. **PRD** — Try `Create PRD for [feature]` to see a full requirements document grounded in your product context.
+3. **Level up** — Say `Level up` anytime to discover capabilities you haven't tried yet. I'll suggest the ones that make sense for your workflow.
+
+STOP: "Now let me show you a few things about how this editor works — or skip ahead if you already know Cursor."
+
+ACTION: Update onboarding state — record `role_starter_kit` in `step_events` with `started_at` (when Step 2.5 began) and `completed_at` (now). Remove from `pending_steps`.
+
+---
+
+## Step 3: Editor Basics
+
+This step has a skip gate and then two parts: a hands-on lesson navigating the workspace, followed by an explanation of the chat panel and how we work together.
+
+### 3-gate: Skip Detection
+
+Since the user got this far via the chat, they clearly know the basics. Offer a skip option before diving into editor teaching.
+
+**Display:**
+
+You've been using this chat like a pro — so you might already know your way around Cursor. Want a quick orientation on modes and shortcuts, or skip ahead?
+
+1. **Quick tour** (~2 min) — modes, @ shortcuts, and a few tricks
+2. **Skip** — I already know Cursor
+
+STOP — wait for the user to respond.
+
+**If the user picks "Skip" (option 2, or says "skip", "já conheço", "ya conozco", etc.):**
+
+ACTION: Record both `editor_basics` and `agent_mode_basics` in `step_events` with `started_at` and `completed_at` set to now (skipped steps get identical timestamps). Remove both from `pending_steps`. Add `"chat_and_modes"`, `"at_context"`, and `"diffs"` to `cursor_skills_learned` array (the user already experienced diffs in Step 1). Then jump to the next applicable step:
+- If Full or Power tier: proceed to Step 4 (Workspace Tour)
+- If Power tier (no workspace tour pending): proceed to Step 5 (Strategic Foundation)
+- If Quick or Instant tier: proceed to Step 6 (Orientation)
+
+**If the user picks "Quick tour" (option 1, or says "tour", "show me", etc.):** Continue with Step 3a below.
+
+---
+
+### 3a: Workspace Navigation (hands-on)
+
+**Display:**
+
+Quick orientation — 30 seconds, even if you've never opened a code editor before.
+
+See the **left sidebar**? That's the File Explorer — your entire workspace lives there. Every folder, every file. Try this:
+
+1. Find any `.md` file in the explorer — try `to_do's/tasks.md` or anything in `documents/`.
+2. Click it. It opens in the center panel. Markdown files look great right here in the editor.
+
+That's it. That's how you open files here. You'll use this to check documents I generate, review tasks, or peek at your strategic context.
+
+STOP — wait for the user to confirm they found a file or say "got it" / "skip".
+
+---
+
+### 3b: How the Chat Works (Micro-Lesson)
+
+**Display:**
+
+Now the important part — how this actually works.
+
+**The Chat Panel** is your main interface. Press **⌘L** (Mac) or **Ctrl+L** (Windows/Linux) to open it anytime. Talk to me like you'd talk to a sharp colleague: "Create a PRD for checkout", "Morning briefing", "What's pending?" — I figure out the right template, load the right context, and handle it.
+
+Two things worth knowing early:
+
+**Modes** — this chat has three modes that change what I can do:
+
+- **Agent** — I can read files, create documents, edit your workspace, connect to tools. **This is the mode you should be in right now.**
+- **Ask** — Read-only. I analyze and answer questions, but I won't touch any files.
+- **Plan** — I research first, build a structured plan, and wait for your approval before executing. We'll cover this at the end.
+
+**@ shortcut** — type **@** in the chat input to point me at specific context: `@filename` for a file, `@folder/` for an entire folder, `@Web` to search the web. This is how you feed me exactly what you want me to work with.
+
+Everything in this workspace is **Markdown** — plain text files you own. No vendor lock-in, no proprietary format.
+
+**Quick exercise (30 seconds):** Try two things: (1) switch to **Ask** mode using the mode picker at the top of this chat, then switch back to **Agent**. (2) Type **@** in the chat input — see the autocomplete? Pick any file. That's it — modes and @ are the two shortcuts you'll use daily.
+
+STOP: "Makes sense? One more thing about how this editor works, then we're done with the tour."
+
+ACTION: Update onboarding state — record `editor_basics` in `step_events` with `started_at` (when Step 3 began) and `completed_at` (now). Remove from `pending_steps`. Add `"chat_and_modes"` and `"at_context"` to `cursor_skills_learned` array.
+
+---
+
+## Step 3.5: How Agent Mode Works
+
+This step teaches the remaining Cursor concepts. It applies to ALL tiers (unless skipped via Step 3 gate).
+
+### 3.5a: Confirm Agent Mode
+
+**Display:**
+
+Quick check: is the mode picker still set to **Agent**? If you switched it during the exercise, make sure it's back to Agent before we continue. That's the mode that lets me create and edit files in your workspace.
+
+If it says Agent, we're good.
+
+---
+
+### 3.5b: Accepting Changes
+
+**Display:**
+
+You've already seen diffs in action when we edited your product context — the green and red highlights, Accept/Reject buttons. That's how every edit works here. A few more things worth knowing:
+
+- **Accept All** — when I make multiple changes at once, saves time
+- **Reject** — discards changes completely, nothing happens to the file
+- You always have the final say. Nothing is saved until you accept it.
+
+### 3.5c: Tool Connections (MCPs)
+
+Here's where it gets interesting. This workspace can connect to your actual tools — Jira, Slack, Google Calendar, meeting transcription services, Figma. These connections are called **MCPs** (Model Context Protocol servers).
+
+With MCPs connected:
+- Morning briefings pull your **real calendar** and **real Jira board**
+- Meeting notes grab **transcripts automatically**
+- I can **post to Slack** or **create Jira tickets** from the chat
+
+Without them, everything still works — you just paste data manually instead. When you're ready to connect them, say `Level up` and I'll recommend the ones that match your workflow. They live in **Settings → Cursor Settings → MCP**.
+
+STOP: "Ready to continue?"
+
+ACTION: Update onboarding state — record `agent_mode_basics` in `step_events` with `started_at` (when Step 3.5 began) and `completed_at` (now). Remove from `pending_steps`.
+
+---
+
+## Step 4: Workspace Tour (Full & Power tiers only)
+
+Skip this step entirely for Quick and Instant tiers.
+
+**Display:**
+
+Let me give you the quick tour — think of it as knowing which drawer has the knives:
+
+- **`documents/`** — Everything I generate lands here. PRDs, One-Pagers, analyses, roadmaps. All Markdown, all portable. This folder will grow fast.
+- **`context/`** — Your product brain. User personas, terminology, stakeholder pages. I read these before generating anything — so the more you fill in, the smarter the output gets.
+- **`global-context/`** — Where strategy lives: domain vision, KPIs, roadmap, architecture. Organized by domain, with shared pillars and assumptions across all of them. We'll set up the basics next.
+- **`to_do's/`** — Your planning system. Quarter goals cascade into weekly priorities, which feed into daily tasks. Also tracks commitments, briefings, and reviews. The whole hierarchy lives here.
+- **`.cursor/rules/`** — My playbook. 14 document templates, 6 reviewer personas, coaching protocols. These activate automatically — you never need to touch them.
+- **`.cursor/skills/`** — Complex workflows: morning briefing, daily/weekly reviews, meeting notes, meeting prep, competitor analysis. The multi-step stuff.
+
+STOP: "Ready to continue?"
+
+ACTION: Update onboarding state — record `workspace_tour` in `step_events` with `started_at` (when Step 4 began) and `completed_at` (now). Remove from `pending_steps`.
 
 ---
 
 ## Step 5: Strategic Foundation (Power tier only)
 
-Skip this step for Quick and Full tiers.
+Skip this step for Quick, Full, and Instant tiers.
 
 This step initializes the planning system so that morning briefings, daily reviews, and weekly reviews work from day one.
 
@@ -579,226 +785,26 @@ ACTION: Update `global-context/shared/assumptions.md` — add each assumption to
 
 Strategic layer: done. Pillars, quarter goals, weekly priorities, assumptions — all connected. When you run a morning briefing, I pull from all of this. When you generate a PRD, I check it against your assumptions. The whole system talks to itself so you don't have to repeat context.
 
-ACTION: Update onboarding state — mark `strategic_foundation` as completed.
+ACTION: Update onboarding state — record `strategic_foundation` in `step_events` with `started_at` (when Step 5 began) and `completed_at` (now). Remove from `pending_steps`.
 
 ---
 
-## Step 5.5: Connect Your Tools (Power tier only)
+## Step 6: Orientation — What Runs Automatically + Growing Your Context
 
-Skip this step for Quick and Full tiers.
+Close the onboarding with the onboarding guide, one last Cursor skill, contextual next steps, the invisible protocols, and the progressive context roadmap.
 
-This step maps the user's actual workflow to MCP integrations and walks them through at least one installation. The goal: the user understands what MCPs do, knows which ones matter for them, and has installed at least one.
+---
 
-### 5.5a: Workflow Discovery
+### Your Onboarding Guide
+
+ACTION: Open the onboarding page for the user — try each method in order, stop at the first success:
+1. **Browser MCP:** Try `browser_navigate` to open `ONBOARDING.html` via `file://` protocol using the workspace absolute path (e.g., `file:///Users/name/path/to/cadence-os/ONBOARDING.html`). Use `position: "side"` so it doesn't cover the chat.
+2. **System browser:** If the MCP is unavailable or navigation fails, run `open "ONBOARDING.html"` (macOS), `xdg-open "ONBOARDING.html"` (Linux), or `start "ONBOARDING.html"` (Windows) via Shell to launch the file in the user's default browser. Detect the OS from the environment.
+3. **Manual fallback (last resort):** Only if both methods above fail, tell the user: "I couldn't open it automatically — right-click `ONBOARDING.html` in the file explorer → 'Reveal in Finder' → double-click to open in your browser."
 
 **Display:**
 
-Last setup step — and it's the one that turns this from "smart markdown generator" into an actual operating system.
-
-Which of these do you do regularly? Just list the numbers:
-
-1. **Track work in Jira or Linear** — sprint boards, tickets, backlog
-2. **Manage calendar and meetings** — Google Calendar or similar
-3. **Process meeting transcripts** — Fireflies, Otter, or similar recording tools
-4. **Communicate via Slack** — async updates, thread conversations
-5. **Work with Google Docs or Sheets** — collaborative documents, spreadsheets
-6. **Design in Figma** — review designs, reference components
-7. **Track analytics** — Amplitude, Mixpanel, or similar
-
-STOP — wait for the user to respond with numbers or descriptions.
-
----
-
-### 5.5b: MCP Recommendations
-
-**After the user responds:**
-
-ACTION: Map their selections to specific MCPs. Build a personalized recommendation table showing only the relevant ones:
-
-| Job | MCP Server | What It Unlocks |
-|-----|-----------|----------------|
-| Jira/Linear | Atlassian MCP or Linear MCP | Morning briefing pulls your board automatically. Create/update tickets from the chat. Progress tracking is live. |
-| Calendar | Zapier MCP (includes Google Calendar) | Morning briefing shows today's schedule. Meeting prep triggers automatically before each call. |
-| Meeting transcripts | Fireflies MCP | Say "process meeting notes" and I grab the transcript, extract action items, update person pages and commitments — hands-free. |
-| Slack | Slack MCP | Send formatted messages and updates directly from the chat. Share document summaries to channels. |
-| Google Docs/Sheets | Google Docs MCP / Google Sheets MCP | Export generated documents to Docs. Pull data from Sheets for analyses. |
-| Figma | Figma MCP | Reference design files and components during PRD and spec generation. |
-| Analytics | Amplitude MCP | Query metrics directly. Connect feature impact to real data during RICE analyses. |
-
-**Display:**
-
-Based on what you do, here's what I'd connect:
-
-[Show only the MCPs matching the user's selections, using the table above]
-
-**The important thing to know:** every feature works without MCPs. You just paste data manually — a calendar screenshot, a meeting transcript, Jira ticket details. But with them connected, the data flows in automatically. Morning briefings go from "useful" to "essential."
-
-**How to install:** Go to **Settings** (gear icon, bottom left) → **Cursor Settings** → **MCP** → **Add new MCP server**. Each MCP has its own setup (usually an API key or OAuth flow).
-
-STOP: "Want me to walk you through installing one right now? Pick the one that would save you the most time, or say 'later' to move on."
-
----
-
-### 5.5c: Guided Installation (optional)
-
-**If the user picks one:**
-
-Walk them through the installation step by step:
-
-1. Direct them to **Settings → Cursor Settings → MCP → Add new MCP server**
-2. For the selected MCP, provide:
-   - The server name to enter
-   - Where to find the API key or how to authenticate
-   - A brief test to confirm it works (e.g., "Now say 'Morning briefing' and you should see your real calendar")
-3. After successful installation, confirm: "Connected. I'll use this automatically from now on."
-
-**If the user says "later" or "skip":** Move on without pressure.
-
-ACTION: Update `onboarding-state.json`:
-- `mcps_configured`: add the slug of any MCP the user installed (e.g., `"atlassian"`, `"slack"`, `"zapier"`)
-- `mcps_suggested`: add the slugs of MCPs recommended but not yet installed
-
-Mark `connect_tools` as completed.
-
-**Display:**
-
-Tool connections: sorted. [If they installed one: "You've got [MCP name] connected — the rest you can add anytime from Settings → MCP."] [If they skipped: "No pressure — you can connect tools anytime from Settings → Cursor Settings → MCP. Everything works without them."]
-
----
-
-## Step 6: First Success Moment
-
-This is the critical "aha!" moment. Generate a real document using the user's freshly configured context to demonstrate the value of the setup.
-
----
-
-**ACTION**: Read the updated `product-context.mdc` to load the user's product context.
-
-**Display:**
-
-Time to see why all those questions were worth it. Give me a feature you're currently thinking about — something real, not a test — and I'll generate a document for it on the spot.
-
-Pick your weapon:
-
-1. **Mini PRD** — Problem, solution, and success metrics. Sharp and practical.
-2. **One-Pager** — A strategic pitch for an idea. Good for getting alignment before you invest.
-3. **Risk Analysis** — The top 5 things that could go wrong. Good for stress-testing before you commit.
-
-Or just describe the feature and say "surprise me" — I'll pick the best format.
-
-STOP — wait for the user to respond.
-
----
-
-**After the user responds:**
-
-ACTION: Based on the user's choice (or default to mini Lean PRD if "surprise me"):
-
-- **Mini PRD:** Generate abbreviated Lean PRD — just Problem, Solution, and Success Metrics sections. Keep it to ~200 words. Save in `documents/`.
-- **One-Pager:** Generate abbreviated One-Pager — just Opportunity, Proposal, and Success Metrics sections. Keep it to ~200 words. Save in `documents/`.
-- **Risk Analysis:** Generate top-5 risk table with probability, severity, and one-line mitigation. Keep it to ~200 words. Save in `documents/`.
-
-Then immediately generate a **quick engineer review** of that document — 3 bullet points only, using the engineer reviewer perspective. Don't save the review as a separate file; display it inline.
-
-**Before showing the result, display this contrast (Micro-Lesson: Rules = Memory):**
-
-Here's what a generic AI without context would write for the same request — something like: *"The product should implement [feature] to improve user experience metrics, following industry best practices for onboarding optimization..."* — vague, interchangeable, could be about any product.
-
-Now look at what I just generated:
-
-**Display the document content, then the 3 review bullets, then say:**
-
-See the difference? This talks about **[their product name]**, references **[their users]**, and builds on **[their differentiator]**. The engineer review flagged [specific thing from the review] — without you providing extra context.
-
-That's `.cursor/rules/` at work — 14 document templates that automatically inject your product context. They fire behind the scenes every time you ask me to generate something.
-
-**Optional peek:** "Curious how it works? Open `.cursor/rules/lean-prd-template.mdc` in the left sidebar — that's one of the templates I use. Every template in that folder works the same way: persistent instructions that shape what I produce. You never need to edit them, but now you know they're there."
-
-ACTION: Add `"rules_awareness"` to `cursor_skills_learned` array in `onboarding-state.json`.
-
-### Context Scorecard
-
-After showing the document and review, display a brief scorecard that teaches the mental model of "more context = better outputs":
-
-**Display:**
-
-Here's what powered that output — your **Context Depth**:
-
-ACTION: Read the actual state of context files and build this table dynamically. Check each file/folder for real content (not just placeholders):
-
-| Context Layer | Status | Impact |
-|---------------|--------|--------|
-| Product identity | [Configured / Not yet] | Documents reference your product correctly |
-| Domains | [Configured (N) / Not yet] | Documents align to the right domain |
-| People | [N pages / Not yet] | Meeting prep and notes are personalized |
-| Terminology | [N terms / Not yet] | Correct jargon in all outputs |
-| User segments | [N segments / Not yet] | Right audience framing in PRDs |
-| Strategic pillars | [Configured (N) / Not yet] | Tasks and docs connect to strategy |
-| Quarter goals | [Configured / Not yet] | Briefings reference progress |
-| Architecture | [Not yet] | Technical PRDs lack constraint awareness |
-| KPIs | [Not yet] | Documents don't connect to metrics targets |
-
-For "Not yet" items, add the one-line suggestion: what to do to unlock it. Example: "Say `Help me fill in terminology` to add product-specific terms."
-
-**Display after the table:**
-
-Each row you fill in makes every output sharper. You don't need to do it all today — context compounds over time. The items marked "Not yet" are your roadmap for making this workspace smarter.
-
-ACTION: Update `onboarding-state.json` → `context_depth` with the current state of each layer. Mark `first_success` as completed.
-
----
-
-## Step 6.5: Your Starter Kit
-
-This step provides role-specific "first 3 things to try" based on the role captured in Step 4 (Context Generator, Phase 1). It makes the transition from onboarding to daily use concrete.
-
----
-
-ACTION: Read the `role` field from `onboarding-state.json`. Select the matching starter kit below. If the role is `"other"` or unclear, use the Product Manager kit as the default.
-
-**Display:**
-
-Based on your role, here are the **3 things worth trying first** — the ones that'll have the most impact for you:
-
-**If role is `product_manager`:**
-
-1. **Morning briefing** — Tomorrow morning, say `Morning briefing`. I'll pull your priorities, calendar, commitments, and initiative status into a single cockpit view. It takes 30 seconds and sets your entire day.
-2. **Meeting notes** — After your next meeting, say `Process meeting notes` (paste the transcript or summary). I'll extract decisions, action items, update person pages, and add commitments automatically.
-3. **One-Pager** — When you have a feature idea, say `Create One-Pager for [feature]`. It's the fastest path from idea to stakeholder alignment — grounded in your product context.
-
-**If role is `engineering_manager`:**
-
-1. **1:1 prep** — Before your next 1:1, say `Prep for 1:1 with [name]`. I'll load their person page, surface open items, and suggest topics to cover — so you walk in prepared, not winging it.
-2. **Epic plan** — Say `Create epic plan for [feature]` to break a project into epics, stories, and a delivery sequence. Good for sprint planning and estimation conversations.
-3. **Engineer review** — Use `Review as engineer` on any PRD or spec before sprint planning. It flags technical debt, missing edge cases, and scalability concerns.
-
-**If role is `designer`:**
-
-1. **User journey** — Say `Map user journey for [flow]` to visualize the end-to-end experience. Surfaces pain points, drop-off risks, and opportunity moments.
-2. **Personas** — Use `Create personas for [segment]` to generate Ideal and Skeptical personas. Both are useful for design reviews and usability testing.
-3. **Customer review** — Try `Review as customer` on any document. It simulates feedback from three customer segments (Small, Growth, Enterprise) — like a usability test without scheduling one.
-
-**If role is `founder`:**
-
-1. **Lean Canvas** — Say `Create Lean Canvas for [product]` to structure your value proposition, channels, cost structure, and unfair advantage in one page.
-2. **Roadmap** — Use `Create roadmap for [quarter]` to plan your next 3 months with strategic themes, milestones, and dependencies.
-3. **Status update** — Try `Generate status update` for your investors or board. It pulls from your initiative progress and metrics to create a concise executive communication.
-
-**If role is `other` or default:**
-
-1. **Morning briefing** — Say `Morning briefing` tomorrow to see your day organized: priorities, meetings, commitments, initiative status.
-2. **PRD** — Try `Create PRD for [feature]` to see a full requirements document grounded in your product context.
-3. **Level up** — Say `Level up` anytime to discover capabilities you haven't tried yet. I'll suggest the ones that make sense for your workflow.
-
-STOP: "Ready for the final tour?"
-
-ACTION: Update onboarding state — mark `role_starter_kit` as completed.
-
----
-
-## Step 7: Orientation — What Runs Automatically + Growing Your Context
-
-Close the onboarding with four sections: one last Cursor skill, contextual next steps, the invisible protocols, and the progressive context roadmap.
+Now that you've seen what this workspace can do, here's your long-term reference — I've opened the **Onboarding Guide** in your browser. (If the manual fallback was used, replace with: "Open `ONBOARDING.html` from the file explorer — it's your long-term reference.") Browse it when you're ready — everything is searchable, with copyable commands.
 
 ---
 
@@ -806,9 +812,9 @@ Close the onboarding with four sections: one last Cursor skill, contextual next 
 
 **Display:**
 
-One last Cursor trick before I hand you the keys: **Plan mode**.
+One last trick before I hand you the keys: **Plan mode**.
 
-Remember the three modes I showed you earlier? Plan mode is the one worth coming back to. Here's when to use it:
+This chat has three modes — you may have already seen them. Plan mode is the one worth knowing about. Here's when to use it:
 
 - You need a **full PRD** and want to review the structure before I write 15 sections
 - You're doing a **competitive analysis** that requires web research across multiple sources
@@ -828,12 +834,12 @@ ACTION: Add `"plan_mode"` to `cursor_skills_learned` array in `onboarding-state.
 
 **You're set up.** Here are a few things worth doing next — based on what we just configured:
 
-ACTION: Pick 2-3 suggestions from this list based on what was configured during onboarding. Choose the most relevant ones. Don't repeat items already covered in the role-based starter kit (Step 6.5):
+ACTION: Pick 2-3 suggestions from this list based on what was configured during onboarding. Choose the most relevant ones. Don't repeat items already covered in the role-based starter kit (Step 2.5):
 
 - If a feature was discussed: "Run `Review as executive` on the document I just generated. It's like getting a VP's reaction without the calendar Tetris."
 - If domains were set up but vision not filled: "Open `global-context/{domain}/DOMAIN-VISION.md` and fill in your domain vision. The more strategic context I have, the sharper your documents get."
 - If assumptions were set: "Say `Assumptions` anytime to review or update your strategic bets. I check them automatically before generating PRDs and roadmaps."
-- If MCPs were suggested but not installed (Power tier): "When you're ready, connect [suggested MCP] from **Settings → Cursor Settings → MCP**. It'll unlock [specific benefit]."
+- If no MCPs are connected yet: "Say `Level up` when you're ready to connect your tools (Jira, Slack, Calendar…). I'll recommend the ones that match your workflow and walk you through setup."
 - If people were created: "Before your next meeting, try `Prep for [Name]`. I'll load their history, open commitments, and suggest what to cover."
 - Default fallback 1: "Say `Level up` to discover capabilities you haven't used yet. I'll suggest the ones that make sense for your current workflow."
 - Default fallback 2: "Say `/improve` when something feels off. I'll capture the idea and surface the best ones during weekly reviews."
@@ -880,7 +886,7 @@ Find it in the file explorer anytime, or say "open onboarding" in the chat.
 
 One more thing: I'll suggest, but I won't insist. "Skip" always works, and I'll never guilt-trip you for it.
 
-ACTION: Update onboarding state — mark `orientation` as completed. Set `status` to `completed`. Write the final `context_depth` snapshot to `onboarding-state.json`.
+ACTION: Update onboarding state — record `orientation` in `step_events` with `started_at` (when Step 6 began) and `completed_at` (now). Remove from `pending_steps`. Set `status` to `completed`. Write the final `context_depth` snapshot to `onboarding-state.json`.
 
 ---
 
@@ -893,7 +899,6 @@ After marking onboarding as completed, silently check setup quality:
 3. **Strategic layer** — Check if `global-context/shared/pillars.md` has content beyond the template.
 4. **Planning** — Check if `to_do's/quarter-goals.md` and `to_do's/week-priorities.md` have content.
 5. **People and terminology** — Check if `context/people/` has any person pages and if `context/TERMINOLOGY.md` has terms beyond the template.
-6. **MCP connections** — Check `onboarding-state.json` → `mcps_configured` and `mcps_suggested`. If suggested MCPs remain uninstalled, note for future Level Up suggestions.
 
 **If any gaps found** (and the tier would have covered them), append a gentle note:
 
@@ -904,7 +909,6 @@ After marking onboarding as completed, silently check setup quality:
 - [Pillars not set — say "set up pillars" to unlock strategic alignment]
 - [No people pages — say "create person page for [name]" to improve meeting prep]
 - [No terminology — say "help me fill in terminology" to improve document accuracy]
-- [MCPs suggested but not connected — go to Settings → Cursor Settings → MCP when ready]
 ```
 
 **If all checks pass for the tier**, don't mention it — silence means success.
@@ -925,25 +929,25 @@ After marking onboarding as completed, silently check setup quality:
 - Never say "I'm following the onboarding script" or any meta-commentary about what you're doing behind the scenes
 - After completing the full onboarding, the always-on protocols take over automatically: `session-protocol.mdc` (staleness checks, context loading), `cadence-coach.mdc` (coaching, next-step suggestions, usage tracking, improvement capture), `people-context.mdc` (auto-inject stakeholder context), and `formatting-preferences.mdc`
 - Always update `to_do's/learnings/onboarding-state.json` after each step completes
+- **Step-level tracking:** When starting a step, record `started_at` in `step_events[step_name]`. When completing a step, record `completed_at` and remove the step from `pending_steps`. Use ISO-8601 timestamps with timezone. Skipped steps get both timestamps set to the same value (the moment of skip). This enables drop-off analysis — where users abandon onboarding and how long each step takes.
 - After each Cursor micro-lesson (marked with "Micro-Lesson" in section headers), update `cursor_skills_learned` in `onboarding-state.json` with the corresponding skill ID
 - The `cursor-ide-browser` MCP is optional — if unavailable, fall back to system browser (`open`/`xdg-open`/`start`), then to manual instructions as last resort
-- Role-based suggestions (Step 6.5) should use the role stored in `onboarding-state.json`. If uncertain, default to `product_manager`.
-- MCP setup (Step 5.5) should never pressure the user. Every feature works without MCPs. The value proposition is automation, not a prerequisite.
-- The context scorecard (Step 6) should be dynamically generated by checking actual file contents, not assumed from which steps were completed.
+- Role-based suggestions (Step 2.5) should use the role stored in `onboarding-state.json`. If uncertain, default to `product_manager`.
+- The context scorecard (Step 2) should be dynamically generated by checking actual file contents, not assumed from which steps were completed.
+- Editor basics (Step 3) can be skipped entirely — the skip gate respects advanced users who already know Cursor.
 
 ## Step Flow Summary
 
 ```
-Step 0:   Language Selection (all tiers)
-Step 1:   Welcome + Tier Selection (all tiers)
-Step 2:   Editor Basics + Modes + @ Context (all tiers) [micro-lessons: chat_and_modes, at_context]
-Step 2.5: Agent Confirmation, Diffs Preview & MCPs Intro (all tiers)
-Step 3:   Workspace Tour (Full & Power)
-Step 4:   Context Generator (all tiers, phases vary by tier) [micro-lesson: diffs]
-Step 4.5: People, Terminology, User Segments (Full & Power)
+Step 0:   Language + Tier Selection — merged (all tiers)
+Step 0.5: Instant Context — paste-and-extract (Instant tier only) [micro-lesson: diffs]
+Step 1:   Context Generator (Quick/Full/Power, phases vary by tier) [micro-lesson: diffs]
+Step 1.5: People, Terminology, User Segments (Full & Power)
+Step 2:   First Success Moment + Context Scorecard (all tiers) [micro-lesson: rules_awareness]
+Step 2.5: Role-Based Starter Kit (all tiers)
+Step 3:   Editor Basics — with skip option (3a: navigation, 3b: modes + @) (all tiers) [micro-lessons: chat_and_modes, at_context]
+Step 3.5: Agent Mode Basics — skippable with Step 3 (all tiers)
+Step 4:   Workspace Tour (Full & Power)
 Step 5:   Strategic Foundation (Power only)
-Step 5.5: Connect Your Tools / MCP Setup (Power only)
-Step 6:   First Success Moment + Context Scorecard (all tiers) [micro-lesson: rules_awareness]
-Step 6.5: Role-Based Starter Kit (all tiers)
-Step 7:   Orientation + Plan Mode + Growing Context (all tiers) [micro-lesson: plan_mode]
+Step 6:   Orientation + ONBOARDING.html + Plan Mode + Growing Context (all tiers) [micro-lesson: plan_mode]
 ```
