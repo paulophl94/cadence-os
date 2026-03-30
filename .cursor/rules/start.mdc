@@ -25,6 +25,7 @@ When the user triggers `/setup`, `redo setup`, or `resume setup`:
 | Quarter Goals | [Filled/Empty] | "set quarter goals" |
 | Week Priorities | [Filled/Empty] | "set week priorities" |
 | People Pages | [X pages] | "create person page for [name]" |
+| Company Pages | [X pages] | "create company page for [name]" |
 | Terminology | [Filled/Empty] | "update terminology" |
 
 Pick any area to update, or say "full reset" to start from scratch.
@@ -58,43 +59,53 @@ Before starting, check two things:
 
 1. **Already configured?** — Check if `product-context.mdc` already has custom content (not the default `<!-- ... -->` placeholders). If it does, ask: "This workspace already has product context configured. Want to **start fresh** or **skip straight to the orientation**?" If starting fresh, begin from Step 0. If skipping, jump to Step 6 (Orientation).
 
-2. **Incomplete onboarding?** — Check if `to_do's/learnings/onboarding-state.json` exists with `"status": "in_progress"`. If so, read `started` date, `pending_steps`, `tier`, and `step_events`. The last completed step is the entry in `step_events` with the most recent `completed_at`. Calculate elapsed days and estimate remaining time (~2 min per remaining step). Ask (in the stored language, or English if no language was set yet): "You started the setup [yesterday / X days ago]. From where we stopped, it's ~[N] min left. Want to continue? (Or say 'skip setup' to start fresh.)" If yes, resume from the next pending step. If "skip setup" or "start fresh", clear `onboarding-state.json` and start from Step 0.
+2. **Incomplete onboarding?** — Check if `to_do's/learnings/onboarding-state.json` exists with `"status": "in_progress"`. **Legacy format migration:** if the file contains `completed_steps` (array) instead of `step_events` (object), treat it as a legacy state — clear the file and start from Step 0 (the old format lacks timestamps and tier data needed for resume). For current-format files: read `started` date, `pending_steps`, `tier`, and `step_events`. The last completed step is the entry in `step_events` with the most recent `completed_at`. Calculate elapsed days and estimate remaining time (~2 min per remaining step). Ask (in the stored language, or English if no language was set yet): "You started the setup [yesterday / X days ago]. From where we stopped, it's ~[N] min left. Want to continue? (Or say 'skip setup' to start fresh.)" If yes, resume from the next pending step. If "skip setup" or "start fresh", clear `onboarding-state.json` and start from Step 0.
 
 ---
 
-## Step 0: Language + Tier Selection
+## Step 0: Language & Tier Selection
 
-This step is always in English, regardless of anything else. Language and tier are asked together in a single message.
+This step starts in English. Language and tier are asked in **two separate messages** to keep the first interaction frictionless.
+
+### 0a: Language
 
 **Display:**
 
-Before we begin — two quick choices:
-
-**Language:** What language would you like to use?
+Before we start — what language should we use?
 
 1. **English**
 2. **Português (BR)**
 3. **Español (LATAM)**
 
-**Setup depth:** How much time do you have?
-
-1. **Espresso** (~5 min) — After this, PRDs and docs talk about YOUR product — not generic placeholders.
-2. **Full Setup** (~15 min) — After this, I also know your team, your domains, and your product jargon. This is the one I'd pick.
-3. **The Works** (~25 min) — After this, morning briefings, reviews, and daily workflows are dialed in from day one — with strategic pillars, quarter goals, and weekly priorities set.
-
-Or — if you have a product description, pitch deck text, or "about us" page handy:
-
-4. **Instant Setup** (~2 min) — Paste your product description and I extract everything at once: product identity, domains, user segments, terminology. You review a single summary, accept or adjust, done.
-
-Nothing is permanent — you can always layer more in later.
-
-STOP: Wait for the user to respond with both choices. Accept numbers, names, or natural responses in any of the three languages. If the user only provides one answer (e.g., just the language or just the tier), ask for the other one naturally before proceeding.
+STOP — wait for the user to respond. Accept numbers, names, or natural responses in any language.
 
 ---
 
-ACTION: Store both choices. Save the language to `product-context.mdc` (Working Preferences → Language) and to the onboarding state. Create `to_do's/learnings/onboarding-state.json`:
+ACTION: Save the language to `product-context.mdc` (Working Preferences → Language).
 
-Add both `"language"` (code: `"en"`, `"pt-BR"`, or `"es-LATAM"`) and `"tier"` fields, and set `pending_steps` based on the tier:
+### 0b: Setup Depth
+
+**Display (in the user's chosen language from 0a):**
+
+Now — how deep do you want to go?
+
+1. **Espresso** (~5 min) — The essentials. After this, PRDs and docs talk about YOUR product — not generic placeholders.
+2. **Cappuccino** (~15 min) — The sweet spot. I also learn your team, your domains, and your product jargon. This is the one I'd pick.
+3. **Pour Over** (~25 min) — The full craft setup. Morning briefings, reviews, and daily workflows are dialed in from day one — with strategic pillars, quarter goals, and weekly priorities.
+
+Or — if you have a product description, pitch deck, or "about us" page handy:
+
+4. **Instant** (~5 min) — Just add hot water. Paste your description, I extract everything at once. You review, adjust, done.
+
+Nothing is permanent — you can always layer more in later.
+
+STOP — wait for the user to respond. Accept numbers, names, or natural responses.
+
+---
+
+ACTION: Store the tier choice. Create `to_do's/learnings/onboarding-state.json`:
+
+Add `"language"` (code: `"en"`, `"pt-BR"`, or `"es-LATAM"`) and `"tier"` fields, and set `pending_steps` based on the tier (Espresso=quick, Cappuccino=full, Pour Over=power, Instant=instant):
 - **Quick:** `["context_generator", "first_success", "role_starter_kit", "editor_basics", "agent_mode_basics", "orientation"]`
 - **Full:** `["context_generator", "people_and_terminology", "first_success", "role_starter_kit", "editor_basics", "agent_mode_basics", "workspace_tour", "orientation"]`
 - **Power:** `["context_generator", "people_and_terminology", "first_success", "role_starter_kit", "editor_basics", "agent_mode_basics", "workspace_tour", "strategic_foundation", "orientation"]`
@@ -120,7 +131,7 @@ The full JSON shape at this point should be:
 }
 ```
 
-The `role` field is populated in Step 1 (Context Generator, Phase 1) or Step 0.5 (Instant Context). The `cursor_skills_learned` array tracks which Cursor micro-lessons have been completed during onboarding — valid values: `"chat_and_modes"`, `"at_context"`, `"diffs"`, `"rules_awareness"`, `"plan_mode"`. These feed the Level Up feature and optional Cursor tips in morning briefings. The `context_depth` field is populated as the user progresses through the onboarding. The `step_events` object replaces the old `completed_steps` array — each key is a step name, with `started_at` and `completed_at` ISO-8601 timestamps for drop-off analysis.
+The `role` field is populated in Step 1 (Context Generator, Phase 1) or Step 0.5 (Instant Context). The `cursor_skills_learned` array tracks which Cursor micro-lessons have been completed during onboarding — valid values: `"chat_and_modes"`, `"at_context"`, `"diffs"`, `"rules_awareness"`, `"plan_mode"`. These feed the Level Up feature and optional Cursor tips in morning briefings. The `context_depth` field is populated as the user progresses through the onboarding. The `step_events` object uses `started_at` and `completed_at` ISO-8601 timestamps per step for drop-off analysis.
 
 From this point forward, **all text displayed to the user must be in the chosen language**. Every message, question, confirmation, suggestion, and closing — everything. Only technical terms, file paths, and command examples stay in English.
 
@@ -340,6 +351,18 @@ Also update the People Registry in `people-context.mdc` with each new person.
 
 Update `onboarding-state.json` → `context_depth.people` with the count of pages created.
 
+**Company Pages (display after person pages are created):**
+
+If any of the people created have an external company (relationship is `external` or company differs from the user's), display:
+
+Some of these people are at external organizations. This workspace also supports **company pages** — they live in `context/companies/` and aggregate meetings, commitments, and activity across everyone you interact with at that company. Think of person pages as individual relationships, and company pages as the organizational view.
+
+Say `Create company page for [Company]` when you're ready, or I'll suggest creating one automatically when processing meeting notes with external participants.
+
+ACTION: If any person pages were created with an external relationship, check if their company has a page in `context/companies/`. If not, offer to create one from `context/companies/_TEMPLATE.md`. If the user says "yes" or "create it", create the page, link the person pages to it via the Key Contacts table, and update the Company Registry in `company-context.mdc`. Update `onboarding-state.json` → `context_depth.companies` with the count of company pages created.
+
+If no external contacts were mentioned, skip this section silently.
+
 ### 1.5b: Product Terminology
 
 **Display:**
@@ -454,41 +477,9 @@ Now look at what I just generated:
 
 See the difference? This talks about **[their product name]**, references **[their users]**, and builds on **[their differentiator]**. The engineer review flagged [specific thing from the review] — without you providing extra context.
 
-That's `.cursor/rules/` at work — 14 document templates that automatically inject your product context. They fire behind the scenes every time you ask me to generate something.
+That's `.cursor/rules/` at work — 14 templates that fire behind the scenes, injecting your product context into everything I generate. You never need to touch them, but now you know they're there.
 
-**Optional peek:** "Curious how it works? Open `.cursor/rules/lean-prd-template.mdc` in the left sidebar — that's one of the templates I use. Every template in that folder works the same way: persistent instructions that shape what I produce. You never need to edit them, but now you know they're there."
-
-ACTION: Add `"rules_awareness"` to `cursor_skills_learned` array in `onboarding-state.json`.
-
-### Context Scorecard
-
-After showing the document and review, display a brief scorecard that teaches the mental model of "more context = better outputs":
-
-**Display:**
-
-Here's what powered that output — your **Context Depth**:
-
-ACTION: Read the actual state of context files and build this table dynamically. Check each file/folder for real content (not just placeholders):
-
-| Context Layer | Status | Impact |
-|---------------|--------|--------|
-| Product identity | [Configured / Not yet] | Documents reference your product correctly |
-| Domains | [Configured (N) / Not yet] | Documents align to the right domain |
-| People | [N pages / Not yet] | Meeting prep and notes are personalized |
-| Terminology | [N terms / Not yet] | Correct jargon in all outputs |
-| User segments | [N segments / Not yet] | Right audience framing in PRDs |
-| Strategic pillars | [Configured (N) / Not yet] | Tasks and docs connect to strategy |
-| Quarter goals | [Configured / Not yet] | Briefings reference progress |
-| Architecture | [Not yet] | Technical PRDs lack constraint awareness |
-| KPIs | [Not yet] | Documents don't connect to metrics targets |
-
-For "Not yet" items, add the one-line suggestion: what to do to unlock it. Example: "Say `Help me fill in terminology` to add product-specific terms."
-
-**Display after the table:**
-
-Each row you fill in makes every output sharper. You don't need to do it all today — context compounds over time. The items marked "Not yet" are your roadmap for making this workspace smarter.
-
-ACTION: Update `onboarding-state.json` → `context_depth` with the current state of each layer. Record `first_success` in `step_events` with `started_at` (when Step 2 began) and `completed_at` (now). Remove from `pending_steps`.
+ACTION: Add `"rules_awareness"` to `cursor_skills_learned` array in `onboarding-state.json`. Record `first_success` in `step_events` with `started_at` (when Step 2 began) and `completed_at` (now). Remove from `pending_steps`.
 
 ---
 
@@ -507,7 +498,7 @@ Based on your role, here are the **3 things worth trying first** — the ones th
 **If role is `product_manager`:**
 
 1. **Morning briefing** — Tomorrow morning, say `Morning briefing`. I'll pull your priorities, calendar, commitments, and initiative status into a single cockpit view. It takes 30 seconds and sets your entire day.
-2. **Meeting notes** — After your next meeting, say `Process meeting notes` (paste the transcript or summary). I'll extract decisions, action items, update person pages, and add commitments automatically.
+2. **Meeting notes** — After your next meeting, say `Process meeting notes` (paste the transcript or summary). I'll extract decisions, action items, update person pages, and add commitments automatically. Each action item gets a unique `^cd-` ID that links it across the meeting doc, `tasks.md`, `commitments.md`, and person pages — so completing a task in one place marks it done everywhere.
 3. **One-Pager** — When you have a feature idea, say `Create One-Pager for [feature]`. It's the fastest path from idea to stakeholder alignment — grounded in your product context.
 
 **If role is `engineering_manager`:**
@@ -534,7 +525,21 @@ Based on your role, here are the **3 things worth trying first** — the ones th
 2. **PRD** — Try `Create PRD for [feature]` to see a full requirements document grounded in your product context.
 3. **Level up** — Say `Level up` anytime to discover capabilities you haven't tried yet. I'll suggest the ones that make sense for your workflow.
 
-STOP: "Now let me show you a few things about how this editor works — or skip ahead if you already know Cursor."
+**For all roles, add after the numbered list:**
+
+One more thing — and this is worth trying right now. You don't need commands for everything. **Think out loud.** Tell me something real that's on your mind — a task you need to do, someone you need to follow up with, an idea you've been sitting on. Anything work-related. Example: "I need to follow up with [someone] about [something]" or "We should think about [topic]."
+
+STOP — wait for the user to respond with a thought, observation, or idea.
+
+**After the user responds:**
+
+ACTION: Activate the conversational capture protocol from `conversational-capture.mdc`. Route the input to the right destination (task, commitment, person page, backlog, etc.) and confirm where it landed. This is a live demo — the user experiences capture in action rather than reading about it.
+
+**Display after routing:**
+
+See how that works? You shared a thought, I classified it and routed it to the right place. No commands, no forms. This happens naturally in every conversation from now on — I'll always confirm before writing anything.
+
+STOP: "Ready for a quick Cursor orientation, or skip ahead if you already know your way around?"
 
 ACTION: Update onboarding state — record `role_starter_kit` in `step_events` with `started_at` (when Step 2.5 began) and `completed_at` (now). Remove from `pending_steps`.
 
@@ -631,22 +636,13 @@ If it says Agent, we're good.
 
 **Display:**
 
-You've already seen diffs in action when we edited your product context — the green and red highlights, Accept/Reject buttons. That's how every edit works here. A few more things worth knowing:
+You've already seen diffs — green for additions, red for removals, Accept/Reject on each change. Quick tip: **Accept All** saves time when I make multiple changes at once. Nothing is ever saved until you say so.
 
-- **Accept All** — when I make multiple changes at once, saves time
-- **Reject** — discards changes completely, nothing happens to the file
-- You always have the final say. Nothing is saved until you accept it.
+### 3.5c: Tool Connections
 
-### 3.5c: Tool Connections (MCPs)
+This workspace can also connect to your real tools — Jira, Slack, Calendar, Figma, meeting transcription. With them connected, morning briefings pull your actual calendar and board, and I can post to Slack or create tickets directly from the chat. Without them, everything still works — you just paste data manually.
 
-Here's where it gets interesting. This workspace can connect to your actual tools — Jira, Slack, Google Calendar, meeting transcription services, Figma. These connections are called **MCPs** (Model Context Protocol servers).
-
-With MCPs connected:
-- Morning briefings pull your **real calendar** and **real Jira board**
-- Meeting notes grab **transcripts automatically**
-- I can **post to Slack** or **create Jira tickets** from the chat
-
-Without them, everything still works — you just paste data manually instead. When you're ready to connect them, say `Level up` and I'll recommend the ones that match your workflow. They live in **Settings → Cursor Settings → MCP**.
+**Quick check:** Open **Settings → Cursor Settings → MCP** (or **⌘ + ,** → search "MCP"). See what's there? You don't need to connect anything now — when you're ready, say `Level up` and I'll recommend the ones that match your workflow.
 
 STOP: "Ready to continue?"
 
@@ -663,13 +659,15 @@ Skip this step entirely for Quick and Instant tiers.
 Let me give you the quick tour — think of it as knowing which drawer has the knives:
 
 - **`documents/`** — Everything I generate lands here. PRDs, One-Pagers, analyses, roadmaps. All Markdown, all portable. This folder will grow fast.
-- **`context/`** — Your product brain. User personas, terminology, stakeholder pages. I read these before generating anything — so the more you fill in, the smarter the output gets.
+- **`context/`** — Your product brain. User personas, terminology, stakeholder pages (`people/`), and organization-level relationship tracking (`companies/`). Person pages track individual relationships; company pages aggregate meetings, commitments, and activity across everyone at that company. I read these before generating anything — so the more you fill in, the smarter the output gets.
 - **`global-context/`** — Where strategy lives: domain vision, KPIs, roadmap, architecture. Organized by domain, with shared pillars and assumptions across all of them. We'll set up the basics next.
 - **`to_do's/`** — Your planning system. Quarter goals cascade into weekly priorities, which feed into daily tasks. Also tracks commitments, briefings, and reviews. The whole hierarchy lives here.
 - **`.cursor/rules/`** — My playbook. 14 document templates, 6 reviewer personas, coaching protocols. These activate automatically — you never need to touch them.
 - **`.cursor/skills/`** — Complex workflows: morning briefing, daily/weekly reviews, meeting notes, meeting prep, competitor analysis. The multi-step stuff.
 
-STOP: "Ready to continue?"
+**Quick exercise:** Open the File Explorer (left sidebar) and click into `to_do's/`. Open `tasks.md` — this is your daily task file, the one that shows up in every morning briefing. Take 10 seconds to browse the folder structure. Everything I just described — it's all right there.
+
+STOP: "Makes sense? Ready to continue?"
 
 ACTION: Update onboarding state — record `workspace_tour` in `step_events` with `started_at` (when Step 4 began) and `completed_at` (now). Remove from `pending_steps`.
 
@@ -708,6 +706,20 @@ These pillars guide all prioritization. Every P1 task should connect to a pillar
 
 *Last updated: YYYY-MM-DD*
 ```
+
+**Briefing Preview (display after saving pillars):**
+
+ACTION: Generate a brief mock morning briefing snippet using the pillars the user just provided. Show what the "Strategic Alignment" section of a morning briefing would look like — with the real pillar names linked to hypothetical tasks and priorities. Keep it to 4-6 lines.
+
+**Display:**
+
+Here's a taste of what your morning briefing will look like with those pillars:
+
+[Display the mock briefing snippet — e.g., "**Pillar alignment today:** 2 of your 3 tasks connect to [Pillar 1]. Nothing scheduled for [Pillar 3] — worth checking if that's intentional."]
+
+That's what runs every morning automatically. Pillars turn a generic to-do list into a strategic cockpit.
+
+---
 
 ### 5b: Quarter Goals
 
@@ -841,48 +853,60 @@ ACTION: Pick 2-3 suggestions from this list based on what was configured during 
 - If assumptions were set: "Say `Assumptions` anytime to review or update your strategic bets. I check them automatically before generating PRDs and roadmaps."
 - If no MCPs are connected yet: "Say `Level up` when you're ready to connect your tools (Jira, Slack, Calendar…). I'll recommend the ones that match your workflow and walk you through setup."
 - If people were created: "Before your next meeting, try `Prep for [Name]`. I'll load their history, open commitments, and suggest what to cover."
+- If conversational capture was introduced: "Try thinking out loud in the chat — 'I need to follow up with [name] about X' or 'The competitor just launched Y'. I'll capture it and route it to the right files automatically."
 - Default fallback 1: "Say `Level up` to discover capabilities you haven't used yet. I'll suggest the ones that make sense for your current workflow."
 - Default fallback 2: "Say `/improve` when something feels off. I'll capture the idea and surface the best ones during weekly reviews."
 
-### What's Running in the Background
+### Context Scorecard
 
-Then always include this section:
+ACTION: Read the actual state of context files and build this compact scorecard dynamically. Check each file/folder for real content (not just placeholders):
 
-Five things happen automatically from now on — you never need to think about them:
+**Display:**
+
+Here's your **Context Depth** — what's powering your outputs right now:
+
+| Layer | Status |
+|-------|--------|
+| Product identity | [Configured / Not yet] |
+| Domains | [N configured / Not yet] |
+| People | [N pages / Not yet] |
+| Terminology | [N terms / Not yet] |
+| User segments | [N segments / Not yet] |
+| Strategic pillars | [Configured / Not yet] |
+| Quarter goals | [Configured / Not yet] |
+
+For "Not yet" items, add a one-line suggestion (e.g., "Say `set up pillars` to unlock strategic alignment"). Each layer you add makes every output sharper — context compounds.
+
+ACTION: Update `onboarding-state.json` → `context_depth` with the current state of each layer.
+
+### What Runs Automatically
+
+Three things you'll never need to think about:
 
 1. **Strategic awareness** — I load your pillars, week priorities, and active initiatives before every response. You never re-explain where you are.
-2. **People context** — When I see a name matching someone in `context/people/`, I pull their page automatically — past meetings, open items, communication style.
-3. **Next-step coaching** — After generating a document, I suggest the logical next step. Say "skip" if you're not interested.
-4. **Staleness detection** — Tasks pending >5 days and unanswered commitments >3 days get flagged at session start. Gentle accountability.
-5. **Self-improvement capture** — If you say "this should be easier" or "I wish..." — I capture it as a toolkit improvement idea. No extra effort from you.
+2. **People and company context** — When I see a name matching someone in `context/people/`, I pull their full context automatically: past meetings, open items, communication style. Same for companies in `context/companies/`.
+3. **Conversational capture** — Share a loose thought in the chat and I route it to the right file — tasks, commitments, person pages, or backlog. You already tried this a few steps back.
 
-### Growing Your Context Over Time
+There are four more automatic protocols running (staleness detection, next-step coaching, cross-file task sync, self-improvement capture). Your **Onboarding Guide** has the full list.
 
-Then always include this section:
+### What to Build Next
 
-The outputs get better as you add more context. Here's your roadmap — fill these in as they become relevant:
+ACTION: Pick the top 3 items from this list based on what's NOT yet configured during onboarding. Show only 3, prioritized by leverage:
 
-| What to Add | How | Impact |
-|-------------|-----|--------|
+| What | How | Why it matters |
+|------|-----|----------------|
 | Domain vision | Edit `global-context/{domain}/DOMAIN-VISION.md` | Documents align with long-term strategy |
-| KPIs and metrics | Edit `global-context/{domain}/DOMAIN-KPIS.md` | PRDs connect features to measurable outcomes |
-| Architecture | Edit `global-context/{domain}/ARCHITECTURE.md` | Technical PRDs reference real system constraints |
-| More people | Say `Create person page for [name]` | Meeting prep improves with each person added |
-| More terminology | Edit `context/TERMINOLOGY.md` | Documents use your exact product language |
-| Tool connections | **Settings → Cursor Settings → MCP** | Morning briefings pull real calendar, Jira, transcripts |
+| KPIs and metrics | Edit `global-context/{domain}/DOMAIN-KPIS.md` | PRDs connect to measurable outcomes |
+| Architecture | Edit `global-context/{domain}/ARCHITECTURE.md` | Technical PRDs reference real constraints |
+| More people | Say `Create person page for [name]` | Meeting prep improves with each person |
+| More terminology | Edit `context/TERMINOLOGY.md` | Documents use your exact language |
+| Tool connections | **Settings → Cursor Settings → MCP** | Briefings pull real calendar and Jira |
 
-You don't need to do any of this right now. The system works today with what we've configured. But each addition makes every output more precise — context compounds.
+The full roadmap is in your **Onboarding Guide** — browse it when you're ready.
 
 ### Closing
 
-Always include this closing:
-
-Your **Onboarding Guide** (`ONBOARDING.html`) stays useful well past setup:
-- **Toolkit** — the full catalog of templates, reviewers, skills, and frameworks with copyable commands
-- **Reference** — searchable command table, filterable by category
-- **Checklist** — tracks what's configured and what you can build out over time
-
-Find it in the file explorer anytime, or say "open onboarding" in the chat.
+Your **Onboarding Guide** (`ONBOARDING.html`) is your long-term reference — toolkit catalog, searchable commands, and a checklist of what's configured vs what you can build out. Find it in the file explorer anytime, or say "open onboarding" in the chat.
 
 One more thing: I'll suggest, but I won't insist. "Skip" always works, and I'll never guilt-trip you for it.
 
@@ -899,6 +923,7 @@ After marking onboarding as completed, silently check setup quality:
 3. **Strategic layer** — Check if `global-context/shared/pillars.md` has content beyond the template.
 4. **Planning** — Check if `to_do's/quarter-goals.md` and `to_do's/week-priorities.md` have content.
 5. **People and terminology** — Check if `context/people/` has any person pages and if `context/TERMINOLOGY.md` has terms beyond the template.
+6. **Company pages** — Check if `context/companies/` has any company pages (besides `_TEMPLATE.md`).
 
 **If any gaps found** (and the tier would have covered them), append a gentle note:
 
@@ -908,6 +933,7 @@ After marking onboarding as completed, silently check setup quality:
 - [No domain folders yet — say "add a domain" when ready]
 - [Pillars not set — say "set up pillars" to unlock strategic alignment]
 - [No people pages — say "create person page for [name]" to improve meeting prep]
+- [No company pages — say "create company page for [name]" to track organization-level relationships]
 - [No terminology — say "help me fill in terminology" to improve document accuracy]
 ```
 
@@ -927,27 +953,27 @@ After marking onboarding as completed, silently check setup quality:
 - Each step should feel like a conversation, not a form or a lecture. If it sounds like a wizard, rewrite it.
 - Use closed questions at STOP points ("Makes sense?" / "Ready?") — not open-ended ones that can derail
 - Never say "I'm following the onboarding script" or any meta-commentary about what you're doing behind the scenes
-- After completing the full onboarding, the always-on protocols take over automatically: `session-protocol.mdc` (staleness checks, context loading), `cadence-coach.mdc` (coaching, next-step suggestions, usage tracking, improvement capture), `people-context.mdc` (auto-inject stakeholder context), and `formatting-preferences.mdc`
+- After completing the full onboarding, the always-on protocols take over automatically: `session-protocol.mdc` (staleness checks, context loading), `cadence-coach.mdc` (coaching, next-step suggestions, usage tracking, improvement capture), `people-context.mdc` (auto-inject stakeholder context), `company-context.mdc` (auto-inject organization context), `conversational-capture.mdc` (intelligent routing of loose thoughts and observations), and `formatting-preferences.mdc`
 - Always update `to_do's/learnings/onboarding-state.json` after each step completes
 - **Step-level tracking:** When starting a step, record `started_at` in `step_events[step_name]`. When completing a step, record `completed_at` and remove the step from `pending_steps`. Use ISO-8601 timestamps with timezone. Skipped steps get both timestamps set to the same value (the moment of skip). This enables drop-off analysis — where users abandon onboarding and how long each step takes.
 - After each Cursor micro-lesson (marked with "Micro-Lesson" in section headers), update `cursor_skills_learned` in `onboarding-state.json` with the corresponding skill ID
 - The `cursor-ide-browser` MCP is optional — if unavailable, fall back to system browser (`open`/`xdg-open`/`start`), then to manual instructions as last resort
 - Role-based suggestions (Step 2.5) should use the role stored in `onboarding-state.json`. If uncertain, default to `product_manager`.
-- The context scorecard (Step 2) should be dynamically generated by checking actual file contents, not assumed from which steps were completed.
+- The context scorecard (Step 6) should be dynamically generated by checking actual file contents, not assumed from which steps were completed.
 - Editor basics (Step 3) can be skipped entirely — the skip gate respects advanced users who already know Cursor.
 
 ## Step Flow Summary
 
 ```
-Step 0:   Language + Tier Selection — merged (all tiers)
+Step 0:   Language (0a) + Tier Selection (0b) — two messages (all tiers)
 Step 0.5: Instant Context — paste-and-extract (Instant tier only) [micro-lesson: diffs]
-Step 1:   Context Generator (Quick/Full/Power, phases vary by tier) [micro-lesson: diffs]
-Step 1.5: People, Terminology, User Segments (Full & Power)
-Step 2:   First Success Moment + Context Scorecard (all tiers) [micro-lesson: rules_awareness]
-Step 2.5: Role-Based Starter Kit (all tiers)
+Step 1:   Context Generator (Espresso/Cappuccino/Pour Over, phases vary by tier) [micro-lesson: diffs]
+Step 1.5: People, Terminology, User Segments (Cappuccino & Pour Over)
+Step 2:   First Success Moment (all tiers) [micro-lesson: rules_awareness]
+Step 2.5: Role-Based Starter Kit + Live Capture Demo (all tiers)
 Step 3:   Editor Basics — with skip option (3a: navigation, 3b: modes + @) (all tiers) [micro-lessons: chat_and_modes, at_context]
 Step 3.5: Agent Mode Basics — skippable with Step 3 (all tiers)
-Step 4:   Workspace Tour (Full & Power)
-Step 5:   Strategic Foundation (Power only)
-Step 6:   Orientation + ONBOARDING.html + Plan Mode + Growing Context (all tiers) [micro-lesson: plan_mode]
+Step 4:   Workspace Tour + hands-on exercise (Cappuccino & Pour Over)
+Step 5:   Strategic Foundation + Briefing Preview (Pour Over only)
+Step 6:   Orientation + ONBOARDING.html + Plan Mode + Context Scorecard (all tiers) [micro-lesson: plan_mode]
 ```

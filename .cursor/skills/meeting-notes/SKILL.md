@@ -110,16 +110,34 @@ Create a structured document. **Assign stable task IDs** (format `^cd-YYYYMMDD-N
 *Processed: [YYYY-MM-DD]*
 ```
 
-### Step 4: Update Person Pages
+### Step 4: Update Person and Company Pages
 
-After processing, **automatically** update person pages for key participants:
+After processing, **automatically** update person and company pages for key participants:
 
+**Person pages:**
 1. Check if person page exists in `@context/people/`
 2. If not found, create one using `@context/people/_TEMPLATE.md`
 3. Update with: meeting entry, open items (what you owe them / they owe you)
-4. Tell the user which pages were created or updated
 
-### Step 5: Update Commitments Tracker
+**Company pages:**
+1. For each external participant, check if their company has a page in `@context/companies/`
+2. If a company page exists, add the meeting to its Activity Log: `- [YYYY-MM-DD] Meeting: [Topic] with [Participants]`
+3. If a company is referenced but has no page, suggest creating one
+4. Link person pages to company pages via the Company field
+
+Tell the user which pages were created or updated.
+
+### Step 5: Sync Tasks to tasks.md
+
+**Automatically** add action items assigned to the user to `@to_do's/tasks.md`:
+
+1. Read current `tasks.md` to find the highest existing `^cd-` ID for today
+2. For each action item owned by the user:
+   - Add to the appropriate priority section (P1 or P2) with the same `^cd-` ID from Step 3
+   - Include pillar tag if the task connects to a strategic pillar
+3. Format: `- [ ] Task description (^cd-YYYYMMDD-NNN) [Pillar: Name]`
+
+### Step 6: Update Commitments Tracker
 
 **Automatically** update `@to_do's/commitments.md` with the same task IDs from Step 3:
 
@@ -137,7 +155,20 @@ After processing, **automatically** update person pages for key participants:
 - Each commitment gets the same `^cd-` ID as the corresponding action item
 - If a commitment doesn't map to an existing action item, create a new ID for it
 
-### Step 6: Suggest Follow-ups
+### Step 7: Verify Cross-File Sync
+
+After all updates, report the sync summary to the user:
+
+```
+Task sync complete:
+- Meeting note: documents/MEETING-[title]-[date].md (X action items)
+- Tasks: to_do's/tasks.md (Y items added)
+- Commitments: to_do's/commitments.md (Z entries added)
+- Person pages: [list of updated pages]
+All items share ^cd- IDs for cross-file tracking.
+```
+
+### Step 8: Suggest Follow-ups
 
 Based on meeting content, suggest:
 - Documents that should be created (PRD, One-Pager, etc.)
@@ -164,10 +195,12 @@ Save as: `documents/MEETING-[type]-[topic]-[YYYY-MM-DD].md`
 
 ## Quality Checklist
 
-- [ ] All action items have owners
+- [ ] All action items have owners and `^cd-` IDs
 - [ ] Decisions are clearly stated
 - [ ] Open questions are documented
 - [ ] Nothing confidential is exposed inappropriately
 - [ ] Follow-up steps are actionable
 - [ ] Person pages created/updated for key participants
-- [ ] Commitments added to tracker
+- [ ] Tasks synced to `tasks.md` with matching IDs
+- [ ] Commitments added to tracker with matching IDs
+- [ ] Cross-file sync verified and reported

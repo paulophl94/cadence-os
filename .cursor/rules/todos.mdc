@@ -77,6 +77,62 @@ Every task created from meeting notes, commitments, or cross-file workflows **mu
 
 ---
 
+## Task Sync Protocol
+
+Cross-file sync is the critical mechanism that keeps tasks consistent across meeting notes, person pages, commitments, and tasks.md. This section defines the exact workflow.
+
+### On Task Creation (from meeting notes or commitments)
+
+1. **Generate ID:** Next sequential `^cd-YYYYMMDD-NNN` for today. To find the next number, search `to_do's/tasks.md` for existing IDs with today's date and increment.
+2. **Write to all relevant files simultaneously:**
+   - `to_do's/tasks.md` — add to appropriate priority section
+   - `to_do's/commitments.md` — if it's a promise (I owe / others owe me)
+   - `context/people/[Person].md` — add to "Open Items" section of relevant person pages
+   - Source meeting note — the action item in the meeting document itself
+3. **Same ID everywhere.** The `^cd-` ID must be identical across all files. This is the sync anchor.
+
+### On Task Completion
+
+When the user says "done with X", "finished X", "completed X", or marks a task `[x]`:
+
+1. **Identify the task ID.** Match by description or ID reference.
+2. **Search all locations** where this ID might appear:
+   - `to_do's/tasks.md`
+   - `to_do's/commitments.md`
+   - `context/people/*.md` (all person pages)
+   - `documents/MEETING-*.md` (meeting notes)
+3. **Update every occurrence:**
+   - Change `- [ ]` to `- [x]`
+   - Append completion timestamp: `✅YYYY-MM-DD`
+4. **Report sync results** to the user: "Marked complete in tasks.md, commitments.md, and [Person]'s page."
+
+### On Task Deletion or Cancellation
+
+If a task is cancelled (no longer needed):
+
+1. Mark with `~~strikethrough~~` and add `❌YYYY-MM-DD` instead of ✅
+2. Sync the cancellation across all files with the same ID
+3. Move to Completed section with cancellation note
+
+### ID Collision Prevention
+
+- Always check existing IDs before generating a new one
+- If multiple tasks are created in a single session, increment the counter sequentially
+- Never reuse an ID, even if the original task was deleted
+
+### Sync Verification
+
+After any sync operation, briefly confirm which files were updated. Example:
+
+```
+Synced ^cd-20260330-003 across 3 files:
+- to_do's/tasks.md ✅
+- to_do's/commitments.md ✅
+- context/people/Sarah-Chen.md ✅
+```
+
+---
+
 ## Adding a Task
 
 Add to the correct section of `tasks.md`:

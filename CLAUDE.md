@@ -19,6 +19,8 @@ AI-powered operating system for product teams.
 | Coach (core) | `.cursor/rules/cadence-coach.mdc` |
 | Coach (on-demand: level up, ratings) | `.cursor/rules/cadence-coach-ondemand.mdc` |
 | People Context | `.cursor/rules/people-context.mdc` |
+| Company Context | `.cursor/rules/company-context.mdc` |
+| Conversational Capture | `.cursor/rules/conversational-capture.mdc` |
 | Formatting Preferences | `.cursor/rules/formatting-preferences.mdc` |
 
 ---
@@ -40,6 +42,7 @@ cadence-os/
 │   └── weekly-review/
 ├── context/
 │   ├── people/               # Person pages for stakeholders
+│   ├── companies/            # Company pages for organization-level tracking
 │   ├── USERS.md              # User personas
 │   └── TERMINOLOGY.md        # Product terminology
 ├── documents/                # Generated documents output

@@ -1,0 +1,119 @@
+---
+description: Conversational Capture - Intelligent routing of loose thoughts, observations, and ideas to the right files
+alwaysApply: true
+---
+# Conversational Capture
+
+Route loose thoughts, observations, and unstructured input to the right place in the workspace — without the user having to decide where things go.
+
+## When to Activate
+
+Detect when the user shares something that is **not a direct command** but contains actionable or recordable information:
+
+- Observations about people: "Sarah seemed worried about the timeline"
+- Scattered thoughts: "We should probably think about pricing for Q3"
+- Meeting fragments: "Just got off a call with John, he wants the API docs by Friday"
+- Ideas: "What if we added a bulk import feature?"
+- Signals: "The competitor just launched subscriptions"
+- Feedback: "Customer X complained about checkout speed again"
+
+**Do NOT activate for:**
+- Direct commands ("show my tasks", "morning briefing")
+- Questions ("what's the status of X?")
+- Document generation requests ("write a PRD for...")
+- Data queries ("what's our GMV?")
+
+## Routing Protocol
+
+### Step 1: Load Strategic Context (silent)
+
+Before routing, silently check:
+
+1. `to_do's/week-priorities.md` — current Top 3 priorities
+2. `global-context/shared/pillars.md` — strategic pillars
+3. `cadence-progress.json` — active initiatives
+
+This context determines routing confidence.
+
+### Step 2: Classify the Input
+
+Determine what type of information was shared:
+
+| Type | Signals | Primary Destination |
+|------|---------|-------------------|
+| **Person observation** | Name mentioned + sentiment/context | `context/people/[Person].md` Notes or Context section |
+| **Commitment detected** | "I'll", "I need to", "they promised", "by Friday" | `to_do's/commitments.md` + person page |
+| **Task detected** | Action verb + implied ownership | `to_do's/tasks.md` with priority inferred |
+| **Idea / opportunity** | "What if", "we should", "I wonder", speculative language | `to_do's/backlog.md` or relevant initiative document |
+| **Competitive signal** | Competitor name + action/launch/change | Relevant domain context or `documents/` |
+| **Customer feedback** | Customer/user + pain/complaint/request | Person page if named, or relevant initiative |
+| **Decision record** | "We decided", "the call was made", "agreed to" | Relevant initiative or meeting doc |
+
+### Step 3: Match to Strategic Context
+
+Cross-reference the input against loaded context:
+
+- **Week priority match:** If the input relates to a Top 3 priority, route there with HIGH confidence
+- **Pillar match:** If the input connects to a strategic pillar, tag it
+- **Initiative match:** If the input relates to an active initiative, route to its context
+- **Person match:** If a known person is mentioned, also update their person page
+- **Company match:** If a known company is mentioned (has a page in `context/companies/`), also update their company page
+
+### Step 4: Propose Routing
+
+Present the routing decision to the user for confirmation. Keep it concise:
+
+```
+Captured. I'd route this to:
+- [Person]'s page (added to Notes) ← HIGH confidence, matches week priority "X"
+- tasks.md as P2: "Follow up on timeline concern with Sarah" ← MEDIUM confidence
+
+Confirm? (or redirect)
+```
+
+**Confidence levels:**
+- **HIGH:** Input directly mentions a week priority, active initiative, or known person
+- **MEDIUM:** Input relates to a strategic pillar or domain but no exact match
+- **LOW:** No clear connection — ask user where it belongs
+
+**Rules:**
+- If HIGH confidence on all routes, proceed and confirm after (don't block)
+- If any route is MEDIUM or LOW, ask before writing
+- Never route to more than 3 destinations from a single input
+- If unsure, default to `to_do's/backlog.md` as the inbox
+
+### Step 5: Execute Routing
+
+Write the information to the confirmed destinations:
+
+1. **Person pages:** Add to Notes section with date prefix: `- [YYYY-MM-DD] Observation text`
+2. **Tasks:** Add with inferred priority and `^cd-` ID if cross-file
+3. **Commitments:** Use standard commitment format with `^cd-` ID
+4. **Backlog:** Add with date and brief context tag
+5. **Company pages:** Add to Notes or Activity section with date prefix
+
+### Step 6: Confirm
+
+After routing, briefly confirm what was captured and where:
+
+```
+Routed:
+- Sarah Chen's page: added timeline concern to Notes
+- tasks.md: added "Follow up with Sarah on Q2 timeline" (P2)
+```
+
+## Multi-Item Capture
+
+If the user shares multiple pieces of information in one message:
+
+1. Parse each distinct item
+2. Route each independently
+3. Present a consolidated routing summary for confirmation
+4. Execute all at once after confirmation
+
+## Integration with Other Workflows
+
+- If the captured input looks like meeting notes, suggest: "This looks like it could be full meeting notes. Want me to run the meeting-notes skill instead?"
+- If a commitment is detected, assign a `^cd-` ID per the Task Sync Protocol in `todos.mdc`
+- If a person is mentioned, follow the People Context protocol (load their page silently)
+- If a company is mentioned, follow the Company Context protocol

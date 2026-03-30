@@ -1,0 +1,67 @@
+---
+description: Company Context - Auto-inject company page context when organizations are mentioned
+alwaysApply: true
+---
+# Company Context Auto-Injection
+
+When a company name matching a file in `context/companies/` is mentioned in conversation, in a document being worked on, or in a file being read, **silently load their company page** for additional context.
+
+## Protocol
+
+1. **Detection:** When a company name appears in the current conversation or document, check if `context/companies/Company-Name.md` exists
+2. **Loading:** If found, silently read the company page to inform your response with:
+   - Their relationship type (Customer/Partner/Competitor/Prospect/Vendor)
+   - Key contacts and their roles
+   - Recent activity and open items
+   - Strategic importance and context
+3. **Application:** Use company context to enrich responses — reference past interactions, surface open commitments across contacts, connect to strategic priorities
+4. **Silence:** Never announce "I loaded company context for X" — just use it naturally
+5. **Person linking:** When a person page references a company that has a company page, cross-reference both for richer context
+
+## Matching Rules
+
+- Match full company names: "Acme Corp" -> `context/companies/Acme-Corp.md`
+- Match aliases defined in company page frontmatter `aliases:` field
+- Case-insensitive matching
+- Use hyphenated filenames for multi-word names: "Acme Corp" -> `Acme-Corp.md`
+
+## When to Trigger
+
+- User mentions a company by name in conversation
+- A document being generated references a company
+- Meeting notes are being processed (load company pages for participant organizations)
+- Meeting prep (load company pages for attending organizations)
+- Commitments are being reviewed (load company pages for commitment counterparts)
+- Conversational capture routes information mentioning a company
+
+## When NOT to Trigger
+
+- Generic industry references ("the competitor", "a customer") without specific names
+- Companies not in the company registry
+- When the user explicitly says they don't need company context
+
+## Auto-Creation
+
+When processing meeting notes or commitments and an organization is referenced that does NOT have a company page:
+
+1. Suggest creating one: "No company page exists for [Company]. Create one?"
+2. If approved, create from `context/companies/_TEMPLATE.md`
+3. Pre-fill known fields from the meeting context
+4. Link known contacts to their person pages
+
+## Aggregation
+
+Company pages aggregate across their contacts:
+
+- **Meeting History:** Roll up meetings from all linked person pages that belong to this company
+- **Open Items:** Consolidate commitments across all contacts at this company
+- **Activity Log:** Chronological view of all interactions with anyone at this company
+
+When updating a person page for someone at a known company, also update the company page's Activity Log with a date-prefixed entry.
+
+## Company Registry
+
+Maintained automatically. When a new company page is created in `context/companies/`, add their name here for quick lookup.
+
+<!-- Add entries as: Company Name | filename | aliases -->
+<!-- Example: Acme Corp | Acme-Corp.md | Acme -->

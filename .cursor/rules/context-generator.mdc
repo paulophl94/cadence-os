@@ -15,7 +15,7 @@ Each phase updates a specific section of product-context.mdc. The wizard output 
 - **From /start (Full):** Run Phases 1-4.
 - **From /start (Power):** Run Phases 1-4.
 
-Phases 5-7 (People, Terminology, User Segments) are handled by `start.mdc` Step 4.5, not by this generator. When invoked standalone, offer them after Phase 4.
+Phases 5-7 (People, Terminology, User Segments) are handled by `start.mdc` Step 1.5, not by this generator. When invoked standalone, offer them after Phase 4.
 
 When invoked from `/start`, the start rule tells you which phases to run. Follow that instruction.
 
@@ -122,7 +122,7 @@ STOP — wait for the user to respond.
 
 ## Phase 5: Your Key People (standalone only)
 
-This phase is only run when the context generator is invoked standalone (not from `/start` — the onboarding handles this in Step 4.5).
+This phase is only run when the context generator is invoked standalone (not from `/start` — the onboarding handles this in Step 1.5).
 
 Ask the user:
 

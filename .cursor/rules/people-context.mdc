@@ -37,6 +37,15 @@ When a person name matching a file in `context/people/` is mentioned in conversa
 - Historical references to people not in the person registry
 - When the user explicitly says they don't need person context
 
+## Company Cross-Reference
+
+When loading a person page, check if their **Company** field links to a company page in `context/companies/`. If it does, silently load the company page as well to enrich context with:
+- Other contacts at the same company
+- Organization-level relationship status and open items
+- Recent company-wide activity
+
+This enables answers like "What's our status with Acme?" to aggregate across all contacts.
+
 ## People Registry
 
 Maintained automatically. When a new person page is created in `context/people/`, add their name here for quick lookup.

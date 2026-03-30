@@ -7,7 +7,7 @@ aliases: [] # Nicknames or short names for auto-matching (e.g., ["Paulo", "PA"])
 | Field | Value |
 |-------|-------|
 | **Role** | <!-- Role/title --> |
-| **Company** | <!-- Company name --> |
+| **Company** | <!-- Company name (if company page exists: [Company](../companies/Company-Name.md)) --> |
 | **Relationship** | <!-- Internal / External / Partner --> |
 | **Primary Contact** | <!-- Email or Slack handle --> |
 

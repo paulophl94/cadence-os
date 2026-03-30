@@ -67,6 +67,7 @@ Recognize natural command variants:
 | Assumptions | "assumptions", "what do we believe", "strategic bets" | Read/update global-context/shared/assumptions.md |
 | Onboarding | "/start", "get started", "onboarding" | Execute onboarding wizard (start.mdc) |
 | Setup Status | "/setup", "setup status", "workspace health" | Show setup completeness and re-onboard options |
+| Capture | Loose thoughts, observations, "just talked to X", unstructured input | Route via conversational-capture protocol |
 
 ## Anti-Patterns (avoid)
 
