@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Day With Cadence OS</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Karla:ital,wght@0,300;0,400;0,500;0,600;0,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Karla', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --bg-primary: #08080f;
+  --bg-card: #151524;
+  --border: #252540;
+  --text-primary: #e8eaf0;
+  --text-secondary: #8b8fa8;
+  --text-muted: #5a5e78;
+  --accent: #7c5cfc;
+  --accent-dim: rgba(124,92,252,0.12);
+  --accent2: #2dd4bf;
+  --radius: 12px;
+}
+html{
+  height:100%;
+  font-family:var(--font-body);
+  background:var(--bg-primary);
+  color:var(--text-primary);
+  -webkit-font-smoothing:antialiased;
+}
+body{
+  min-height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:48px 0;
+}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:700;line-height:1.2}
+.gradient-text{
+  background:linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.container{
+  width:100%;
+  max-width:900px;
+  padding:0 32px;
+  opacity:0;
+  transform:translateY(24px);
+  animation:fadeIn .8s ease forwards;
+}
+@keyframes fadeIn{to{opacity:1;transform:translateY(0)}}
+
+.title{
+  font-size:clamp(2rem,4.5vw,2.8rem);
+  font-weight:800;
+  letter-spacing:-.02em;
+  margin-bottom:14px;
+}
+.subtitle{
+  color:var(--text-secondary);
+  font-size:1.05rem;
+  max-width:620px;
+  line-height:1.6;
+  margin-bottom:56px;
+}
+
+.timeline{position:relative;max-width:800px;margin:0 auto}
+.tl-track{
+  display:flex;
+  justify-content:space-between;
+  position:relative;
+  padding:0 20px;
+}
+.tl-track::before{
+  content:'';
+  position:absolute;
+  top:24px;
+  left:60px;
+  right:60px;
+  height:2px;
+  background:var(--border);
+}
+.tl-node{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+  position:relative;
+  z-index:2;
+  flex:1;
+}
+.tl-dot{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:var(--bg-card);
+  border:2px solid var(--border);
+  display:grid;
+  place-items:center;
+  font-size:1.3rem;
+  transition:border-color .3s,background .3s,transform .3s;
+}
+.tl-node:hover .tl-dot,
+.tl-node.active .tl-dot{
+  border-color:var(--accent);
+  background:var(--accent-dim);
+  transform:scale(1.1);
+}
+.tl-label{
+  font-family:var(--font-display);
+  font-size:.82rem;
+  font-weight:600;
+  text-align:center;
+}
+.tl-time{
+  font-family:var(--font-mono);
+  font-size:.65rem;
+  color:var(--text-muted);
+}
+
+.tl-detail{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:28px;
+  margin-top:32px;
+  display:none;
+}
+.tl-detail.active{
+  display:block;
+  animation:fadeUp .35s ease;
+}
+.tl-detail h4{font-size:1.1rem;margin-bottom:8px}
+.tl-detail p{color:var(--text-secondary);font-size:.92rem;margin-bottom:12px}
+.tl-detail ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.tl-detail li{
+  display:flex;
+  gap:8px;
+  align-items:baseline;
+  font-size:.88rem;
+  color:var(--text-secondary);
+}
+.tl-detail li::before{content:'→';color:var(--accent);flex-shrink:0}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:600px){
+  .tl-track{flex-direction:column;gap:16px;align-items:flex-start;padding:0}
+  .tl-track::before{top:0;bottom:0;left:43px;width:2px;height:auto}
+  .container{padding:0 20px}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1 class="title">A Day With <span class="gradient-text">Cadence OS</span></h1>
+  <p class="subtitle">From the first coffee to end-of-day reflection — a daily rhythm that compounds knowledge over time. Click each stage below to see what happens.</p>
+
+  <div class="timeline">
+    <div class="tl-track">
+      <div class="tl-node active" onclick="showDetail(0)">
+        <div class="tl-dot">☀️</div>
+        <div class="tl-label">Morning</div>
+        <div class="tl-time">Start of day</div>
+      </div>
+      <div class="tl-node" onclick="showDetail(1)">
+        <div class="tl-dot">📝</div>
+        <div class="tl-label">During Day</div>
+        <div class="tl-time">Working hours</div>
+      </div>
+      <div class="tl-node" onclick="showDetail(2)">
+        <div class="tl-dot">🌅</div>
+        <div class="tl-label">End of Day</div>
+        <div class="tl-time">Before closing</div>
+      </div>
+      <div class="tl-node" onclick="showDetail(3)">
+        <div class="tl-dot">📊</div>
+        <div class="tl-label">Friday</div>
+        <div class="tl-time">End of week</div>
+      </div>
+    </div>
+
+    <div id="detail-0" class="tl-detail active">
+      <h4>Morning Briefing</h4>
+      <p>Begin your day with full context — no more 30 minutes of reconstruction.</p>
+      <ul>
+        <li>Calendar and meeting prep loaded</li>
+        <li>Initiative and project status pulled</li>
+        <li>Stale commitments flagged (&gt;3 days without update)</li>
+        <li>Today's Three priorities suggested (max 3 P1)</li>
+        <li>Session context restored from yesterday</li>
+      </ul>
+    </div>
+
+    <div id="detail-1" class="tl-detail">
+      <h4>Documents, Reviews &amp; Meetings</h4>
+      <p>Generate and refine documents. Process meetings as they happen.</p>
+      <ul>
+        <li>Create PRDs, One-Pagers, specs with full context</li>
+        <li>Run multi-perspective reviews (6 personas)</li>
+        <li>Process meeting notes → auto-update person pages</li>
+        <li>Track commitments with unique IDs</li>
+        <li>Use frameworks for strategic decisions</li>
+      </ul>
+    </div>
+
+    <div id="detail-2" class="tl-detail">
+      <h4>Daily Review</h4>
+      <p>Reflect on what happened. Capture learnings and prep tomorrow.</p>
+      <ul>
+        <li>Compare planned vs actual (Today's Three)</li>
+        <li>Capture learnings and preferences</li>
+        <li>Career evidence prompt for significant work</li>
+        <li>Session context saved for tomorrow</li>
+        <li>Stale tasks and commitments flagged</li>
+      </ul>
+    </div>
+
+    <div id="detail-3" class="tl-detail">
+      <h4>Weekly Review</h4>
+      <p>Synthesize the week. Set up next week for success.</p>
+      <ul>
+        <li>Week synthesis with patterns identified</li>
+        <li>Quarter progress evaluation</li>
+        <li>Top 3 priorities for next week suggested</li>
+        <li>Toolkit improvements surfaced from backlog</li>
+        <li>Unused skill recommendation (feature discovery)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+function showDetail(idx) {
+  document.querySelectorAll('.tl-node').forEach((n, i) => {
+    n.classList.toggle('active', i === idx);
+  });
+  document.querySelectorAll('.tl-detail').forEach((d, i) => {
+    d.classList.toggle('active', i === idx);
+  });
+}
+</script>
+</body>
+</html>

@@ -37,3 +37,4 @@ to_do's/weekly-reviews/*.md
 to_do's/learnings/onboarding-state.json
 context/people/*.md
 !context/people/_TEMPLATE.md
+.vercel

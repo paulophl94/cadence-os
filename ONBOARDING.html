@@ -285,6 +285,7 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(8,8,
     <li><a href="#toolkit" data-i18n="nav4">Toolkit</a></li>
     <li><a href="#commands" data-i18n="nav5">Reference</a></li>
     <li><a href="#checklist" data-i18n="nav6">Checklist</a></li>
+    <li><a href="#integrations" data-i18n="nav7">Integrations</a></li>
   </ul>
   <div class="nav-controls">
     <select class="lang-select" id="lang-select" onchange="applyLanguage(this.value)" aria-label="Language">
@@ -499,6 +500,22 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(8,8,
   </div>
 </section>
 
+<!-- INTEGRATIONS / CONNECT YOUR TOOLS -->
+<section id="integrations" class="section">
+  <div class="section-inner">
+    <div class="section-label" data-i18n="intLabel">Integrations</div>
+    <h2 class="section-title" data-i18n="intTitle">Connect Your Tools</h2>
+    <p class="section-subtitle" data-i18n="intSubtitle">Cadence OS works standalone, but connecting your tools unlocks the full experience. Here's what changes.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:40px" id="int-comparison"></div>
+
+    <h3 style="font-family:var(--font-display);font-size:1.3rem;margin-bottom:24px" data-i18n="intRankedTitle">Integrations by Impact</h3>
+    <div class="cards-grid cols-3" id="int-grid"></div>
+
+    <div class="card" style="margin-top:32px;border:1px solid var(--accent);background:var(--accent-dim)" id="int-zapier-card"></div>
+  </div>
+</section>
+
 <!-- WHAT TO DO AFTER SETUP -->
 <section id="after-setup" class="section">
   <div class="section-inner">
@@ -568,7 +585,7 @@ function tx(val){
 
 const i18n={
 en:{
-  nav1:'Your Day',nav2:'The Editor',nav3:'Setup',nav4:'Toolkit',nav5:'Reference',nav6:'Checklist',
+  nav1:'Your Day',nav2:'The Editor',nav3:'Setup',nav4:'Toolkit',nav5:'Reference',nav6:'Checklist',nav7:'Integrations',
   heroBadge:'Open Source',
   heroDesc:'Your AI co-pilot for getting more done. Generate documents, run daily rituals, track commitments, and stress-test decisions — all from a single place. No code required.',
   heroCta:'Get Started →',
@@ -597,7 +614,7 @@ en:{
   tier2Title:'Full Setup',tier2Time:'~15 minutes',
   tier2Items:['Everything in Quick, plus:','Domain configuration & folder creation','Working preferences (language, tone, tools)','Morning briefing, daily & weekly reviews','Meeting notes with commitment tracking','Person pages for stakeholders','Session continuity across chats'],
   tier3Title:'Power Setup',tier3Time:'~25 minutes',
-  tier3Items:['Everything in Full, plus:','Strategic pillars','Quarter goals','Weekly priorities (Top 3)','Morning briefings work from day one','Connect tools (Jira, Slack, Calendar) after setup'],
+  tier3Items:['Everything in Full, plus:','Strategic pillars','Quarter goals','Weekly priorities (Top 3)','Morning briefings work from day one','Connect tools (Fireflies, Calendar, Jira, Slack) after setup'],
   quickStartTitle:'⚡ Quick Start',
   quickStartSteps:'<ol style="display:flex;flex-direction:column;gap:10px;padding-left:20px;margin-top:12px;color:var(--text-secondary)"><li>Download <a href="https://cursor.com" target="_blank" rel="noopener noreferrer">Cursor</a> and install it</li><li>Clone the repo: <code>git clone https://github.com/paulophl94/cadence-os.git</code></li><li>Open the <code>cadence-os</code> folder in Cursor</li><li>Press <code>⌘L</code> to open the Chat Panel</li><li>Type: <code>/start</code> — the wizard will ask you to pick a setup tier (Quick 5 min, Full 15 min, or Power 25 min) and guide you from there</li></ol>',
   toolkitTitle:'The Toolkit',
@@ -636,10 +653,36 @@ en:{
   ctaTitle:'Ready to Start?',
   ctaDesc:'Open the Chat Panel in Cursor and type:',
   ctaSub:'The wizard will ask you to pick a tier — Quick (5 min), Full (15 min), or Power (25 min).<br>You can always upgrade your setup later.',
+  intLabel:'Integrations',
+  intTitle:'Connect Your Tools',
+  intSubtitle:'Cadence OS works standalone, but connecting your tools unlocks the full experience. Here\'s what changes.',
+  intRankedTitle:'Integrations by Impact',
+  intCompWithout:'Without integrations',
+  intCompWith:'With integrations',
+  intComp:[
+    ['You paste meeting transcripts manually','<code>Process meeting notes</code> grabs the transcript automatically, extracts action items, updates person pages'],
+    ['Morning briefing skips your calendar','Briefing pulls your real schedule, preps you for each meeting'],
+    ['You copy ticket info from Jira/Linear','Board status syncs into briefings, create/update tickets from chat'],
+    ['You draft emails separately','Draft follow-ups with product context baked in, send from chat'],
+  ],
+  intCards:[
+    {icon:'🎙️',tier:'core',title:'Meeting Transcripts',tools:'Fireflies / Granola',desc:'The single highest-leverage integration. <code>Process meeting notes</code> grabs the transcript, extracts decisions and action items, updates person pages, and adds commitments — all in one command.'},
+    {icon:'📅',tier:'core',title:'Google Calendar',tools:'Zapier MCP',desc:'Morning briefings pull your real schedule. Meeting prep fires automatically before each call. Without it, the briefing has no idea what your day looks like.'},
+    {icon:'📋',tier:'core',title:'Project Tracker',tools:'Atlassian MCP / Linear MCP',desc:'Create tickets from chat, pull board status into briefings, triage bugs directly. Search Confluence for company knowledge.'},
+    {icon:'💬',tier:'multiplier',title:'Slack',tools:'Slack MCP',desc:'Post formatted messages, share document summaries, send status updates directly from the chat.'},
+    {icon:'📧',tier:'multiplier',title:'Gmail',tools:'Zapier MCP',desc:'Draft and send emails with product context baked in — follow-ups after meetings, stakeholder comms, alignment emails.'},
+    {icon:'📄',tier:'multiplier',title:'Google Docs / Sheets',tools:'Google Docs MCP / Sheets MCP',desc:'Export documents to Docs. Pull data from Sheets for analyses.'},
+    {icon:'🎨',tier:'specialized',title:'Figma',tools:'Figma MCP',desc:'Reference design files during PRD and spec generation.'},
+    {icon:'📊',tier:'specialized',title:'Amplitude',tools:'Amplitude MCP',desc:'Query metrics directly for RICE analyses and data-driven PRDs.'},
+  ],
+  intTierLabels:{core:'Core',multiplier:'Multiplier',specialized:'Specialized'},
+  intZapierTitle:'The Shortcut: Zapier MCP',
+  intZapierDesc:'<strong>One MCP server, 7,000+ apps.</strong> Zapier MCP acts as a hub — configure it once and gain access to Google Calendar, Gmail, Sheets, Notion, Asana, and more through a single connection. Especially useful for tools that don\'t have a dedicated Cursor MCP server. Think of it as the Swiss Army knife of integrations.',
+  intZapierHow:'<strong>How to connect:</strong> Settings → Cursor Settings → MCP → Add new MCP server. Or say <code>Help me connect Zapier</code> in the chat.',
   tagLabels:{rule:'Rule',skill:'Skill',doc:'Document',config:'Config'},
 },
 pt:{
-  nav1:'Seu Dia',nav2:'O Editor',nav3:'Configuração',nav4:'Ferramentas',nav5:'Referência',nav6:'Checklist',
+  nav1:'Seu Dia',nav2:'O Editor',nav3:'Configuração',nav4:'Ferramentas',nav5:'Referência',nav6:'Checklist',nav7:'Integrações',
   heroBadge:'Open Source',
   heroDesc:'Seu co-pilot com IA para otimizar o seu trabalho. Gere documentos, execute rituais diários, acompanhe compromissos e valide decisões — tudo em um só lugar. Sem precisar programar.',
   heroCta:'Começar →',
@@ -668,7 +711,7 @@ pt:{
   tier2Title:'Setup Completo',tier2Time:'~15 minutos',
   tier2Items:['Tudo do Rápido, mais:','Configuração de domínio e criação de pastas','Preferências de trabalho (idioma, tom, ferramentas)','Briefing matinal, revisões diárias e semanais','Notas de reunião com rastreamento de compromissos','Páginas de pessoas para stakeholders','Continuidade de sessão entre chats'],
   tier3Title:'Setup Avançado',tier3Time:'~25 minutos',
-  tier3Items:['Tudo do Completo, mais:','Pilares estratégicos','Metas do trimestre','Prioridades da semana (Top 3)','Briefings matinais funcionam desde o primeiro dia','Conectar ferramentas (Jira, Slack, Calendário) após setup'],
+  tier3Items:['Tudo do Completo, mais:','Pilares estratégicos','Metas do trimestre','Prioridades da semana (Top 3)','Briefings matinais funcionam desde o primeiro dia','Conectar ferramentas (Fireflies, Calendar, Jira, Slack) após setup'],
   quickStartTitle:'⚡ Início Rápido',
   quickStartSteps:'<ol style="display:flex;flex-direction:column;gap:10px;padding-left:20px;margin-top:12px;color:var(--text-secondary)"><li>Baixe o <a href="https://cursor.com" target="_blank" rel="noopener noreferrer">Cursor</a> e instale</li><li>Clone o repositório: <code>git clone https://github.com/paulophl94/cadence-os.git</code></li><li>Abra a pasta <code>cadence-os</code> no Cursor</li><li>Pressione <code>⌘L</code> para abrir o Painel de Chat</li><li>Digite: <code>/start</code> — o assistente vai pedir para escolher um nível (Rápido 5 min, Completo 15 min ou Avançado 25 min) e guiar você a partir daí</li></ol>',
   toolkitTitle:'O Kit de Ferramentas',
@@ -707,10 +750,36 @@ pt:{
   ctaTitle:'Pronto para Começar?',
   ctaDesc:'Abra o Painel de Chat no Cursor e digite:',
   ctaSub:'O assistente vai pedir para escolher um nível — Rápido (5 min), Completo (15 min) ou Avançado (25 min).<br>Você sempre pode atualizar seu setup depois.',
+  intLabel:'Integrações',
+  intTitle:'Conecte Suas Ferramentas',
+  intSubtitle:'O Cadence OS funciona sozinho, mas conectar suas ferramentas desbloqueia a experiência completa. Veja o que muda.',
+  intRankedTitle:'Integrações por Impacto',
+  intCompWithout:'Sem integrações',
+  intCompWith:'Com integrações',
+  intComp:[
+    ['Você cola transcrições de reunião manualmente','<code>Process meeting notes</code> busca a transcrição automaticamente, extrai itens de ação, atualiza páginas de pessoas'],
+    ['Briefing matinal pula seu calendário','Briefing puxa sua agenda real, prepara você para cada reunião'],
+    ['Você copia info de tickets do Jira/Linear','Status do board sincroniza nos briefings, crie/atualize tickets pelo chat'],
+    ['Você escreve e-mails separadamente','Rascunhe follow-ups com contexto do produto, envie pelo chat'],
+  ],
+  intCards:[
+    {icon:'🎙️',tier:'core',title:'Transcrições de Reunião',tools:'Fireflies / Granola',desc:'A integração de maior alavancagem. <code>Process meeting notes</code> busca a transcrição, extrai decisões e itens de ação, atualiza páginas de pessoas e adiciona compromissos — tudo em um comando.'},
+    {icon:'📅',tier:'core',title:'Google Calendar',tools:'Zapier MCP',desc:'Briefings matinais puxam sua agenda real. Preparação de reunião dispara automaticamente antes de cada call. Sem isso, o briefing não sabe como é seu dia.'},
+    {icon:'📋',tier:'core',title:'Gerenciador de Projetos',tools:'Atlassian MCP / Linear MCP',desc:'Crie tickets pelo chat, puxe status do board para briefings, faça triagem de bugs diretamente. Busque no Confluence por conhecimento da empresa.'},
+    {icon:'💬',tier:'multiplier',title:'Slack',tools:'Slack MCP',desc:'Envie mensagens formatadas, compartilhe resumos de documentos, envie status updates diretamente pelo chat.'},
+    {icon:'📧',tier:'multiplier',title:'Gmail',tools:'Zapier MCP',desc:'Rascunhe e envie e-mails com contexto do produto — follow-ups após reuniões, comunicação com stakeholders, e-mails de alinhamento.'},
+    {icon:'📄',tier:'multiplier',title:'Google Docs / Sheets',tools:'Google Docs MCP / Sheets MCP',desc:'Exporte documentos para Docs. Puxe dados do Sheets para análises.'},
+    {icon:'🎨',tier:'specialized',title:'Figma',tools:'Figma MCP',desc:'Referencie arquivos de design durante geração de PRD e specs.'},
+    {icon:'📊',tier:'specialized',title:'Amplitude',tools:'Amplitude MCP',desc:'Consulte métricas diretamente para análises RICE e PRDs baseados em dados.'},
+  ],
+  intTierLabels:{core:'Essencial',multiplier:'Multiplicador',specialized:'Especializado'},
+  intZapierTitle:'O Atalho: Zapier MCP',
+  intZapierDesc:'<strong>Um servidor MCP, 7.000+ apps.</strong> O Zapier MCP funciona como um hub — configure uma vez e ganhe acesso ao Google Calendar, Gmail, Sheets, Notion, Asana e mais através de uma única conexão. Especialmente útil para ferramentas que não têm um servidor MCP dedicado no Cursor. Pense nele como o canivete suíço das integrações.',
+  intZapierHow:'<strong>Como conectar:</strong> Settings → Cursor Settings → MCP → Add new MCP server. Ou diga <code>Help me connect Zapier</code> no chat.',
   tagLabels:{rule:'Regra',skill:'Skill',doc:'Documento',config:'Config'},
 },
 es:{
-  nav1:'Tu Día',nav2:'El Editor',nav3:'Configuración',nav4:'Herramientas',nav5:'Referencia',nav6:'Checklist',
+  nav1:'Tu Día',nav2:'El Editor',nav3:'Configuración',nav4:'Herramientas',nav5:'Referencia',nav6:'Checklist',nav7:'Integraciones',
   heroBadge:'Open Source',
   heroDesc:'Tu co-pilot con IA para optimizar tu trabajo. Genera documentos, ejecuta rituales diarios, rastrea compromisos y valida decisiones — todo desde un solo lugar. Sin necesidad de programar.',
   heroCta:'Empezar →',
@@ -739,7 +808,7 @@ es:{
   tier2Title:'Setup Completo',tier2Time:'~15 minutos',
   tier2Items:['Todo del Rápido, más:','Configuración de dominio y creación de carpetas','Preferencias de trabajo (idioma, tono, herramientas)','Briefing matinal, revisiones diarias y semanales','Notas de reunión con seguimiento de compromisos','Páginas de personas para stakeholders','Continuidad de sesión entre chats'],
   tier3Title:'Setup Avanzado',tier3Time:'~25 minutos',
-  tier3Items:['Todo del Completo, más:','Pilares estratégicos','Metas del trimestre','Prioridades de la semana (Top 3)','Briefings matinales funcionan desde el primer día','Conectar herramientas (Jira, Slack, Calendario) después del setup'],
+  tier3Items:['Todo del Completo, más:','Pilares estratégicos','Metas del trimestre','Prioridades de la semana (Top 3)','Briefings matinales funcionan desde el primer día','Conectar herramientas (Fireflies, Calendar, Jira, Slack) después del setup'],
   quickStartTitle:'⚡ Inicio Rápido',
   quickStartSteps:'<ol style="display:flex;flex-direction:column;gap:10px;padding-left:20px;margin-top:12px;color:var(--text-secondary)"><li>Descarga <a href="https://cursor.com" target="_blank" rel="noopener noreferrer">Cursor</a> e instálalo</li><li>Clona el repositorio: <code>git clone https://github.com/paulophl94/cadence-os.git</code></li><li>Abre la carpeta <code>cadence-os</code> en Cursor</li><li>Presiona <code>⌘L</code> para abrir el Panel de Chat</li><li>Escribe: <code>/start</code> — el asistente te pedirá elegir un nivel (Rápido 5 min, Completo 15 min o Avanzado 25 min) y te guiará desde ahí</li></ol>',
   toolkitTitle:'Las Herramientas',
@@ -778,6 +847,32 @@ es:{
   ctaTitle:'¿Listo para Empezar?',
   ctaDesc:'Abre el Panel de Chat en Cursor y escribe:',
   ctaSub:'El asistente te pedirá elegir un nivel — Rápido (5 min), Completo (15 min) o Avanzado (25 min).<br>Siempre puedes actualizar tu setup después.',
+  intLabel:'Integraciones',
+  intTitle:'Conecta Tus Herramientas',
+  intSubtitle:'Cadence OS funciona solo, pero conectar tus herramientas desbloquea la experiencia completa. Mira qué cambia.',
+  intRankedTitle:'Integraciones por Impacto',
+  intCompWithout:'Sin integraciones',
+  intCompWith:'Con integraciones',
+  intComp:[
+    ['Pegas transcripciones de reunión manualmente','<code>Process meeting notes</code> obtiene la transcripción automáticamente, extrae ítems de acción, actualiza páginas de personas'],
+    ['El briefing matinal omite tu calendario','El briefing carga tu agenda real, te prepara para cada reunión'],
+    ['Copias info de tickets de Jira/Linear','El estado del tablero sincroniza en briefings, crea/actualiza tickets desde el chat'],
+    ['Redactas emails por separado','Redacta follow-ups con contexto del producto, envía desde el chat'],
+  ],
+  intCards:[
+    {icon:'🎙️',tier:'core',title:'Transcripciones de Reunión',tools:'Fireflies / Granola',desc:'La integración de mayor apalancamiento. <code>Process meeting notes</code> obtiene la transcripción, extrae decisiones e ítems de acción, actualiza páginas de personas y agrega compromisos — todo en un comando.'},
+    {icon:'📅',tier:'core',title:'Google Calendar',tools:'Zapier MCP',desc:'Los briefings matinales cargan tu agenda real. La preparación de reunión se dispara automáticamente antes de cada llamada. Sin esto, el briefing no sabe cómo es tu día.'},
+    {icon:'📋',tier:'core',title:'Gestor de Proyectos',tools:'Atlassian MCP / Linear MCP',desc:'Crea tickets desde el chat, carga el estado del tablero en briefings, triagea bugs directamente. Busca en Confluence por conocimiento de la empresa.'},
+    {icon:'💬',tier:'multiplier',title:'Slack',tools:'Slack MCP',desc:'Envía mensajes formateados, comparte resúmenes de documentos, envía status updates directamente desde el chat.'},
+    {icon:'📧',tier:'multiplier',title:'Gmail',tools:'Zapier MCP',desc:'Redacta y envía emails con contexto del producto — follow-ups tras reuniones, comunicación con stakeholders, emails de alineación.'},
+    {icon:'📄',tier:'multiplier',title:'Google Docs / Sheets',tools:'Google Docs MCP / Sheets MCP',desc:'Exporta documentos a Docs. Obtén datos de Sheets para análisis.'},
+    {icon:'🎨',tier:'specialized',title:'Figma',tools:'Figma MCP',desc:'Referencia archivos de diseño durante la generación de PRD y specs.'},
+    {icon:'📊',tier:'specialized',title:'Amplitude',tools:'Amplitude MCP',desc:'Consulta métricas directamente para análisis RICE y PRDs basados en datos.'},
+  ],
+  intTierLabels:{core:'Esencial',multiplier:'Multiplicador',specialized:'Especializado'},
+  intZapierTitle:'El Atajo: Zapier MCP',
+  intZapierDesc:'<strong>Un servidor MCP, 7.000+ apps.</strong> Zapier MCP actúa como hub — configúralo una vez y obtén acceso a Google Calendar, Gmail, Sheets, Notion, Asana y más a través de una sola conexión. Especialmente útil para herramientas que no tienen un servidor MCP dedicado en Cursor. Piensa en él como la navaja suiza de las integraciones.',
+  intZapierHow:'<strong>Cómo conectar:</strong> Settings → Cursor Settings → MCP → Add new MCP server. O di <code>Help me connect Zapier</code> en el chat.',
   tagLabels:{rule:'Regla',skill:'Skill',doc:'Documento',config:'Config'},
 },
 };
@@ -911,7 +1006,7 @@ const checklistCards=[
 const afterSetupCards=[
   {icon:'📄',title:{en:'After Quick Setup',pt:'Após Setup Rápido',es:'Después del Setup Rápido'},items:{en:['→ Try <code>Create PRD for [feature]</code>','→ Try <code>Review as engineer</code>','→ Fill in domain context when ready','→ Re-run <code>/start</code> for Full setup later'],pt:['→ Experimente <code>Criar PRD para [feature]</code>','→ Experimente <code>Revisar como engenheiro</code>','→ Preencha o contexto de domínio quando estiver pronto','→ Re-execute <code>/start</code> para o Setup Completo depois'],es:['→ Prueba <code>Crear PRD para [feature]</code>','→ Prueba <code>Revisar como ingeniero</code>','→ Completa el contexto de dominio cuando estés listo','→ Re-ejecuta <code>/start</code> para el Setup Completo después']}},
   {icon:'🔁',title:{en:'After Full Setup',pt:'Após Setup Completo',es:'Después del Setup Completo'},items:{en:['→ Say <code>Morning briefing</code> tomorrow','→ Create person pages for key stakeholders','→ Fill in domain vision & KPIs','→ Set up quarter goals & pillars'],pt:['→ Diga <code>Briefing matinal</code> amanhã','→ Crie páginas de pessoas para stakeholders-chave','→ Preencha visão do domínio e KPIs','→ Configure metas do trimestre e pilares'],es:['→ Di <code>Briefing matinal</code> mañana','→ Crea páginas de personas para stakeholders clave','→ Completa la visión del dominio y KPIs','→ Configura metas del trimestre y pilares']}},
-  {icon:'🔗',title:{en:'After Power Setup',pt:'Após Setup Avançado',es:'Después del Setup Avanzado'},items:{en:['→ Run your first <code>Morning briefing</code>','→ Connect MCPs (Jira, Slack, Calendar)','→ Fill in domain roadmap & architecture','→ Say <code>Level up</code> to discover more'],pt:['→ Execute seu primeiro <code>Briefing matinal</code>','→ Conecte MCPs (Jira, Slack, Calendário)','→ Preencha roadmap e arquitetura do domínio','→ Diga <code>Level up</code> para descobrir mais'],es:['→ Ejecuta tu primer <code>Briefing matinal</code>','→ Conecta MCPs (Jira, Slack, Calendario)','→ Completa el roadmap y arquitectura del dominio','→ Di <code>Level up</code> para descubrir más']}},
+  {icon:'🔗',title:{en:'After Power Setup',pt:'Após Setup Avançado',es:'Después del Setup Avanzado'},items:{en:['→ Run your first <code>Morning briefing</code>','→ Connect Fireflies/Granola + Calendar (see <a href="#integrations">Integrations</a>)','→ Fill in domain roadmap & architecture','→ Say <code>Level up</code> to discover more'],pt:['→ Execute seu primeiro <code>Briefing matinal</code>','→ Conecte Fireflies/Granola + Calendar (veja <a href="#integrations">Integrações</a>)','→ Preencha roadmap e arquitetura do domínio','→ Diga <code>Level up</code> para descobrir mais'],es:['→ Ejecuta tu primer <code>Briefing matinal</code>','→ Conecta Fireflies/Granola + Calendar (ver <a href="#integrations">Integraciones</a>)','→ Completa el roadmap y arquitectura del dominio','→ Di <code>Level up</code> para descubrir más']}},
 ];
 
 /* ── DATA: FILE TREE (with i18n) ── */
@@ -1145,6 +1240,46 @@ function renderAfterSetup(){
     </div>`).join('');
 }
 
+function renderIntegrations(){
+  const T=i18n[currentLang];
+  const tierColors={core:'var(--accent)',multiplier:'var(--accent2)',specialized:'var(--text-muted)'};
+  const comp=document.getElementById('int-comparison');
+  if(comp&&T.intComp){
+    comp.innerHTML=`
+      <div style="background:var(--bg-card);padding:16px 20px;font-weight:600;font-family:var(--font-display);font-size:.9rem;color:var(--text-muted)">${T.intCompWithout}</div>
+      <div style="background:var(--bg-card);padding:16px 20px;font-weight:600;font-family:var(--font-display);font-size:.9rem;color:var(--accent)">${T.intCompWith}</div>
+      ${T.intComp.map(row=>`
+        <div style="background:var(--bg-secondary);padding:12px 20px;font-size:.88rem;color:var(--text-secondary);border-top:1px solid var(--border)">${row[0]}</div>
+        <div style="background:var(--bg-secondary);padding:12px 20px;font-size:.88rem;color:var(--text-primary);border-top:1px solid var(--border)">${row[1]}</div>
+      `).join('')}`;
+  }
+  const grid=document.getElementById('int-grid');
+  if(grid&&T.intCards){
+    grid.innerHTML=T.intCards.map(c=>{
+      const tierLabel=(T.intTierLabels&&T.intTierLabels[c.tier])||c.tier;
+      const tierColor=tierColors[c.tier]||'var(--text-muted)';
+      return `<div class="card">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span style="font-size:1.5rem">${c.icon}</span>
+          <span style="font-family:var(--font-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:${tierColor};border:1px solid ${tierColor};padding:2px 8px;border-radius:4px">${tierLabel}</span>
+        </div>
+        <div class="card-title">${c.title}</div>
+        <div style="font-family:var(--font-mono);font-size:.75rem;color:var(--text-muted);margin-bottom:8px">${c.tools}</div>
+        <div class="card-desc">${c.desc}</div>
+      </div>`}).join('');
+  }
+  const zapier=document.getElementById('int-zapier-card');
+  if(zapier&&T.intZapierTitle){
+    zapier.innerHTML=`
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <span style="font-size:1.8rem">⚡</span>
+        <div class="card-title" style="margin:0">${T.intZapierTitle}</div>
+      </div>
+      <div class="card-desc" style="margin-bottom:8px">${T.intZapierDesc}</div>
+      <div style="font-size:.85rem;color:var(--text-secondary)">${T.intZapierHow}</div>`;
+  }
+}
+
 /* ── FILE TREE ── */
 function buildTree(items, parentUl) {
   items.forEach(item => {
@@ -1284,6 +1419,7 @@ function applyLanguage(lang){
   renderCommandFilters();
   renderCommands();
   renderChecklist();
+  renderIntegrations();
   renderAfterSetup();
   renderFileTree();
 

@@ -35,21 +35,35 @@ Based on your usage, here are capabilities you haven't explored yet:
 
 ```
 **Connect your tools** — This workspace can plug into Jira, Slack, Google Calendar,
-Fireflies, Figma, and more. Morning briefings pull your real schedule, meeting notes
-grab transcripts automatically, and you can post to Slack from the chat.
+Fireflies, Granola, Gmail, Figma, and more. Morning briefings pull your real schedule,
+meeting notes grab transcripts automatically, and you can post to Slack from the chat.
 → Go to **Settings → Cursor Settings → MCP → Add new MCP server**
 → Or say: `Help me connect [tool name]`
 ```
 
+**Individual MCP servers:**
+
 | Tool | MCP Server | What It Unlocks |
 |------|-----------|----------------|
-| Jira/Linear | Atlassian MCP / Linear MCP | Morning briefing pulls your board. Create/update tickets from chat. |
-| Calendar | Zapier MCP | Morning briefing shows today's schedule. Meeting prep triggers automatically. |
-| Meeting transcripts | Fireflies MCP | `Process meeting notes` grabs transcripts, extracts action items, updates person pages. |
+| Jira/Linear | Atlassian MCP / Linear MCP | Morning briefing pulls your board. Create/update tickets from chat. Search Confluence for company knowledge. |
+| Meeting transcripts | Fireflies MCP / Granola | `Process meeting notes` grabs transcripts, extracts action items, updates person pages. Fireflies records and transcribes; Granola captures notes with context. |
 | Slack | Slack MCP | Send messages and share document summaries directly from chat. |
 | Google Docs/Sheets | Google Docs MCP / Sheets MCP | Export documents to Docs. Pull data from Sheets for analyses. |
 | Figma | Figma MCP | Reference design files during PRD and spec generation. |
 | Analytics | Amplitude MCP | Query metrics directly. Connect feature impact to real data in RICE analyses. |
+
+**Zapier MCP — the universal hub:**
+
+| Tool | Via Zapier MCP | What It Unlocks |
+|------|---------------|----------------|
+| Google Calendar | Zapier MCP | Morning briefing shows today's schedule. Meeting prep triggers automatically before each call. |
+| Gmail | Zapier MCP | Draft and send emails with product context baked in — follow-ups, stakeholder comms, alignment emails. |
+| Google Sheets | Zapier MCP | Pull data from spreadsheets for analyses and metrics reviews. |
+| Notion / Asana / other | Zapier MCP | Sync with project management tools that don't have a dedicated MCP server. |
+
+Zapier MCP acts as a hub: one MCP server that connects to 7,000+ apps. Configure it once and gain access to Calendar, Gmail, Sheets, Notion, and more through a single connection. Especially useful for tools that don't have their own dedicated Cursor MCP server. Think of it as the Swiss Army knife — if a tool exists, Zapier probably connects to it.
+
+→ Say: `Help me connect Zapier` to set it up.
 
 ## Protocol 6: Skill Rating (optional)
 

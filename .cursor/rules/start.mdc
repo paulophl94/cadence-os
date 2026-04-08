@@ -638,11 +638,47 @@ If it says Agent, we're good.
 
 You've already seen diffs — green for additions, red for removals, Accept/Reject on each change. Quick tip: **Accept All** saves time when I make multiple changes at once. Nothing is ever saved until you say so.
 
-### 3.5c: Tool Connections
+### 3.5c: Tool Connections (MCP Integrations)
 
-This workspace can also connect to your real tools — Jira, Slack, Calendar, Figma, meeting transcription. With them connected, morning briefings pull your actual calendar and board, and I can post to Slack or create tickets directly from the chat. Without them, everything still works — you just paste data manually.
+**Display:**
 
-**Quick check:** Open **Settings → Cursor Settings → MCP** (or **⌘ + ,** → search "MCP"). See what's there? You don't need to connect anything now — when you're ready, say `Level up` and I'll recommend the ones that match your workflow.
+Now the part that turns this from a smart text editor into an actual operating system: **tool connections**.
+
+This workspace works fine standalone — you paste data, I process it. But when you connect your real tools, the difference is night and day:
+
+| Without integrations | With integrations |
+|---|---|
+| You paste meeting transcripts manually | `Process meeting notes` grabs the transcript automatically, extracts action items, updates person pages |
+| Morning briefing skips your calendar | Briefing pulls your real schedule, preps you for each meeting |
+| You copy ticket info from Jira/Linear | I pull your board status and create/update tickets from the chat |
+| You draft emails separately | I draft follow-ups with your product context baked in |
+
+Here's what's worth connecting, ranked by impact:
+
+**Unlock core workflows:**
+
+- **Meeting transcripts (Fireflies or Granola)** — This is the single highest-leverage integration. After every meeting, `Process meeting notes` grabs the transcript, extracts decisions and action items, updates person pages, and adds commitments — all in one command. Without it, you paste transcripts manually. With it, meetings become structured data automatically.
+- **Google Calendar** — Morning briefings pull your real schedule. Meeting prep fires automatically before each call. Without Calendar, the briefing has no idea what your day looks like.
+- **Project tracker (Jira / Linear)** — Create tickets from chat, pull board status into briefings, triage bugs directly. The Atlassian MCP also lets you search Confluence for company knowledge.
+
+**Productivity multipliers:**
+
+- **Slack** — Post formatted messages, share document summaries, send status updates directly from the chat.
+- **Gmail** — Draft and send emails with product context baked in — follow-ups after meetings, stakeholder comms, alignment emails.
+- **Google Docs / Sheets** — Export documents to Docs. Pull data from Sheets for analyses.
+
+**Specialized:**
+
+- **Figma** — Reference design files during PRD and spec generation.
+- **Amplitude** — Query metrics directly for RICE analyses and data-driven PRDs.
+
+**The shortcut: Zapier MCP**
+
+If setting up individual MCPs sounds like a lot — there's a shortcut. **Zapier MCP** acts as a hub: one MCP server that connects to 7,000+ apps. It's especially useful for tools that don't have their own dedicated Cursor MCP server yet (like Google Calendar or Gmail). Configure Zapier once, and you get Calendar, Gmail, Sheets, Notion, Asana, and more through a single connection. Think of it as the Swiss Army knife of integrations.
+
+**How to connect:** Go to **Settings → Cursor Settings → MCP** (or **⌘ + ,** → search "MCP"). You'll see a list of available servers — enable the ones you use. Each one has a one-time auth flow.
+
+You don't need to do this now — everything works without integrations. But when you're ready, say `Help me connect [tool name]` and I'll walk you through it. Or say `Level up` anytime to see which integrations make the most sense for your workflow.
 
 STOP: "Ready to continue?"
 
@@ -851,7 +887,7 @@ ACTION: Pick 2-3 suggestions from this list based on what was configured during 
 - If a feature was discussed: "Run `Review as executive` on the document I just generated. It's like getting a VP's reaction without the calendar Tetris."
 - If domains were set up but vision not filled: "Open `global-context/{domain}/DOMAIN-VISION.md` and fill in your domain vision. The more strategic context I have, the sharper your documents get."
 - If assumptions were set: "Say `Assumptions` anytime to review or update your strategic bets. I check them automatically before generating PRDs and roadmaps."
-- If no MCPs are connected yet: "Say `Level up` when you're ready to connect your tools (Jira, Slack, Calendar…). I'll recommend the ones that match your workflow and walk you through setup."
+- If no MCPs are connected yet: "Your biggest quick win right now: **connect your meeting transcription tool** (Fireflies or Granola) and **Google Calendar**. Those two integrations unlock automatic meeting notes and calendar-aware briefings. Say `Help me connect Fireflies` or `Help me connect Calendar` to get started. Or set up **Zapier MCP** as a single hub for Calendar, Gmail, Sheets, and more — say `Help me connect Zapier`."
 - If people were created: "Before your next meeting, try `Prep for [Name]`. I'll load their history, open commitments, and suggest what to cover."
 - If conversational capture was introduced: "Try thinking out loud in the chat — 'I need to follow up with [name] about X' or 'The competitor just launched Y'. I'll capture it and route it to the right files automatically."
 - Default fallback 1: "Say `Level up` to discover capabilities you haven't used yet. I'll suggest the ones that make sense for your current workflow."
@@ -874,8 +910,9 @@ Here's your **Context Depth** — what's powering your outputs right now:
 | User segments | [N segments / Not yet] |
 | Strategic pillars | [Configured / Not yet] |
 | Quarter goals | [Configured / Not yet] |
+| Tool connections (MCPs) | [N connected / Not yet] |
 
-For "Not yet" items, add a one-line suggestion (e.g., "Say `set up pillars` to unlock strategic alignment"). Each layer you add makes every output sharper — context compounds.
+For "Not yet" items, add a one-line suggestion (e.g., "Say `set up pillars` to unlock strategic alignment"). For tool connections, suggest: "Say `Help me connect Fireflies` or `Help me connect Zapier` to unlock automatic meeting notes and calendar-aware briefings." Each layer you add makes every output sharper — context compounds.
 
 ACTION: Update `onboarding-state.json` → `context_depth` with the current state of each layer.
 
@@ -900,7 +937,7 @@ ACTION: Pick the top 3 items from this list based on what's NOT yet configured d
 | Architecture | Edit `global-context/{domain}/ARCHITECTURE.md` | Technical PRDs reference real constraints |
 | More people | Say `Create person page for [name]` | Meeting prep improves with each person |
 | More terminology | Edit `context/TERMINOLOGY.md` | Documents use your exact language |
-| Tool connections | **Settings → Cursor Settings → MCP** | Briefings pull real calendar and Jira |
+| Tool connections | Say `Help me connect [tool]` or go to **Settings → MCP** | Meeting transcripts flow automatically (Fireflies/Granola), briefings pull real calendar, tickets sync with Jira. Zapier MCP connects Calendar + Gmail + more in one shot |
 
 The full roadmap is in your **Onboarding Guide** — browse it when you're ready.
 
