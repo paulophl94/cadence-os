@@ -142,7 +142,15 @@ If the document mentions people by name, check/create person pages in `context/p
 ### 3. Commitments (if applicable)
 If the document contains action items with owners, add to `to_do's/commitments.md`
 
-### 4. Next Step (via cadence-coach Protocol 1)
+### 4. Wiki Check (if applicable)
+If the document contains decisions, learnings, or product hypotheses:
+- Check if related wiki entries exist in `wiki/INDEX.md`
+- If yes, suggest updating with new evidence
+- If no, suggest creating a new entry
+- Format: "Wiki candidate: [topic] (type: [type]). Add?"
+- Do not block — this is a suggestion
+
+### 5. Next Step (via cadence-coach Protocol 1)
 Suggest next step per the capability map
 
-**Rules:** Steps 1-3 are automatic (execute without asking). Step 4 follows cadence-coach protocol.
+**Rules:** Steps 1-3 are automatic (execute without asking). Steps 4-5 follow the respective protocols (wiki check is a suggestion; step 5 follows cadence-coach protocol).

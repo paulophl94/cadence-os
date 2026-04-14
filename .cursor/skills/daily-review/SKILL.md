@@ -132,6 +132,24 @@ If the user shared learnings or patterns:
 
 **Usage tracking:** Update `@to_do's/learnings/usage-log.md` — increment the "Daily Review" row count and update "Last Used" date.
 
+### Step 6b: Suggest Wiki Updates
+
+If the user worked on documents, had meetings, or shared insights during the day:
+
+1. Check if any completed tasks or learnings relate to existing wiki entries
+2. Check if any new knowledge emerged that doesn't have a wiki entry yet
+
+**Wiki check:**
+- [If relevant] Entry [W-XXXX-X] can be updated with today's learning about [topic]
+- [If relevant] New insight: "[observation]" — create wiki entry? (type: learning)
+
+Update / Create / Skip?
+
+**Rules:**
+- Max 2 suggestions (keep the review fast)
+- If user says "skip", move on immediately
+- If no wiki-relevant work happened today, omit this step entirely
+
 ### Step 7: Commitment Review
 
 Read `@to_do's/commitments.md` and perform a full commitment health check:

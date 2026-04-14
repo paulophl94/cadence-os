@@ -48,6 +48,11 @@ You started the setup [yesterday / X days ago]. From where we stopped, it's ~[N]
 2. **Commitment staleness** — Read `to_do's/commitments.md`, identify commitments >3 days without update -> flag with person name and original context
 3. **Initiative staleness** — Read `cadence-progress.json`, identify `in_progress` initiatives where metadata `last_updated` is >7 days ago -> flag with current phase
 4. **Today's briefing** — Check if `to_do's/briefings/YYYY-MM-DD.md` exists for today; if not, suggest morning briefing
+5. **Wiki freshness** — If `wiki/INDEX.md` exists AND has at least 1 entry, check:
+   - Entries with confidence `low` or `outdated` for >7 days → flag
+   - If wiki has >5 entries AND (`wiki/syntheses/` has no `.md` files OR latest synthesis `.md` is >30 days old) → suggest running "last 30 days" knowledge synthesis
+   - Skip the synthesis alert entirely if wiki has ≤5 entries (too early to synthesize)
+   - Maximum 1 wiki alert per session (don't compete with task/commitment alerts)
 
 **Rules:**
 - Never block the user's request — respond first, append alerts at the end
@@ -64,6 +69,8 @@ You started the setup [yesterday / X days ago]. From where we stopped, it's ~[N]
 - Commitment "Y" without update for 4 days (owed to [Person])
 - Initiative "Z" without progress for 12 days (phase: requirements)
 - Today's briefing not done yet — run morning briefing?
+- Wiki: 3 hypotheses with "low" confidence for >7 days — run "wiki health"?
+- Wiki: 12 entries, no synthesis in 30+ days — run "últimos 30 dias"?
 ```
 
 ### Phase 4: Workspace Health Score (silent, for internal use)

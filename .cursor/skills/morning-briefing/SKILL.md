@@ -49,6 +49,7 @@ Read the planning hierarchy files to inform the briefing narrative:
 Read: @to_do's/quarter-goals.md
 Read: @to_do's/week-priorities.md
 Read: @to_do's/commitments.md (if exists)
+Read: @wiki/INDEX.md (if exists — for Wiki Pulse section)
 ```
 
 **Purpose:** These files provide the operational planning context:
@@ -172,6 +173,17 @@ date: YYYY-MM-DD
 - [ONE-PAGER-feature-y.md] — completed, next step: Requirements Spec
 
 [If no active initiatives: "No initiatives tracked. Start with `Create new initiative [name]`."]
+
+## Wiki Pulse
+
+[Only include if wiki/INDEX.md Total count > 0. Omit entirely otherwise.]
+
+[Read wiki/INDEX.md and compute: (1) total entry count, (2) entries where last_updated is within the last 7 days, (3) entries with confidence "low" or "outdated", (4) hypotheses where last_challenged is null. Then output the line below with the real values substituted:]
+
+**Wiki Pulse:** X entries | Y updated this week | Z stale hypotheses (>30 days) | W never challenged
+
+[If any stale entries have tags that overlap with today's meetings or week priorities, add a specific mention:]
+- "[W-XXXX-X] relates to today's meeting with [Person] — consider reviewing before the call"
 
 ## Immediate Attention
 

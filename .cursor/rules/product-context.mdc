@@ -68,6 +68,12 @@ Recognize natural command variants:
 | Onboarding | "/start", "get started", "onboarding" | Execute onboarding wizard (start.mdc) |
 | Setup Status | "/setup", "setup status", "workspace health" | Show setup completeness and re-onboard options |
 | Capture | Loose thoughts, observations, "just talked to X", unstructured input | Route via conversational-capture protocol |
+| Wiki Capture | "wiki:", "add to wiki", "save to wiki", "anotar no wiki" | Execute wiki skill (capture mode) |
+| Wiki Query | "what do I know about", "wiki lookup", "o que sei sobre" | Execute wiki skill (query mode) |
+| Wiki Browse | "wiki status", "wiki health", "stale entries", "saúde do wiki" | Execute wiki skill (browse mode) |
+| Wiki Merge | "wiki merge", "fundir wiki entries", "merge wiki" | Execute wiki skill (merge mode) |
+| Wiki Promote | "wiki promote", "graduar wiki", "graduate entry" | Execute wiki skill (promote mode) |
+| Knowledge Synthesis | "last 30 days", "monthly synthesis", "knowledge synthesis", "últimos 30 dias", "síntese mensal", "what happened this month" | Execute last30days skill |
 
 ## Anti-Patterns (avoid)
 

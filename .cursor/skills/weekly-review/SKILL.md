@@ -90,6 +90,12 @@ Synthesize across all data sources:
    - What didn't work? (fix it)
    - Any new preferences or patterns to capture?
 
+6. **Knowledge Health:** If `wiki/` exists:
+   - Read the latest `wiki/challenges/CHALLENGE-YYYY-WXX.md` (if one exists for this week)
+   - Count: total wiki entries (from `wiki/INDEX.md`), entries updated this week, stale entries (>30 days without update), contradictions found in the challenge report
+   - Extract: top contradiction and top confirmation from the challenge report
+   - If no challenge report exists for this week, note it and suggest running the assumption challenger
+
 ### Step 4: Ask User for Input
 
 Quick prompt (keep it brief):
@@ -165,6 +171,19 @@ Save to `@to_do's/weekly-reviews/YYYY-WXX.md`:
 
 ### Insights estrategicos
 - [Observations that matter for quarter goals or beyond]
+
+## Knowledge Health
+
+[Only include if `wiki/` exists. Omit entirely otherwise.]
+
+- **Wiki entries total:** X (Y updated this week)
+- **Challenge report:** [If exists] X entries challenged, Y contradictions, Z confirmations — [link to `wiki/challenges/CHALLENGE-YYYY-WXX.md`]
+- **Top contradiction:** [W-XXXX-X] "[topic]" — [1-line summary of why it contradicts]
+- **Stale entries (>30 days):** X
+- **Graduation candidates:** Y entries ready to promote
+- **Suggestion:** [Specific action — e.g., "Review contradictions before Monday planning" or "Run wiki promote W-XXXX-X"]
+
+[If no challenge report for this week:] *Assumption Challenger não rodou esta semana — considere rodar manualmente ou aguardar próxima sexta.*
 
 ## Prioridades para Proxima Semana
 
@@ -251,6 +270,7 @@ Read `@to_do's/learnings/skill-ratings.md` (if exists) and surface skills with a
 > - Toolkit: X melhorias pendentes (top: [top improvement], [N] com mencoes repetidas)
 > - Workspace health: XX/100 [brief note if < 60]
 > - Sugestao da semana: experimentar [unused template/skill]
+> - [If wiki exists] Knowledge Health: X entries | Y contradictions | Z graduation candidates
 > - Review salvo em `to_do's/weekly-reviews/YYYY-WXX.md`
 
 **Usage tracking:** Update `@to_do's/learnings/usage-log.md` — increment the "Weekly Review" row count and update "Last Used" date.

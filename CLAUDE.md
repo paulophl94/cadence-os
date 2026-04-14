@@ -39,13 +39,20 @@ cadence-os/
 │   ├── meeting-prep/
 │   ├── metrics-analyzer/
 │   ├── morning-briefing/
-│   └── weekly-review/
+│   ├── weekly-review/
+│   ├── wiki/
+│   └── last30days/
 ├── context/
 │   ├── people/               # Person pages for stakeholders
 │   ├── companies/            # Company pages for organization-level tracking
 │   ├── USERS.md              # User personas
 │   └── TERMINOLOGY.md        # Product terminology
 ├── documents/                # Generated documents output
+├── wiki/                    # Product Memory Wiki (knowledge base)
+│   ├── INDEX.md             # Auto-maintained catalog of entries
+│   ├── product/             # Entries by type (decisions, hypotheses, learnings, signals, patterns)
+│   ├── syntheses/           # Output from /last30days skill
+│   └── challenges/          # Output from assumption challenger
 ├── frameworks/               # Strategy frameworks (Rumelt, DHM, SWOT, etc.)
 ├── global-context/           # Product strategy, vision, KPIs (create per domain)
 │   ├── shared/               # Pillars, assumptions, glossary, invariants

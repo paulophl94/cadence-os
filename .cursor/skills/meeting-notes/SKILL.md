@@ -175,6 +175,28 @@ Based on meeting content, suggest:
 - People who should be informed
 - Meetings that should be scheduled
 
+### Step 9: Suggest Wiki Entries
+
+After processing the meeting, scan the output for wiki candidates:
+
+1. **Decisions made** → Suggest as `decision` wiki entries
+2. **Key learnings or data points** → Suggest as `learning` wiki entries
+3. **Hypotheses discussed** → Suggest as `hypothesis` wiki entries
+
+For each candidate, present:
+
+**Wiki candidates detected:**
+1. Decision: "[text]" → type: decision (confidence: high)
+2. Hypothesis: "[text]" → type: hypothesis (confidence: medium)
+
+Add to wiki? (all / select / skip)
+
+**Rules:**
+- Max 3 candidates per meeting (prioritize decisions > learnings > hypotheses)
+- If user says "all", create all entries via wiki skill capture mode
+- If user says "skip", move on immediately
+- Do NOT block the meeting notes flow — this is a suggestion
+
 ## Special Processing Rules
 
 ### For Discovery/Interview Meetings
@@ -204,3 +226,4 @@ Save as: `documents/MEETING-[type]-[topic]-[YYYY-MM-DD].md`
 - [ ] Tasks synced to `tasks.md` with matching IDs
 - [ ] Commitments added to tracker with matching IDs
 - [ ] Cross-file sync verified and reported
+- [ ] Wiki candidates suggested (decisions, learnings, hypotheses from meeting)

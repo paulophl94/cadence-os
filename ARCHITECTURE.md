@@ -54,6 +54,8 @@ Skills are **multi-step workflow SOPs** — each `SKILL.md` is a self-contained 
 | `metrics-analyzer` | analysis | `METRICS-*.md` |
 | `atlassian-helper` | integrations | Jira/Confluence export |
 | `career-review` | career | Career evidence analysis |
+| `wiki` | knowledge | `wiki/product/**/*.md`, `wiki/INDEX.md` |
+| `last30days` | knowledge | `wiki/syntheses/SYNTHESIS-YYYY-MM-DD.md` |
 
 ### 3. Webapp Layer (`webapp/`)
 
@@ -90,6 +92,10 @@ All state lives in the filesystem. No external database required.
 | `to_do's/learnings/usage-log.md` | Feature usage tracking | Coach protocol 4 |
 | `to_do's/learnings/onboarding-state.json` | Onboarding progress | `/start` flow |
 | `to_do's/toolkit-improvements.md` | Workflow improvement ideas | Coach protocol 3 |
+| `wiki/INDEX.md` | Wiki entry catalog (IDs `W-MMDD-N`) | Wiki skill |
+| `wiki/product/**/*.md` | Knowledge entries (decisions, hypotheses, learnings, signals, patterns) | Wiki skill, conversational capture |
+| `wiki/syntheses/*.md` | Monthly knowledge syntheses | Last30days skill |
+| `wiki/challenges/*.md` | Assumption challenge reports | Assumption challenger |
 
 ### Cross-File Linking
 
@@ -112,7 +118,7 @@ Rules layer (always-on protocols load context silently)
     ▼
 Skills / Templates (multi-step workflows with explicit file I/O)
     │
-    ├── Write: documents/*.md, to_do's/*.md
+    ├── Write: documents/*.md, to_do's/*.md, wiki/**/*.md
     ├── Update: cadence-progress.json
     └── Update: context/people/*.md
     │
@@ -124,6 +130,8 @@ Webapp (reads filesystem via WorkspaceService, displays in browser)
 - Morning briefing **writes** `briefings/YYYY-MM-DD.md` → Daily review **reads** it
 - Meeting notes **writes** person pages → Meeting prep **reads** them
 - Document templates **update** `cadence-progress.json` → Session protocol **reads** it for staleness
+- Meeting notes / daily review / conversational capture **write** wiki entries → Assumption challenger **reads** and challenges
+- Wiki entries **inform** morning briefing (Wiki Pulse) and weekly review (Knowledge Health)
 
 ---
 

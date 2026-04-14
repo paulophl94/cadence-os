@@ -45,9 +45,12 @@ Determine what type of information was shared:
 | **Commitment detected** | "I'll", "I need to", "they promised", "by Friday" | `to_do's/commitments.md` + person page |
 | **Task detected** | Action verb + implied ownership | `to_do's/tasks.md` with priority inferred |
 | **Idea / opportunity** | "What if", "we should", "I wonder", speculative language | `to_do's/backlog.md` or relevant initiative document |
-| **Competitive signal** | Competitor name + action/launch/change | Relevant domain context or `documents/` |
+| **Competitive signal** | Competitor name + action/launch/change | `wiki/product/signals/` via wiki skill (capture) |
 | **Customer feedback** | Customer/user + pain/complaint/request | Person page if named, or relevant initiative |
-| **Decision record** | "We decided", "the call was made", "agreed to" | Relevant initiative or meeting doc |
+| **Decision record** | "We decided", "agreed to" | Relevant initiative or meeting doc |
+| **Product insight** | "I learned", "turns out", "data shows", "we discovered", "confirmamos" | `wiki/product/learnings/` via wiki skill (capture) |
+| **Product hypothesis** | "I think", "my bet is", "we assume", "probably because", "eu acho que" | `wiki/product/hypotheses/` via wiki skill (capture) |
+| **Product decision** | "decidimos", "ficou combinado", "the call was", "we're going with" | `wiki/product/decisions/` via wiki skill (capture) |
 
 ### Step 3: Match to Strategic Context
 
@@ -117,3 +120,6 @@ If the user shares multiple pieces of information in one message:
 - If a commitment is detected, assign a `^cd-` ID per the Task Sync Protocol in `todos.mdc`
 - If a person is mentioned, follow the People Context protocol (load their page silently)
 - If a company is mentioned, follow the Company Context protocol
+- If the input is a product insight, hypothesis, or decision, route to the wiki skill in capture mode. The skill handles classification, deduplication, and indexing.
+
+**Routing priority rule:** If the input matches both an existing type and a wiki type, wiki routing takes **priority** over `documents/`. This applies to: product insights (→ `learning`), product hypotheses (→ `hypothesis`), product decisions (→ `decision`), and competitive/market signals (→ `signal`). The wiki is the preferred destination for distilled knowledge; `documents/` is for formal artifacts (PRDs, specs, competitive analysis reports).
